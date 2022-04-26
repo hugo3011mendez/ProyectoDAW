@@ -6,5 +6,4 @@ Subiré aquí todos los archivos relacionados con el proyecto de fin de ciclo de
 
 ## Ideas para el proyecto
 ### Necesitan ser profesionales para poder enseñar a la hora de mandar CV
-- Gestor de personajes del LoL
-- Gestor de personajes de D&D
+- Gestor de posts, haciéndolo de manera atractiva, quizá mostrar un TL con los posts más gustados rollo Twitter
