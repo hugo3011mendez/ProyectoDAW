@@ -37,3 +37,9 @@ Subiré aquí todos los archivos relacionados con el proyecto de fin de ciclo de
 
 - Actualizado hito "Plantillas"
 	- Actualizado [proyecto en Figma](https://www.figma.com/file/DvIS3RPxc4pvAt01vPY6pH/Plantillas-Proyecto-DAW?node-id=0%3A1) con plantillas de las páginas para los usuarios sin privilegios
+
+
+### 17/05/2022
+- Actualizado hito "Plantillas"
+	- Actualizadas las páginas creadas ayer, y añadidas las páginas referentes a los administradores y a las tareas finalizadas en el [proyecto en Figma](https://www.figma.com/file/DvIS3RPxc4pvAt01vPY6pH/Plantillas-Proyecto-DAW?node-id=0%3A1)
+	- El documento se ha actualizado y entregado correctamente
