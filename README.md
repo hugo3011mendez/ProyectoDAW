@@ -43,3 +43,10 @@ Subiré aquí todos los archivos relacionados con el proyecto de fin de ciclo de
 - Actualizado hito "Plantillas"
 	- Actualizadas las páginas creadas ayer, y añadidas las páginas referentes a los administradores y a las tareas finalizadas en el [proyecto en Figma](https://www.figma.com/file/DvIS3RPxc4pvAt01vPY6pH/Plantillas-Proyecto-DAW?node-id=0%3A1)
 	- El documento se ha actualizado y entregado correctamente
+
+### 23/05/2022
+- Modificado documento referente al hito "Plantillas" para corregir erratas
+
+- Creado archivo SQL para la creación de la base de datos
+	- Definidas tablas Usuarios, Roles y Privilegios
+	- Introducidos los datos pertinentes en la tabla Privilegios
