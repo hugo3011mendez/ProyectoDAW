@@ -59,3 +59,5 @@ Subiré aquí todos los archivos relacionados con el proyecto de fin de ciclo de
 
 - Terminado archivo SQL para la creación de la base de datos
 	- Añadidas tablas "Proyectos", "Tareas" y "Tareas Finalizadas"
+
+- Creado archivo PHP referente a las acciones a realizar para la gestión de la base de datos
