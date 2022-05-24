@@ -33,9 +33,52 @@ create table privilegios
     id smallint not null AUTO_INCREMENT,
     nombre varchar(20) not null,
     constraint pk_privilegios primary key (id), /* El campo ID es la clave primaria de la tabla */
+);
+
+
+/* Tabla Proyectos */
+create table proyectos
+(
+    id smallint not null AUTO_INCREMENT,
+    usuario_creador smallint not null,
+    nombre varchar(20) not null,
+    descripcion varchar(100),
+    fecha_creacion datetime not null,
+    constraint pk_proyectos primary key (id), /* El campo ID es la clave primaria de la tabla */
+    constraint foreign key (usuario_creador) references usuarios(id) /* El usuario creador es una clave foránea de la ID del usuario */
+);
+
+
+/* Tabla Tareas */
+create table tareas
+(
+    id smallint not null AUTO_INCREMENT,
+    nombre varchar(20) not null,
+    descripcion varchar(100),
+    estado bit not null,
+    fecha_creacion datetime not null,
+    fecha_modificacion datetime not null,
+    proyecto smallint not null,
+    parentID smallint,
+    constraint pk_tareas primary key (id), /* El campo ID es la clave primaria de la tabla */
+    constraint foreign key (proyecto) references proyectos(id) /* El proyecto es una clave foránea de la ID del proyecto en cuestión */
+);
+
+
+/* Tabla Tareas Finalizadas */
+create table tareas_finalizadas
+(
+    id smallint not null AUTO_INCREMENT,
+    nombre varchar(20) not null,
+    descripcion varchar(100),
+    estado bit not null,
+    fecha_creacion datetime not null,
+    fecha_modificacion datetime not null,
+    proyecto smallint not null,
+    parentID smallint,
+    constraint pk_tareas primary key (id), /* El campo ID es la clave primaria de la tabla */
+    constraint foreign key (proyecto) references proyectos(id) /* El proyecto es una clave foránea de la ID del proyecto en cuestión */
 )
-
-
 
 /* Introduzco los 3 privilegios posibles que hay, en su tabla correspondiente */
 insert into privilegios values ('1','Lectura');
