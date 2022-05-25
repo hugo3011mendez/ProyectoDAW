@@ -61,3 +61,18 @@ Subiré aquí todos los archivos relacionados con el proyecto de fin de ciclo de
 	- Añadidas tablas "Proyectos", "Tareas" y "Tareas Finalizadas"
 
 - Creado archivo PHP referente a las acciones a realizar para la gestión de la base de datos
+
+
+### 25/05/2022
+- Modificado archivo SQL de creación de la base de datos
+	- Se han introducido valores en la tabla de roles, para que haya unos roles iniciales creados
+
+- Modificado archivo PHP para las funciones de manejo de la base de datos
+	- Se han añadido las siguientes funciones : 
+		- Registrar un usuario
+		- Eliminar un usuario
+		- Eliminar los proyectos de un usuario
+		- Eliminar un proyecto 
+		- Eliminar todas las tareas de un proyecto
+
+- Se ha creado otro archivo PHP para las funciones de uso general
