@@ -76,3 +76,19 @@ Subiré aquí todos los archivos relacionados con el proyecto de fin de ciclo de
 		- Eliminar todas las tareas de un proyecto
 
 - Se ha creado otro archivo PHP para las funciones de uso general
+
+
+### 31/05/2022
+- Modificado archivo SQL de creación de la base de datos
+	- Se han eliminado la entrada de datos para el rol "Invitado"
+
+- Modificado archivo PHP para las funciones de manejo de la base de datos
+	- Se ha dado un mejor formato al código
+	- Se han añadido y modificado comentarios
+	- Se han cambiado las constantes para el archivo Utils
+	- Se han añadido las siguientes funciones : 
+		- Eliminar una tarea
+		- Eliminar todas las subtareas de una tarea
+
+- Modificado archivo PHP para las funciones de uso general
+	- Se ha movido el lugar de declaración de las constantes a este archivo

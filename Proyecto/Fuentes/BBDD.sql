@@ -87,6 +87,5 @@ insert into privilegios values ('Escritura');
 insert into privilegios values ('Sobre otros usuarios');
 
 /* Introduzco los 3 roles que va a haber, en su tabla correspondiente */
-insert into roles values ('Invitado', 1); /* Un invitado que sólo puede consultar los datos, no puede modificarlos */
 insert into roles values ('Usuario', 2); /* Un usuario que puede leer y modificar sus propios datos */
 insert into roles values ('Administrador', 3); /* Un administrador que puede leer y modificar sus propios datos, además de gestionar a los demás usuarios */
