@@ -92,3 +92,15 @@ Subiré aquí todos los archivos relacionados con el proyecto de fin de ciclo de
 
 - Modificado archivo PHP para las funciones de uso general
 	- Se ha movido el lugar de declaración de las constantes a este archivo
+
+
+### 01/06/2022
+- Modificado archivo PHP para las funciones de manejo de la base de datos
+	- Se ha añadido la funcionalidad de rollback a todas las consultas, para cuando ocurra algún error
+	- 
+	- Se han añadido las siguientes funciones : 
+		- Finalizar una tarea
+		- Finalizar todas las subtareas de una tarea
+
+- Modificado archivo SQL de creación de la base de datos
+	- Se ha eliminado el campo "estado" de las tablas para las tareas y tareas finalizadas, debido a la falta de uso
