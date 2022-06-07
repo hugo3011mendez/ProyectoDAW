@@ -108,3 +108,19 @@ Subiré aquí todos los archivos relacionados con el proyecto de fin de ciclo de
 - Modificado documento referente a "Entidad de Datos" debido a este último cambio
 
 - Creado nuevo archivo para el almacenamiento de constantes
+
+
+### 07/06/2022
+- Modificado archivo PHP para las funciones de manejo de la base de datos
+	- Se ha dado un mejor formato al código con el fin de que sea más legible
+	- Se han añadido las siguientes funciones :
+		- Comprobar el resultado de una query y devolver un booleano según corresponda
+		- Crear una tarea
+		- Actualizar una tarea
+		- Actualizar un usuario
+		- Crear un proyecto
+	- Modificada sentencia INSERT INTO en la función para finalizar subtareas
+
+- Modificado archivo SQL de creación de la base de datos
+	- Añadidos comentarios sobre el formato del tipo de dato datetime
+	- Pendiente de saber cómo representar la imagen de los usuarios

@@ -3,6 +3,7 @@
     require_once "Utils.php"; // Linkeo el archivo de Utils a este, para usar sus funciones
     require_once "Constantes.php"; // Linkeo el archivo de las constantes a este, para utilizarlas en las funciones de la BBDD
   
+    //------------------------------------------------------------- FUNCIONES GENERALES -----------------------------------------------
 
     /**
      * Intenta conectarse a la base de datos especificada y guarda en una variable el tipo de error en cada caso
@@ -19,6 +20,27 @@
         }
         else {
             return false;
+        }
+    }
+
+
+    /**
+     * Comprueba el resultado de la ejecución de una consulta
+     * 
+     * @param $conexion La conexión con la base de datos. Pasada por referencia para que los cambios hagan efecto en la conexión.
+     * @param $sentencia La sentencia a ejecutar
+     * @param $mensaje El mensaje a mostrar en consola si algo sale mal
+     * 
+     * @return Boolean Indicando el resultado de la función
+     */
+    function comprobarResultadoDeQuery(&$conexion, $sentencia, $mensaje){
+        if (mysqli_query($conexion, $sentencia)) { // Intento eliminar las subtareas activas
+            $conexion->commit(); // Realizo el commit si ha salido bien
+
+            return true;
+        }
+        else {
+            return accionesDeError($conexion, $mensaje); // Devuelvo el resultado de las acciones de error
         }
     }
 
@@ -41,7 +63,9 @@
     }
 
 
-    // ----------------------------------------------------------- Funciones referentes a los usuarios ---------------------------------------------------------
+
+
+    //------------------------------------------------------------- FUNCIONES PARA USUARIOS -----------------------------------------------
 
     /**
      * Inserta los datos de un nuevo Usuario en la BBDD
@@ -60,13 +84,30 @@
 
         // Armo la sentencia
         $sentencia = "INSERT INTO ".TABLA_USUARIOS." (email, nickname, pwd, imagen, rol) VALUES(".$email.", ".$nickname.", ".$password.", ".$imagen.", ".$rol.")";
-        if (!mysqli_query($conexion, $sentencia)) { // Compruebo que al ejecutar la consulta haya salido algo mal
-            return accionesDeError($conexion, "Se ha producido un error al registrar al usuario : ".$conexion-> connect_error); // Devuelvo el resultado de las acciones de error
-        }
-        else {
-            $conexion->commit(); // Realizo el commit si ha salido bien
-            return true; // Devuelvo un true indicando que todo ha ido bien
-        }
+        // Compruebo el resultado de la ejecución de la sentencia y devuelvo un booleano según corresponda
+        return comprobarResultadoDeQuery($conexion, $sentencia, "Se ha producido un error al registrar al usuario : ".$conexion-> connect_error);
+    }
+
+
+    /**
+     * Actualiza la información de un usuario en la base de datos
+     * 
+     * @param $conexion La conexión con la base de datos
+     * @param $id La ID del usuario que queremos actualizar
+     * @param $email El nuevo email del usuario
+     * @param $nickname El nuevo nickname del usuario
+     * @param $password La nueva password del usuario
+     * @param $imagen La nueva imagen del usuario
+     * @param $rol El nuevo rol del usuario
+     * 
+     * @return Boolean Indicando el resultado de la ejecución de la función
+     */
+    function actualizarUsuario($conexion, $id, $email, $nickname, $password, $imagen, $rol){
+        // Armo la sentencia
+        $sentencia = "UPDATE ".TABLA_USUARIOS." SET email = ".$email.", nickname = ".$nickname.", pwd = ".$password.", imagen = ".$imagen." WHERE id = ".$id;
+        
+        // Compruebo el resultado de la ejecución de la sentencia y devuelvo un booleano según corresponda
+        return comprobarResultadoDeQuery($conexion, $sentencia, "Se ha producido un error al intentar actualizar el usuario : ".$conexion-> connect_error);        
     }
 
 
@@ -89,7 +130,8 @@
             return eliminarProyectosDeUsuario($conexion, $id); // Y devuelvo una booleana según su resultado
         }
         else {
-            return accionesDeError($conexion, "Se ha producido un error al eliminar al usuario con ID ".$id." : ".$conexion-> connect_error); // Devuelvo el resultado de las acciones de error
+            // Devuelvo el resultado de las acciones de error
+            return accionesDeError($conexion, "Se ha producido un error al eliminar al usuario con ID ".$id." : ".$conexion-> connect_error);
         }
     }
 
@@ -114,10 +156,35 @@
         }
     }
 
+    
 
 
-    // ----------------------------------------------------------- Funciones generales ---------------------------------------------------------
-
+    //------------------------------------------------------------- FUNCIONES PARA PROYECTOS -----------------------------------------------
+    
+    /**
+     * Crea un proyecto según los parámetros especificados
+     * 
+     * @param $conexion La conexión con la base de datos
+     * @param $idCreador La ID del usuario creador del proyecto
+     * @param $nombre El nombre del nuevo proyecto
+     * @param $descripcion La descripción del nuevo proyecto
+     * 
+     * @return Boolean Indicando el resultado de la ejecución de la función
+     */
+    function crearProyecto($conexion, $idCreador, $nombre, $descripcion){
+        $conexion->autocommit(FALSE); // Desactivo el autocommit
+        
+        // Armo la sentencia de creación
+        $sentencia = "INSERT INTO ".TABLA_PROYECTOS."values ('".$idCreador.
+        "', '".$nombre.
+        "', '".$descripcion.
+        ", ".date("Y-m-d H:i:s");
+        
+        // Compruebo el resultado de la ejecución de la sentencia y devuelvo un booleano según corresponda
+        return comprobarResultadoDeQuery($conexion, $sentencia, "Se ha producido un error al intentar crear el proyecto ".$nombre." : ".$conexion-> connect_error);      
+    }
+    
+    
     /**
      * Elimina un proyecto y todas sus tareas de la base de datos
      * 
@@ -128,26 +195,21 @@
      */
     function eliminarProyecto($conexion, $proyecto){
         $conexion->autocommit(FALSE); // Desactivo el autocommit
-
+        
         if (eliminarTodasTareas($conexion, $proyecto)) { // Compruebo que haya salido bien la realización de esta función
-
+            
             // Si sale bien, armo la consulta para eliminar el proyecto
             $sentencia = "DELETE FROM ".TABLA_PROYECTOS." WHERE id =".$proyecto-> id;
-            if (!mysqli_query($onexion, $sentencia)) {               
-                return accionesDeError($conexion, "Se ha producido un error al intentar eliminar el proyecto ".$proyecto-> nombre." : ".$conexion-> connect_error); // Devuelvo el resultado de las acciones de error
-            }
-            else {
-                $conexion->commit(); // Realizo el commit si ha salido bien
-
-                return true; // Devuelvo true si todo ha ido bien
-            }                    
+            // Compruebo el resultado de la ejecución de la sentencia y devuelvo un booleano según corresponda
+            return comprobarResultadoDeQuery($conexion, $sentencia, "Se ha producido un error al intentar eliminar el proyecto ".$proyecto-> nombre." : ".$conexion-> connect_error);
         }
-        else { // En el caso de que haya algún error
-            return accionesDeError($conexion, "Se ha producido un error al intentar eliminar todas las tareas del proyecto ".$proyecto-> nombre." : ".$conexion-> connect_error); // Devuelvo el resultado de las acciones de error
+        else {
+            // Devuelvo el resultado de las acciones de error
+            return accionesDeError($conexion, "Se ha producido un error al intentar eliminar todas las tareas del proyecto ".$proyecto-> nombre." : ".$conexion-> connect_error);
         }
     }
-
-
+    
+    
     /**
      * Elimina todas las tareas y tareas finalizadas de un proyecto
      * 
@@ -158,28 +220,75 @@
      */
     function eliminarTodasTareas($conexion, $proyecto){
         $conexion->autocommit(FALSE); // Desactivo el autocommit
-
+        
         // Armo la consulta para eliminar primero las tareas finalizadas del proyecto
         $sentencia = "DELETE FROM ".TABLA_TAREAS_FINALIZADAS." WHERE proyecto =".$proyecto-> id;
         if (mysqli_query($conexion, $sentencia)) { // Intento eliminar las tareas finalizadas
         
             // Armo la consulta para eliminar ahora las tareas del proyecto
             $sentencia = "DELETE FROM ".TABLA_TAREAS." WHERE proyecto =".$proyecto-> id;
-            if (!mysqli_query($conexion, $sentencia)) { // Intento eliminar las tareas
-                $conexion->commit(); // Realizo el commit si ha salido bien
-
-                return true;
-            }
-            else {
-                return accionesDeError($conexion, "Se ha producido un error al intentar eliminar las tareas correspondientes al proyecto ".$proyecto-> nombre." : ".$conexion-> connect_error); // Devuelvo el resultado de las acciones de error
-            }
+            // Compruebo el resultado de la ejecución de la sentencia y devuelvo un booleano según corresponda
+            return comprobarResultadoDeQuery($conexion, $sentencia, "Se ha producido un error al intentar eliminar las tareas correspondientes al proyecto ".$proyecto-> nombre." : ".$conexion-> connect_error);
         }
         else {
-            return accionesDeError($conexion, "Se ha producido un error al intentar eliminar las tareas finalizadas correspondientes al proyecto ".$proyecto-> nombre." : ".$conexion-> connect_error); // Devuelvo el resultado de las acciones de error
+            // Devuelvo el resultado de las acciones de error
+            return accionesDeError($conexion, "Se ha producido un error al intentar eliminar las tareas finalizadas correspondientes al proyecto ".$proyecto-> nombre." : ".$conexion-> connect_error);
         }           
     }
-
-
+    
+    
+    
+    
+    //------------------------------------------------------------- FUNCIONES PARA TAREAS Y SUBTAREAS -----------------------------------------------
+    
+    /**
+     * Crea una tarea según los parámetros especificados
+     * 
+     * @param $conexion La conexión con la base de datos
+     * @param $nombre El nombre de la nueva tarea
+     * @param $descripcion La descripción de la nueva tarea
+     * @param $proyecto La ID del proyecto donde crearemos una nueva tarea
+     * @param $parentID La ID de la tarea padre
+     * 
+     * @return Boolean Indicando el resultado de la ejecución de la función
+     */
+    function crearTarea($conexion, $nombre, $descripcion, $proyecto, $parentID){
+        $conexion->autocommit(FALSE); // Desactivo el autocommit
+        
+        // Armo la sentencia de creación
+        $sentencia = "INSERT INTO ".TABLA_TAREAS."values ('".$nombre.
+        "', '".$descripcion.
+        ", ".date("Y-m-d H:i:s").
+        ", ".date("Y-m-d H:i:s").
+        ", ".$proyecto.
+        ", ".$parentID;
+        
+        // Compruebo el resultado de la ejecución de la sentencia y devuelvo un booleano según corresponda
+        return comprobarResultadoDeQuery($conexion, $sentencia, "Se ha producido un error al intentar crear la tarea ".$nombre." : ".$conexion-> connect_error);
+    }
+    
+    
+    /**
+     * Actualiza los datos de una tarea en la base de datos
+     * 
+     * @param $conexion La conexión con la base de datos
+     * @param $id ID de la tarea que queremos actualizar
+     * @param $nombre El nombre de la tarea
+     * @param $descripcion La descripción de la tarea
+     * 
+     * @return Boolean Indicando el resultado de la ejecución de la función
+     */
+    function actualizarTarea($conexion, $id, $nombre, $descripcion){
+        $conexion->autocommit(FALSE); // Desactivo el autocommit
+        
+        // Armo la sentencia
+        $sentencia = "UPDATE ".TABLA_TAREAS." SET nombre = ".$nombre.", descripcion = ".$descripcion." WHERE id = ".$id;
+        
+        // Compruebo el resultado de la ejecución de la sentencia y devuelvo un booleano según corresponda
+        return comprobarResultadoDeQuery($conexion, $sentencia, "Se ha producido un error al intentar actualizar la tarea : ".$conexion-> connect_error);
+    }
+    
+    
     /**
      * Elimina una tarea y todas sus subtareas
      * 
@@ -190,27 +299,22 @@
      */
     function eliminarTarea($conexion, $tarea){
         $conexion->autocommit(FALSE); // Desactivo el autocommit
-
+        
         // Primero elimino las subtareas de la tarea que se quiere eliminar
         if (eliminarSubtareas($conexion, $tarea)) { 
             // Armo la consulta       
             $sentencia = "DELETE FROM ".TABLA_TAREAS." WHERE id=".$tarea-> id;
-
-            if (mysqli_query($conexion, $sentencia)) { // Intento eliminar la tarea
-                $conexion->commit(); // Realizo el commit si ha salido bien
-
-                return true;
-            }
-            else {
-                return accionesDeError($conexion, "Se ha producido un error al intentar eliminar la tarea ".$tarea-> nombre." : ".$conexion-> connect_error); // Devuelvo el resultado de las acciones de error
-            }
+            
+            // Compruebo el resultado de la ejecución de la sentencia y devuelvo un booleano según corresponda
+            return comprobarResultadoDeQuery($conexion, $sentencia, "Se ha producido un error al intentar eliminar la tarea ".$tarea-> nombre." : ".$conexion-> connect_error);
         }
         else {
-            return accionesDeError($conexion, "Se ha producido un error al intentar eliminar las subtareas de la tarea ".$tarea-> nombre." : ".$conexion-> connect_error); // Devuelvo el resultado de las acciones de error
+            // Devuelvo el resultado de las acciones de error
+            return accionesDeError($conexion, "Se ha producido un error al intentar eliminar las subtareas de la tarea ".$tarea-> nombre." : ".$conexion-> connect_error);
         }
     }
-
-
+    
+    
     /**
      * Elimina todas las subtareas de una tarea
      * 
@@ -221,24 +325,19 @@
      */
     function eliminarSubtareas($conexion, $tarea){
         $conexion->autocommit(FALSE); // Desactivo el autocommit
-
+        
         // Primero intento eliminar las subtareas finalizadas
         $sentencia = "DELETE FROM ".TABLA_TAREAS_FINALIZADAS." WHERE parentID=".$tarea-> id;
         if (mysqli_query($conexion, $sentencia)) { // Intento eliminar las subtareas finalizadas
 
             // Ahora intento eliminar las subtareas activas
             $sentencia = "DELETE FROM ".TABLA_TAREAS." WHERE parentID=".$tarea-> id;
-            if (mysqli_query($conexion, $sentencia)) { // Intento eliminar las subtareas activas
-                $conexion->commit(); // Realizo el commit si ha salido bien
-
-                return true;
-            }
-            else {
-                return accionesDeError($conexion, "Se ha producido un error al intentar eliminar las subtareas de la tarea ".$tarea-> nombre." : ".$conexion-> connect_error); // Devuelvo el resultado de las acciones de error       
-            }
+            // Compruebo el resultado de la ejecución de la sentencia y devuelvo un booleano según corresponda
+            return comprobarResultadoDeQuery($conexion, $sentencia, "Se ha producido un error al intentar eliminar las subtareas de la tarea ".$tarea-> nombre." : ".$conexion-> connect_error);
         }
         else {
-            return accionesDeError($conexion, "Se ha producido un error al intentar eliminar las subtareas finalizadas de la tarea ".$tarea-> nombre." : ".$conexion-> connect_error); // Devuelvo el resultado de las acciones de error
+            // Devuelvo el resultado de las acciones de error
+            return accionesDeError($conexion, "Se ha producido un error al intentar eliminar las subtareas finalizadas de la tarea ".$tarea-> nombre." : ".$conexion-> connect_error);
         }
     }
 
@@ -269,22 +368,18 @@
                     ", ".$tarea-> proyecto.
                     ", ".$tarea-> parentID;
 
-                    if (mysqli_query($conexion, $sentencia)) { // Ejecuto la consulta y compruebo que haya salido bien
-                        $conexion->commit(); // Realizo el commit si ha salido bien
-
-                        return true;
-                    }
-                    else{
-                        return accionesDeError($conexion, "Se ha producido un error al intentar insertar la tarea a la tabla de tareas finalizadas : ".$conexion-> connect_error); // Devuelvo el resultado de las acciones de error
-                    }
+                    // Compruebo el resultado de la ejecución de la sentencia y devuelvo un booleano según corresponda
+                    return comprobarResultadoDeQuery($conexion, $sentencia, "Se ha producido un error al intentar insertar la tarea a la tabla de tareas finalizadas : ".$conexion-> connect_error);
                 }
             }
             else{
-                return accionesDeError($conexion, "Se ha producido un error al intentar eliminar la tarea con ID ".$idTarea." de su tabla : ".$conexion-> connect_error); // Devuelvo el resultado de las acciones de error
+                // Devuelvo el resultado de las acciones de error
+                return accionesDeError($conexion, "Se ha producido un error al intentar eliminar la tarea con ID ".$idTarea." de su tabla : ".$conexion-> connect_error);
             }
         }
         else{
-            return accionesDeError($conexion, "Se ha producido un error al intentar finalizar las subtareas de la tarea : ".$conexion-> connect_error); // Devuelvo el resultado de las acciones de error
+            // Devuelvo el resultado de las acciones de error
+            return accionesDeError($conexion, "Se ha producido un error al intentar finalizar las subtareas de la tarea : ".$conexion-> connect_error);
         }
     }
 
@@ -313,6 +408,7 @@
                 // Armo la sentencia para introdducir la subtarea finalizada en la otra tabla
                 $sentencia = "INSERT INTO ".TABLA_TAREAS_FINALIZADAS."values ('".$subtarea->nombre.
                 "', '".$subtarea-> descripcion.
+                ", ".$subtarea-> fecha_creacion.
                 ", ".$subtarea-> fecha_modificacion.
                 ", ".$subtarea-> proyecto.
                 ", ".$subtarea-> parentID;

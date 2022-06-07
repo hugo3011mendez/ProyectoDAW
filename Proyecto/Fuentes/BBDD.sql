@@ -9,7 +9,7 @@ create table usuarios
     email varchar(40) not null,
     nickname varchar(20) not null,
     pwd varchar(25) not null,
-    imagen varchar(),
+    imagen varchar(), /* TODO : Pendiente de como representar este dato */
     rol smallint not null,
     constraint pk_usuarios primary key (id), /* El campo ID es la clave primaria de la tabla */
     constraint fk_rol_usuario foreign key (rol) references roles(id) /* Clave foránea haciendo referencia a la ID de la tabla Roles */
@@ -43,7 +43,7 @@ create table proyectos
     usuario_creador smallint not null,
     nombre varchar(20) not null,
     descripcion varchar(100),
-    fecha_creacion datetime not null,
+    fecha_creacion datetime not null, /* Su formato es (YYYY-MM-DD HH:MI:SS) */
     constraint pk_proyectos primary key (id), /* El campo ID es la clave primaria de la tabla */
     constraint foreign key (usuario_creador) references usuarios(id) /* El usuario creador es una clave foránea de la ID del usuario */
 );
@@ -55,8 +55,8 @@ create table tareas
     id smallint not null AUTO_INCREMENT,
     nombre varchar(20) not null,
     descripcion varchar(100),
-    fecha_creacion datetime not null,
-    fecha_modificacion datetime not null,
+    fecha_creacion datetime not null, /* Su formato es (YYYY-MM-DD HH:MI:SS) */
+    fecha_modificacion datetime not null, /* Su formato es (YYYY-MM-DD HH:MI:SS) */
     proyecto smallint not null,
     parentID smallint,
     constraint pk_tareas primary key (id), /* El campo ID es la clave primaria de la tabla */
@@ -70,8 +70,8 @@ create table tareas_finalizadas
     id smallint not null AUTO_INCREMENT,
     nombre varchar(20) not null,
     descripcion varchar(100),
-    fecha_creacion datetime not null,
-    fecha_modificacion datetime not null,
+    fecha_creacion datetime not null, /* Su formato es (YYYY-MM-DD HH:MI:SS) */
+    fecha_modificacion datetime not null, /* Su formato es (YYYY-MM-DD HH:MI:SS) */
     proyecto smallint not null,
     parentID smallint,
     constraint pk_tareas primary key (id), /* El campo ID es la clave primaria de la tabla */
