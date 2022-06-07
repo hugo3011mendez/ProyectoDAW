@@ -119,7 +119,11 @@ Subiré aquí todos los archivos relacionados con el proyecto de fin de ciclo de
 		- Actualizar una tarea
 		- Actualizar un usuario
 		- Crear un proyecto
+		- Crear un rol
+		- Actualizar un rol
+		- Crear un proyecto
 	- Modificada sentencia INSERT INTO en la función para finalizar subtareas
+	- Se ha mejorado el formato de todos los mensajes de error
 
 - Modificado archivo SQL de creación de la base de datos
 	- Añadidos comentarios sobre el formato del tipo de dato datetime

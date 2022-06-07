@@ -83,7 +83,7 @@
         $conexion->autocommit(FALSE); // Desactivo el autocommit
 
         // Armo la sentencia
-        $sentencia = "INSERT INTO ".TABLA_USUARIOS." (email, nickname, pwd, imagen, rol) VALUES(".$email.", ".$nickname.", ".$password.", ".$imagen.", ".$rol.")";
+        $sentencia = "INSERT INTO ".TABLA_USUARIOS." (email, nickname, pwd, imagen, rol) VALUES('".$email."', '".$nickname."', '".$password."', '".$imagen."', ".$rol.")";
         // Compruebo el resultado de la ejecución de la sentencia y devuelvo un booleano según corresponda
         return comprobarResultadoDeQuery($conexion, $sentencia, "Se ha producido un error al registrar al usuario : ".$conexion-> connect_error);
     }
@@ -104,10 +104,10 @@
      */
     function actualizarUsuario($conexion, $id, $email, $nickname, $password, $imagen, $rol){
         // Armo la sentencia
-        $sentencia = "UPDATE ".TABLA_USUARIOS." SET email = ".$email.", nickname = ".$nickname.", pwd = ".$password.", imagen = ".$imagen." WHERE id = ".$id;
+        $sentencia = "UPDATE ".TABLA_USUARIOS." SET email = '".$email."', nickname = '".$nickname."', pwd = '".$password."', imagen = '".$imagen."' WHERE id = ".$id;
         
         // Compruebo el resultado de la ejecución de la sentencia y devuelvo un booleano según corresponda
-        return comprobarResultadoDeQuery($conexion, $sentencia, "Se ha producido un error al intentar actualizar el usuario : ".$conexion-> connect_error);        
+        return comprobarResultadoDeQuery($conexion, $sentencia, "Se ha producido un error al actualizar el usuario : ".$conexion-> connect_error);        
     }
 
 
@@ -156,7 +156,70 @@
         }
     }
 
+
+
+
+    //------------------------------------------------------------- FUNCIONES PARA ROLES -----------------------------------------------
     
+    /**
+     * Crea un nuevo rol y lo guarda en la base de datos
+     * 
+     * @param $conexion La conexión con la BBDD
+     * @param $nombre El nombre del nuevo rol
+     * @param $privilegios Los privilegios del nuevo rol
+     * 
+     * @return Boolean Indicando el resultado de la ejecución de la función
+     */
+    function crearRol($conexion, $nombre, $privilegios){
+        $conexion->autocommit(FALSE); // Desactivo el autocommit
+
+        $sentencia = "INSERT INTO ".TABLA_ROLES." (nombre, privilegios) VALUES('".$nombre."', ".$privilegios.")";
+
+        // Compruebo el resultado de la ejecución de la sentencia y devuelvo un booleano según corresponda
+        return comprobarResultadoDeQuery($conexion, $sentencia, "Se ha producido un error al crear el rol ".$nombre." : ".$conexion-> connect_error);
+    }
+
+
+    /**
+     * Actualiza un rol existente en la BBDD
+     * 
+     * @param $conexion La conexión con la BBDD
+     * @param $nombre El nuevo nombre del rol
+     * @param $privilegios Los nuevos privilegios del rol
+     * @param $id La ID del rol que queremos actualizar
+     * 
+     * @return Boolean Indicando el resultado de la ejecución de la función
+     */
+    function actualizarRol($conexion, $nombre, $privilegios, $id){
+        $conexion->autocommit(FALSE); // Desactivo el autocommit
+        
+        // Armo la sentencia
+        $sentencia = "UPDATE ".TABLA_ROLES." SET nombre = '".$nombre."', privilegios = ".$privilegios."' WHERE id = ".$id;
+        
+        // Compruebo el resultado de la ejecución de la sentencia y devuelvo un booleano según corresponda
+        return comprobarResultadoDeQuery($conexion, $sentencia, "Se ha producido un error al intentar actualizar el rol con ID ".$id." : ".$conexion-> connect_error);
+    }
+
+
+    /**
+     * Elimina un rol de la BBDD
+     * 
+     * @param $conexion La conexión con la BBDD
+     * @param $id La ID del rol que queremos actualizar
+     * 
+     * @return Boolean Indicando el resultado de la ejecución de la función
+     */
+    function eliminarRol($conexion, $id){
+        $conexion->autocommit(FALSE); // Desactivo el autocommit
+        
+        // Armo la sentencia
+        $sentencia = "DELETE FROM ".TABLA_ROLES." WHERE id = ".$id;
+        
+        // Compruebo el resultado de la ejecución de la sentencia y devuelvo un booleano según corresponda
+        return comprobarResultadoDeQuery($conexion, $sentencia, "Se ha producido un error al intentar eliminar el rol con ID ".$id.": ".$conexion-> connect_error);
+    }
+
+
 
 
     //------------------------------------------------------------- FUNCIONES PARA PROYECTOS -----------------------------------------------
@@ -175,8 +238,9 @@
         $conexion->autocommit(FALSE); // Desactivo el autocommit
         
         // Armo la sentencia de creación
-        $sentencia = "INSERT INTO ".TABLA_PROYECTOS."values ('".$idCreador.
-        "', '".$nombre.
+        $sentencia = "INSERT INTO ".TABLA_PROYECTOS." (usuario_creador, nombre, descripcion, fecha_creacion) VALUES (".
+        $idCreador.
+        ", '".$nombre.
         "', '".$descripcion.
         ", ".date("Y-m-d H:i:s");
         
@@ -184,6 +248,27 @@
         return comprobarResultadoDeQuery($conexion, $sentencia, "Se ha producido un error al intentar crear el proyecto ".$nombre." : ".$conexion-> connect_error);      
     }
     
+
+    /**
+     * Actualiza la información de un proyecto en la BBDD
+     * 
+     * @param $conexion La conexión con la base de datos
+     * @param $nombre El nuevo nombre del proyecto
+     * @param $descripcion La nueva descripción del proyecto
+     * @param $id La ID del proyecto que queremos cambiar
+     * 
+     * @return Boolean Indicando el resultado de la ejecución de la función
+     */
+    function actualizarProyecto($conexion, $nombre, $descripcion, $id){
+        $conexion->autocommit(FALSE); // Desactivo el autocommit
+        
+        // Armo la sentencia de creación
+        $sentencia = "UPDATE ".TABLA_PROYECTOS." SET nombre = '".$nombre."', descripcion = '".$descripcion."' WHERE id = ".$id;
+
+        // Compruebo el resultado de la ejecución de la sentencia y devuelvo un booleano según corresponda
+        return comprobarResultadoDeQuery($conexion, $sentencia, "Se ha producido un error al intentar actualizar el proyecto con ID ".$id." : ".$conexion-> connect_error);
+    }
+
     
     /**
      * Elimina un proyecto y todas sus tareas de la base de datos
@@ -256,7 +341,8 @@
         $conexion->autocommit(FALSE); // Desactivo el autocommit
         
         // Armo la sentencia de creación
-        $sentencia = "INSERT INTO ".TABLA_TAREAS."values ('".$nombre.
+        $sentencia = "INSERT INTO ".TABLA_TAREAS." (nombre, descripcion, fecha_creacion, fecha_modificacion, proyecto, parentID) VALUES ('".
+        $nombre.
         "', '".$descripcion.
         ", ".date("Y-m-d H:i:s").
         ", ".date("Y-m-d H:i:s").
@@ -282,10 +368,10 @@
         $conexion->autocommit(FALSE); // Desactivo el autocommit
         
         // Armo la sentencia
-        $sentencia = "UPDATE ".TABLA_TAREAS." SET nombre = ".$nombre.", descripcion = ".$descripcion." WHERE id = ".$id;
+        $sentencia = "UPDATE ".TABLA_TAREAS." SET nombre = '".$nombre."', descripcion = '".$descripcion."' WHERE id = ".$id;
         
         // Compruebo el resultado de la ejecución de la sentencia y devuelvo un booleano según corresponda
-        return comprobarResultadoDeQuery($conexion, $sentencia, "Se ha producido un error al intentar actualizar la tarea : ".$conexion-> connect_error);
+        return comprobarResultadoDeQuery($conexion, $sentencia, "Se ha producido un error al intentar actualizar la tarea con ID ".$id." : ".$conexion-> connect_error);
     }
     
     
@@ -362,14 +448,16 @@
             if (mysqli_query($conexion, $sentencia)) { // Ejecuto la consulta y compruebo si ha resultado satisfactoria
                 while ($tarea) {
                     // Establezco la sentencia para insertar los datos de la tarea en la tabla de tareas finalizadas
-                    $sentencia = "INSERT INTO ".TABLA_TAREAS_FINALIZADAS."values ('".$tarea->nombre.
+                    $sentencia = "INSERT INTO ".TABLA_TAREAS_FINALIZADAS." (nombre, descripcion, fecha_creacion, fecha_modificacion, proyecto, parentID) VALUES ('".
+                    $tarea-> nombre.
                     "', '".$tarea-> descripcion.
+                    ", ".$tarea-> fecha_creacion.
                     ", ".$tarea-> fecha_modificacion.
                     ", ".$tarea-> proyecto.
                     ", ".$tarea-> parentID;
 
                     // Compruebo el resultado de la ejecución de la sentencia y devuelvo un booleano según corresponda
-                    return comprobarResultadoDeQuery($conexion, $sentencia, "Se ha producido un error al intentar insertar la tarea a la tabla de tareas finalizadas : ".$conexion-> connect_error);
+                    return comprobarResultadoDeQuery($conexion, $sentencia, "Se ha producido un error al intentar insertar la tarea ".$tarea-> nombre." a la tabla de tareas finalizadas : ".$conexion-> connect_error);
                 }
             }
             else{
@@ -379,7 +467,7 @@
         }
         else{
             // Devuelvo el resultado de las acciones de error
-            return accionesDeError($conexion, "Se ha producido un error al intentar finalizar las subtareas de la tarea : ".$conexion-> connect_error);
+            return accionesDeError($conexion, "Se ha producido un error al intentar finalizar las subtareas de la tarea ".$tarea-> nombre." : ".$conexion-> connect_error);
         }
     }
 
@@ -405,8 +493,9 @@
             if (mysqli_query($conexion, $sentencia)) { // Ejecuto la sentencia y compruebo que haya salido bien
                 $conexion->commit();
                 // TODO : Ver si hay una mejor manera de hacer esto
-                // Armo la sentencia para introdducir la subtarea finalizada en la otra tabla
-                $sentencia = "INSERT INTO ".TABLA_TAREAS_FINALIZADAS."values ('".$subtarea->nombre.
+                // Armo la sentencia para introducir la subtarea finalizada en la otra tabla
+                $sentencia = "INSERT INTO ".TABLA_TAREAS_FINALIZADAS." (nombre, descripcion, fecha_creacion, fecha_modificacion, proyecto, parentID) VALUES ('".
+                $subtarea->nombre.
                 "', '".$subtarea-> descripcion.
                 ", ".$subtarea-> fecha_creacion.
                 ", ".$subtarea-> fecha_modificacion.
@@ -436,7 +525,7 @@
 
         if (!$error) { // Si ha habido algún error en el bucle
             // Muestro un mensaje de error
-            consoleLog("Se ha producido un error al intentar finalizar las subtareas : ".$conexion-> connect_error);
+            consoleLog("Se ha producido un error al intentar finalizar las subtareas de la tarea padre con ID ".$idTareaPadre." : ".$conexion-> connect_error);
         }
 
         return $error; // Devuelvo el valor del error como resultado de la función
