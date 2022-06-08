@@ -128,3 +128,12 @@ Subiré aquí todos los archivos relacionados con el proyecto de fin de ciclo de
 - Modificado archivo SQL de creación de la base de datos
 	- Añadidos comentarios sobre el formato del tipo de dato datetime
 	- Pendiente de saber cómo representar la imagen de los usuarios
+
+
+### 08/06/2022
+- Modificado archivo PHP para las funciones de manejo de la base de datos
+	- Modificada función referente al registro de un usuario, con la comprobación de si el email ya existe en la base de datos
+
+- Ha comenzado la prueba de las funciones de manejo de la base de datos
+
+- He creado el archivo Gitignore para evitar subir los archivos de prueba al repositorio

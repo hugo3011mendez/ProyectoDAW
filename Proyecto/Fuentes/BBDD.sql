@@ -2,17 +2,12 @@ create database todomanager;
 
 use todomanager;
 
-/* Tabla Usuarios */
-create table usuarios
-( 
+/* Tabla Privilegios */
+create table privilegios
+(
     id smallint not null AUTO_INCREMENT,
-    email varchar(40) not null,
-    nickname varchar(20) not null,
-    pwd varchar(25) not null,
-    imagen varchar(), /* TODO : Pendiente de como representar este dato */
-    rol smallint not null,
-    constraint pk_usuarios primary key (id), /* El campo ID es la clave primaria de la tabla */
-    constraint fk_rol_usuario foreign key (rol) references roles(id) /* Clave foránea haciendo referencia a la ID de la tabla Roles */
+    nombre varchar(20) character set utf8 collate utf8_general_ci not null,
+    constraint pk_privilegios primary key (id), /* El campo ID es la clave primaria de la tabla */
 );
 
 
@@ -20,19 +15,24 @@ create table usuarios
 create table roles
 (
     id smallint not null AUTO_INCREMENT,
-    nombre varchar(20) not null,
+    nombre varchar(20) character set utf8 collate utf8_general_ci not null,
     privilegios smallint not null,
     constraint pk_roles primary key (id), /* El campo ID es la clave primaria de la tabla */
     constraint foreign key (privilegios) references privilegios(id) /* Clave foránea haciendo referencia a la ID de la tabla Privilegios */
 );
 
 
-/* Tabla Privilegios */
-create table privilegios
-(
+/* Tabla Usuarios */
+create table usuarios
+( 
     id smallint not null AUTO_INCREMENT,
-    nombre varchar(20) not null,
-    constraint pk_privilegios primary key (id), /* El campo ID es la clave primaria de la tabla */
+    email varchar(40) character set utf8 collate utf8_general_ci not null,
+    nickname varchar(20) character set utf8 collate utf8_general_ci not null,
+    pwd varchar(25) character set utf8 collate utf8_general_ci not null,
+    imagen varchar(10000) character set utf8 collate utf8_general_ci, /* TODO : Pendiente de como representar este dato */
+    rol smallint not null,
+    constraint pk_usuarios primary key (id), /* El campo ID es la clave primaria de la tabla */
+    constraint fk_rol_usuario foreign key (rol) references roles(id) /* Clave foránea haciendo referencia a la ID de la tabla Roles */
 );
 
 
@@ -41,8 +41,8 @@ create table proyectos
 (
     id smallint not null AUTO_INCREMENT,
     usuario_creador smallint not null,
-    nombre varchar(20) not null,
-    descripcion varchar(100),
+    nombre varchar(20) character set utf8 collate utf8_general_ci not null,
+    descripcion varchar(100) character set utf8 collate utf8_general_ci,
     fecha_creacion datetime not null, /* Su formato es (YYYY-MM-DD HH:MI:SS) */
     constraint pk_proyectos primary key (id), /* El campo ID es la clave primaria de la tabla */
     constraint foreign key (usuario_creador) references usuarios(id) /* El usuario creador es una clave foránea de la ID del usuario */
@@ -53,8 +53,8 @@ create table proyectos
 create table tareas
 (
     id smallint not null AUTO_INCREMENT,
-    nombre varchar(20) not null,
-    descripcion varchar(100),
+    nombre varchar(20) character set utf8 collate utf8_general_ci not null,
+    descripcion varchar(100) character set utf8 collate utf8_general_ci,
     fecha_creacion datetime not null, /* Su formato es (YYYY-MM-DD HH:MI:SS) */
     fecha_modificacion datetime not null, /* Su formato es (YYYY-MM-DD HH:MI:SS) */
     proyecto smallint not null,
@@ -68,8 +68,8 @@ create table tareas
 create table tareas_finalizadas
 (
     id smallint not null AUTO_INCREMENT,
-    nombre varchar(20) not null,
-    descripcion varchar(100),
+    nombre varchar(20) character set utf8 collate utf8_general_ci not null,
+    descripcion varchar(100) character set utf8 collate utf8_general_ci,
     fecha_creacion datetime not null, /* Su formato es (YYYY-MM-DD HH:MI:SS) */
     fecha_modificacion datetime not null, /* Su formato es (YYYY-MM-DD HH:MI:SS) */
     proyecto smallint not null,

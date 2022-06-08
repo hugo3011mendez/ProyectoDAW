@@ -82,10 +82,23 @@
     function registrarUsuario($conexion, $email, $nickname, $password, $imagen, $rol){ // TODO : El rol seguramente vaya a mano
         $conexion->autocommit(FALSE); // Desactivo el autocommit
 
-        // Armo la sentencia
-        $sentencia = "INSERT INTO ".TABLA_USUARIOS." (email, nickname, pwd, imagen, rol) VALUES('".$email."', '".$nickname."', '".$password."', '".$imagen."', ".$rol.")";
-        // Compruebo el resultado de la ejecución de la sentencia y devuelvo un booleano según corresponda
-        return comprobarResultadoDeQuery($conexion, $sentencia, "Se ha producido un error al registrar al usuario : ".$conexion-> connect_error);
+        $yaRegistrado = false; // Booleano para indicar si el email del usuario ya está en la BBDD
+        $sentencia = "SELECT * FROM ".TABLA_USUARIOS." WHERE email = ".$email;
+        while ($usuario = mysqli_query($conexion, $sentencia) -> fetch_object()) {
+            if ($usuario-> email == $email) {
+                $yaRegistrado = true;
+            }
+        }
+
+        if (!$yaRegistrado) { // Si finalmente el email no está en la tabla de la BBDD
+            // Armo la sentencia
+            $sentencia = "INSERT INTO ".TABLA_USUARIOS." (email, nickname, pwd, imagen, rol) VALUES('".$email."', '".$nickname."', '".$password."', '".$imagen."', ".$rol.")";
+            // Compruebo el resultado de la ejecución de la sentencia y devuelvo un booleano según corresponda
+            return comprobarResultadoDeQuery($conexion, $sentencia, "Se ha producido un error al registrar al usuario : ".$conexion-> connect_error);       
+        }
+        else {
+            accionesDeError($conexion, "Error al registrarse : El email del usuario ya se encuentra en la base de datos");
+        }
     }
 
 
