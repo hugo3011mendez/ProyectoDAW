@@ -137,3 +137,5 @@ Subiré aquí todos los archivos relacionados con el proyecto de fin de ciclo de
 - Ha comenzado la prueba de las funciones de manejo de la base de datos
 
 - He creado el archivo Gitignore para evitar subir los archivos de prueba al repositorio
+
+- Se ha modificado el código de creación de la BBDD en el archivo BBDD.sql para que no haya errores

@@ -7,7 +7,7 @@ create table privilegios
 (
     id smallint not null AUTO_INCREMENT,
     nombre varchar(20) character set utf8 collate utf8_general_ci not null,
-    constraint pk_privilegios primary key (id), /* El campo ID es la clave primaria de la tabla */
+    constraint pk_privilegios primary key (id) /* El campo ID es la clave primaria de la tabla */
 );
 
 
@@ -76,14 +76,18 @@ create table tareas_finalizadas
     parentID smallint,
     constraint pk_tareas primary key (id), /* El campo ID es la clave primaria de la tabla */
     constraint foreign key (proyecto) references proyectos(id) /* El proyecto es una clave foránea de la ID del proyecto en cuestión */
-)
+);
 
 
 /* Introduzco los 3 privilegios posibles que hay, en su tabla correspondiente */
-insert into privilegios values ('Lectura');
-insert into privilegios values ('Escritura');
-insert into privilegios values ('Sobre otros usuarios');
+INSERT INTO privilegios (nombre) VALUES ('Lectura');
+
+INSERT INTO privilegios (nombre) VALUES ('Escritura');
+
+INSERT INTO privilegios (nombre) VALUES ('Sobre otros usuarios');
+
 
 /* Introduzco los 3 roles que va a haber, en su tabla correspondiente */
-insert into roles values ('Usuario', 2); /* Un usuario que puede leer y modificar sus propios datos */
-insert into roles values ('Administrador', 3); /* Un administrador que puede leer y modificar sus propios datos, además de gestionar a los demás usuarios */
+INSERT INTO roles (nombre, privilegios) VALUES ('Usuario', 2); /* Un usuario que puede leer y modificar sus propios datos */
+
+INSERT INTO roles (nombre, privilegios) VALUES ('Administrador', 3); /* Un administrador que puede leer y modificar sus propios datos, además de gestionar a los demás usuarios */

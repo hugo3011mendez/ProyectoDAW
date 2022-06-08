@@ -19,6 +19,7 @@
             return $conexionBD;
         }
         else {
+            consoleLog("No se ha podido conectar con la base de datos : ".$conexionBD-> connect_error); // Si hay algún error, muestro un mensaje en la consola
             return false;
         }
     }
@@ -78,7 +79,7 @@
      * @param $rol Rol que va a tener el nuevo usuario
      * 
      * @return Boolean indicando si la acción resultó con errores
-     */
+     */ 
     function registrarUsuario($conexion, $email, $nickname, $password, $imagen, $rol){ // TODO : El rol seguramente vaya a mano
         $conexion->autocommit(FALSE); // Desactivo el autocommit
 
