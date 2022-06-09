@@ -139,3 +139,18 @@ Subiré aquí todos los archivos relacionados con el proyecto de fin de ciclo de
 - He creado el archivo Gitignore para evitar subir los archivos de prueba al repositorio
 
 - Se ha modificado el código de creación de la BBDD en el archivo BBDD.sql para que no haya errores
+
+
+### 09/06/2022
+- Modificado archivo PHP para las funciones de manejo de la base de datos
+	- Modificada función referente al registro de un usuario, añadiendo comillas en la comprobación del email y guardando el resultado de la query en una variable para ser recorrida
+	- Se ha guardado en variables el resultado de las querys que después serán recorridas
+
+- Modificado archivo de funciones útiles en los archivos PHP
+	- He añadido comillas para mostrar mensajes de error en la consola del navegador
+
+- Avances en la prueba de funciones :
+	- Funciona correctamente :
+		- Registrar un usuario
+		- Eliminar un usuario
+		- Actualizar usuario

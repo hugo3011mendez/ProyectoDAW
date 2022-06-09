@@ -84,8 +84,11 @@
         $conexion->autocommit(FALSE); // Desactivo el autocommit
 
         $yaRegistrado = false; // Booleano para indicar si el email del usuario ya está en la BBDD
-        $sentencia = "SELECT * FROM ".TABLA_USUARIOS." WHERE email = ".$email;
-        while ($usuario = mysqli_query($conexion, $sentencia) -> fetch_object()) {
+        $sentencia = "SELECT * FROM ".TABLA_USUARIOS." WHERE email = '".$email."'"; // Armo la sentencia
+        $resultado = mysqli_query($conexion, $sentencia); // Guardo el resultado de la ejecución de la sentencia para recorrerse
+
+        // Recorro el resultado de la consulta y compruebo si el email ya está registrado
+        while ($usuario = $resultado -> fetch_object()) {
             if ($usuario-> email == $email) {
                 $yaRegistrado = true;
             }
@@ -256,10 +259,10 @@
         $idCreador.
         ", '".$nombre.
         "', '".$descripcion.
-        ", ".date("Y-m-d H:i:s");
+        "', ".date("d-m-Y H:i:s"); // FIXME : Syntax Error con el datetime
         
         // Compruebo el resultado de la ejecución de la sentencia y devuelvo un booleano según corresponda
-        return comprobarResultadoDeQuery($conexion, $sentencia, "Se ha producido un error al intentar crear el proyecto ".$nombre." : ".$conexion-> connect_error);      
+        return comprobarResultadoDeQuery($conexion, $sentencia, "Se ha producido un error al intentar crear el proyecto ".$nombre." : ".$conexion-> connect_error);
     }
     
 
@@ -456,11 +459,11 @@
         // Primero, intento finalizar sus subtareas
         if (finalizarSubtareas($conexion, $idTarea)) { // Compruebo el resultado de la función que intenta finalizar las subtareas de una tarea
             $sentencia = "SELECT * FROM ".TABLA_TAREAS." WHERE id=".$idTarea; // Establezco la sentencia para conseguir los datos de la tarea
-            $tarea = mysqli_query($conexion, $sentencia)-> fetch_object(); // Guardo el resultado de la query
+            $resultado = mysqli_query($conexion, $sentencia); // Guardo el resultado en una variable para ser recorrido
 
             $sentencia = "DELETE FROM".TABLA_TAREAS." WHERE id=".$idTarea; // Establezco la sentencia para eliminar la tarea de la tabla
             if (mysqli_query($conexion, $sentencia)) { // Ejecuto la consulta y compruebo si ha resultado satisfactoria
-                while ($tarea) {
+                while ($tarea = $resultado -> fetch_object()) {
                     // Establezco la sentencia para insertar los datos de la tarea en la tabla de tareas finalizadas
                     $sentencia = "INSERT INTO ".TABLA_TAREAS_FINALIZADAS." (nombre, descripcion, fecha_creacion, fecha_modificacion, proyecto, parentID) VALUES ('".
                     $tarea-> nombre.
