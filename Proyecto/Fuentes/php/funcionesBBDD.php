@@ -2,7 +2,7 @@
 
     require_once "Utils.php"; // Linkeo el archivo de Utils a este, para usar sus funciones
     require_once "Constantes.php"; // Linkeo el archivo de las constantes a este, para utilizarlas en las funciones de la BBDD
-  
+
     //------------------------------------------------------------- FUNCIONES GENERALES -----------------------------------------------
 
     /**
@@ -150,7 +150,7 @@
 
 
     /**
-     * Según la ID del usuairo y el código del dato, consigo y devuelvo el indicado de la BBDD
+     * Según la ID del usuario y el código del dato, consigo y devuelvo el indicado de la BBDD
      * 
      * @param $conexion La conexión con la base de datos
      * @param $id La ID del usuario sobre el que buscaremos el dato
@@ -161,7 +161,6 @@
     function conseguirDatoUsuario($conexion, $id, $codigoDato){
         $sentencia = "SELECT * FROM ".TABLA_USUARIOS." WHERE id = ".$id;
         $resultado = mysqli_query($conexion, $sentencia); // Guardo el resultado de la ejecución de la sentencia para recorrerse
-
         // Recorro el resultado de la consulta y compruebo si la ID coincide
         while ($usuario = $resultado -> fetch_object()) {
             if ($usuario-> id == $id) {
@@ -188,7 +187,6 @@
                 }
             }
         }
-
     }
 
 
@@ -268,6 +266,16 @@
     function actualizarRol($conexion, $nombre, $privilegios, $id){
         $conexion->autocommit(FALSE); // Desactivo el autocommit
         
+        // Compruebo si alguno de estos dos valores es null, para autocompletarlo con el existente en la BBDD
+        if ($nombre == null) {
+            $nombre = conseguirDatoRol($conexion, $id, 0);
+        }
+
+        if ($privilegios == null) {
+            $privilegios = conseguirDatoRol($conexion, $id, 1);
+        }
+
+
         // Armo la sentencia
         $sentencia = "UPDATE ".TABLA_ROLES." SET nombre = '".$nombre."', privilegios = ".$privilegios."' WHERE id = ".$id;
         
@@ -277,10 +285,39 @@
 
 
     /**
+     * Según la ID del rol y el código del dato, consigo y devuelvo el indicado de la BBDD
+     * 
+     * @param $conexion La conexión con la base de datos
+     * @param $id La ID del rol sobre el que buscaremos el dato
+     * @param $dato Código numérico que indicará qué dato tenemos que obtener
+     * 
+     * @return Dato El dato que necesitamos conseguir
+     */
+    function conseguirDatoRol($conexion, $id, $codigoDato){
+        $sentencia = "SELECT * FROM ".TABLA_ROLES." WHERE id = ".$id;
+        $resultado = mysqli_query($conexion, $sentencia); // Guardo el resultado de la ejecución de la sentencia para recorrerse
+        // Recorro el resultado de la consulta y compruebo si la ID coincide
+        while ($rol = $resultado -> fetch_object()) {
+            if ($rol-> id == $id) {
+                switch ($codigoDato) { // Según el código de dato, devuelvo el dato correspondiente
+                    case 0:
+                        return $rol-> nombre; 
+                        break;
+        
+                    case 1:
+                        return $rol-> privilegios;
+                        break;
+                    }
+            }
+        }
+    }
+
+
+    /**
      * Elimina un rol de la BBDD
      * 
      * @param $conexion La conexión con la BBDD
-     * @param $id La ID del rol que queremos actualizar
+     * @param $id La ID del rol que queremos eliminar
      * 
      * @return Boolean Indicando el resultado de la ejecución de la función
      */
@@ -337,6 +374,15 @@
     function actualizarProyecto($conexion, $nombre, $descripcion, $id){
         $conexion->autocommit(FALSE); // Desactivo el autocommit
         
+        // Compruebo si alguno de estos dos datos es null para autocompletarlo con el existente en la BBDD
+        if ($nombre == null) {
+            $nombre = conseguirDatoProyecto($conexion, $id, 0);
+        }
+
+        if ($descripcion == null) {
+            $descripcion = conseguirDatoProyecto($conexion, $id, 1);
+        }
+
         // Armo la sentencia de creación
         $sentencia = "UPDATE ".TABLA_PROYECTOS." SET nombre = '".$nombre."', descripcion = '".$descripcion."' WHERE id = ".$id;
 
@@ -344,7 +390,36 @@
         return comprobarResultadoDeQuery($conexion, $sentencia, "Se ha producido un error al intentar actualizar el proyecto con ID ".$id." : ".$conexion-> connect_error);
     }
 
+
+    /**
+     * Según la ID del proyecto y el código del dato, consigo y devuelvo el indicado de la BBDD
+     * 
+     * @param $conexion La conexión con la base de datos
+     * @param $id La ID del proyecto sobre el que buscaremos el dato
+     * @param $dato Código numérico que indicará qué dato tenemos que obtener
+     * 
+     * @return Dato El dato que necesitamos conseguir
+     */
+    function conseguirDatoProyecto($conexion, $id, $codigoDato){
+        $sentencia = "SELECT * FROM ".TABLA_PROYECTOS." WHERE id = ".$id;
+        $resultado = mysqli_query($conexion, $sentencia); // Guardo el resultado de la ejecución de la sentencia para recorrerse
+        // Recorro el resultado de la consulta y compruebo si la ID coincide
+        while ($proyecto = $resultado -> fetch_object()) {
+            if ($proyecto-> id == $id) {
+                switch ($codigoDato) { // Según el código de dato, devuelvo el dato correspondiente
+                    case 0:
+                        return $proyecto-> nombre; 
+                        break;
+        
+                    case 1:
+                        return $proyecto-> descripcion;
+                        break;
+                    }
+            }
+        }
+    }
     
+
     /**
      * Elimina un proyecto y todas sus tareas de la base de datos
      * 
@@ -456,6 +531,15 @@
     function actualizarTarea($conexion, $id, $nombre, $descripcion){
         $conexion->autocommit(FALSE); // Desactivo el autocommit
         
+        // Compruebo si alguno de estos dos datos es null para autocompletarlo con el existente en la BBDD
+        if ($nombre == null) {
+            $nombre = conseguirDatoTarea($conexion, $id, 0);
+        }
+        
+        if($descripcion == null){
+            $descripcion = conseguirDatoTarea($conexion, $id, 1);
+        }
+
         // Armo la sentencia
         $sentencia = "UPDATE ".TABLA_TAREAS." SET nombre = '".$nombre."', descripcion = '".$descripcion."' WHERE id = ".$id;
         
@@ -463,6 +547,35 @@
         return comprobarResultadoDeQuery($conexion, $sentencia, "Se ha producido un error al intentar actualizar la tarea con ID ".$id." : ".$conexion-> connect_error);
     }
     
+
+    /**
+     * Según la ID de la tarea y el código del dato, consigo y devuelvo el indicado de la BBDD
+     * 
+     * @param $conexion La conexión con la base de datos
+     * @param $id La ID de la tarea sobre el que buscaremos el dato
+     * @param $dato Código numérico que indicará qué dato tenemos que obtener
+     * 
+     * @return Dato El dato que necesitamos conseguir
+     */
+    function conseguirDatoTarea($conexion, $id, $codigoDato){
+        $sentencia = "SELECT * FROM ".TABLA_TAREAS." WHERE id = ".$id;
+        $resultado = mysqli_query($conexion, $sentencia); // Guardo el resultado de la ejecución de la sentencia para recorrerse
+        // Recorro el resultado de la consulta y compruebo si la ID coincide
+        while ($tarea = $resultado -> fetch_object()) {
+            if ($tarea-> id == $id) {
+                switch ($codigoDato) { // Según el código de dato, devuelvo el dato correspondiente
+                    case 0:
+                        return $tarea-> nombre; 
+                        break;
+        
+                    case 1:
+                        return $tarea-> descripcion;
+                        break;
+                    }
+            }
+        }
+    }
+
     
     /**
      * Elimina una tarea y todas sus subtareas

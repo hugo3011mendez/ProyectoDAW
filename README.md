@@ -3,7 +3,7 @@ Subiré aquí todos los archivos relacionados con el proyecto de fin de ciclo de
 
 ## Idea para el proyecto
 - Un To Do Manager, para organizar tareas
-	- Con usuarios, tareas pendientes, realizándose y realizadas.
+	- Con usuarios que tendrán roles los cuales poseerán privilegios, proyectos dentro de los cuales habrá tareas pendientes y realizadas 
 
 ## Changelog
 
@@ -162,6 +162,9 @@ Subiré aquí todos los archivos relacionados con el proyecto de fin de ciclo de
 	- He añadido paréntesis de cierre en las sentencias INSERT INTO que no lo tenían
 	- He añadido la comprobación de si el proyecto existe a la función referente a crear una tarea
 	- He añadido una función para conseguir el/los datos que sean null a la hora de actualizar un usuario
+	- He añadido una función para conseguir el/los datos que sean null a la hora de actualizar un rol
+	- He añadido una función para conseguir el/los datos que sean null a la hora de actualizar un proyecto
+	- He añadido una función para conseguir el/los datos que sean null a la hora de actualizar una tarea
 
 - Avances en la prueba de funciones :
 	- Funciona correctamente :
@@ -171,4 +174,4 @@ Subiré aquí todos los archivos relacionados con el proyecto de fin de ciclo de
 		- Eliminar un proyecto
 		- Eliminar todas las tareas de un usuario
 		- Eliminar un usuario
-		- 
+		- Actualizar un usuario
