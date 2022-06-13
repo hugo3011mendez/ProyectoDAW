@@ -165,6 +165,16 @@ Subiré aquí todos los archivos relacionados con el proyecto de fin de ciclo de
 	- He añadido una función para conseguir el/los datos que sean null a la hora de actualizar un rol
 	- He añadido una función para conseguir el/los datos que sean null a la hora de actualizar un proyecto
 	- He añadido una función para conseguir el/los datos que sean null a la hora de actualizar una tarea
+	- He actualizado la función eliminarProyecto() para poder trabajar tanto con el objeto de un proyecto como con su ID
+	- He actualizado la función eliminarTodasTareas() para poder trabajar tanto con el objeto de un proyecto como con su ID
+	- He actualizado la función eliminarTarea() para poder trabajar tanto con el objeto de una tarea como con su ID
+	- He actualizado la función eliminarSubtareas() para poder trabajar tanto con el objeto de una tarea como con su ID
+	- Añadidas comillas en el campo descripción para insertar una subtarea en la lista de tareas finalizadas, a la hora de finalizar las subtareas de una tarea
+	- He cambiado el valor de los campos a insertar por el valor de la función NOW() para las fechas a la hora de finalizar tareas y subtareas
+	- He creado una variable auxiliar para que cuando se finalice la tarea padre, no falle si su parentID es null
+
+- Modificado archivo de constantes PHP
+	- He añadido constantes referentes a los roles de los usuarios y a los privilegios de éstes
 
 - Avances en la prueba de funciones :
 	- Funciona correctamente :
@@ -175,3 +185,9 @@ Subiré aquí todos los archivos relacionados con el proyecto de fin de ciclo de
 		- Eliminar todas las tareas de un usuario
 		- Eliminar un usuario
 		- Actualizar un usuario
+		- Actualizar un proyecto
+		- Actualizar una tarea
+		- Eliminar una tarea con ID
+		- Eliminar subtareas con ID
+		- Finalizar una tarea
+		- Finalizar las subtareas de una tarea

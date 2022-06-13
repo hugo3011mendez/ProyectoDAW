@@ -424,51 +424,82 @@
      * Elimina un proyecto y todas sus tareas de la base de datos
      * 
      * @param $conexion La conexión con la base de datos
-     * @param $proyecto El objeto del proyecto que va a ser eliminado, y sobre el que se van a eliminar todas las tareas
+     * @param $proyecto El objeto o la ID del proyecto que va a ser eliminado, y sobre el que se van a eliminar todas las tareas
      * 
      * @return Boolean indicando si la acción resultó con errores
      */
     function eliminarProyecto($conexion, $proyecto){
         $conexion->autocommit(FALSE); // Desactivo el autocommit
         
-        if (eliminarTodasTareas($conexion, $proyecto)) { // Compruebo que haya salido bien la realización de esta función
-            
-            // Si sale bien, armo la consulta para eliminar el proyecto
-            $sentencia = "DELETE FROM ".TABLA_PROYECTOS." WHERE id =".$proyecto-> id;
-            // Compruebo el resultado de la ejecución de la sentencia y devuelvo un booleano según corresponda
-            return comprobarResultadoDeQuery($conexion, $sentencia, "Se ha producido un error al intentar eliminar el proyecto ".$proyecto-> nombre." : ".$conexion-> connect_error);
+        if (is_object($proyecto)) { // Si la variable se trata de un objeto representando al proyecto
+            if (eliminarTodasTareas($conexion, $proyecto)) { // Compruebo que haya salido bien la realización de esta función
+                
+                // Si sale bien, armo la consulta para eliminar el proyecto
+                $sentencia = "DELETE FROM ".TABLA_PROYECTOS." WHERE id =".$proyecto-> id;
+                // Compruebo el resultado de la ejecución de la sentencia y devuelvo un booleano según corresponda
+                return comprobarResultadoDeQuery($conexion, $sentencia, "Se ha producido un error al intentar eliminar el proyecto ".$proyecto-> nombre." : ".$conexion-> connect_error);
+            }
+            else {
+                // Devuelvo el resultado de las acciones de error
+                return accionesDeError($conexion, "Se ha producido un error al intentar eliminar todas las tareas del proyecto ".$proyecto-> nombre." : ".$conexion-> connect_error);
+            }
         }
-        else {
-            // Devuelvo el resultado de las acciones de error
-            return accionesDeError($conexion, "Se ha producido un error al intentar eliminar todas las tareas del proyecto ".$proyecto-> nombre." : ".$conexion-> connect_error);
+        elseif (is_int($proyecto)) { // Si resulta que la variable se trata de la ID del proyecto
+            if (eliminarTodasTareas($conexion, $proyecto)) { // Compruebo que haya salido bien la realización de esta función
+                // Si sale bien, armo la consulta para eliminar el proyecto
+                $sentencia = "DELETE FROM ".TABLA_PROYECTOS." WHERE id =".$proyecto;
+                // Compruebo el resultado de la ejecución de la sentencia y devuelvo un booleano según corresponda
+                return comprobarResultadoDeQuery($conexion, $sentencia, "Se ha producido un error al intentar eliminar el proyecto : ".$conexion-> connect_error);
+            }
+            else {
+                // Devuelvo el resultado de las acciones de error
+                return accionesDeError($conexion, "Se ha producido un error al intentar eliminar todas las tareas del proyecto : ".$conexion-> connect_error);
+            }
         }
-    }
+    }    
     
-    
+
     /**
      * Elimina todas las tareas y tareas finalizadas de un proyecto
      * 
      * @param $conexion La conexión con la base de datos
-     * @param $proyecto El objeto del proyecto sobre el que se van a eliminar todas sus tareas
+     * @param $proyecto El objeto o la ID del proyecto sobre el que se van a eliminar todas sus tareas
      * 
      * @return Boolean indicando si la acción resultó con errores
      */
     function eliminarTodasTareas($conexion, $proyecto){
         $conexion->autocommit(FALSE); // Desactivo el autocommit
         
-        // Armo la consulta para eliminar primero las tareas finalizadas del proyecto
-        $sentencia = "DELETE FROM ".TABLA_TAREAS_FINALIZADAS." WHERE proyecto =".$proyecto-> id;
-        if (mysqli_query($conexion, $sentencia)) { // Intento eliminar las tareas finalizadas
-        
-            // Armo la consulta para eliminar ahora las tareas del proyecto
-            $sentencia = "DELETE FROM ".TABLA_TAREAS." WHERE proyecto =".$proyecto-> id;
-            // Compruebo el resultado de la ejecución de la sentencia y devuelvo un booleano según corresponda
-            return comprobarResultadoDeQuery($conexion, $sentencia, "Se ha producido un error al intentar eliminar las tareas correspondientes al proyecto ".$proyecto-> nombre." : ".$conexion-> connect_error);
+        if (is_object($proyecto)) { // Si la variable se trata de un objeto representando al proyecto
+            // Armo la consulta para eliminar primero las tareas finalizadas del proyecto
+            $sentencia = "DELETE FROM ".TABLA_TAREAS_FINALIZADAS." WHERE proyecto =".$proyecto-> id;
+            if (mysqli_query($conexion, $sentencia)) { // Intento eliminar las tareas finalizadas
+            
+                // Armo la consulta para eliminar ahora las tareas del proyecto
+                $sentencia = "DELETE FROM ".TABLA_TAREAS." WHERE proyecto =".$proyecto-> id;
+                // Compruebo el resultado de la ejecución de la sentencia y devuelvo un booleano según corresponda
+                return comprobarResultadoDeQuery($conexion, $sentencia, "Se ha producido un error al intentar eliminar las tareas correspondientes al proyecto ".$proyecto-> nombre." : ".$conexion-> connect_error);
+            }
+            else {
+                // Devuelvo el resultado de las acciones de error
+                return accionesDeError($conexion, "Se ha producido un error al intentar eliminar las tareas finalizadas correspondientes al proyecto ".$proyecto-> nombre." : ".$conexion-> connect_error);
+            }            
         }
-        else {
-            // Devuelvo el resultado de las acciones de error
-            return accionesDeError($conexion, "Se ha producido un error al intentar eliminar las tareas finalizadas correspondientes al proyecto ".$proyecto-> nombre." : ".$conexion-> connect_error);
-        }           
+        elseif (is_int($proyecto)) { // Si resulta que la variable se trata de la ID del proyecto
+            // Armo la consulta para eliminar primero las tareas finalizadas del proyecto
+            $sentencia = "DELETE FROM ".TABLA_TAREAS_FINALIZADAS." WHERE proyecto =".$proyecto;
+            if (mysqli_query($conexion, $sentencia)) { // Intento eliminar las tareas finalizadas
+            
+                // Armo la consulta para eliminar ahora las tareas del proyecto
+                $sentencia = "DELETE FROM ".TABLA_TAREAS." WHERE proyecto =".$proyecto;
+                // Compruebo el resultado de la ejecución de la sentencia y devuelvo un booleano según corresponda
+                return comprobarResultadoDeQuery($conexion, $sentencia, "Se ha producido un error al intentar eliminar las tareas correspondientes al proyecto : ".$conexion-> connect_error);
+            }
+            else {
+                // Devuelvo el resultado de las acciones de error
+                return accionesDeError($conexion, "Se ha producido un error al intentar eliminar las tareas finalizadas correspondientes al proyecto : ".$conexion-> connect_error);
+            }            
+        }
     }
     
     
@@ -541,7 +572,7 @@
         }
 
         // Armo la sentencia
-        $sentencia = "UPDATE ".TABLA_TAREAS." SET nombre = '".$nombre."', descripcion = '".$descripcion."' WHERE id = ".$id;
+        $sentencia = "UPDATE ".TABLA_TAREAS." SET nombre = '".$nombre."', descripcion = '".$descripcion."', fecha_modificacion = NOW() WHERE id = ".$id;
         
         // Compruebo el resultado de la ejecución de la sentencia y devuelvo un booleano según corresponda
         return comprobarResultadoDeQuery($conexion, $sentencia, "Se ha producido un error al intentar actualizar la tarea con ID ".$id." : ".$conexion-> connect_error);
@@ -581,24 +612,40 @@
      * Elimina una tarea y todas sus subtareas
      * 
      * @param $conexion La conexión con la base de datos
-     * @param $tarea El objeto de la tarea que queremos eliminar
+     * @param $tarea El objeto o la ID de la tarea que queremos eliminar
      * 
      * @return Boolean indicando si la acción resultó con errores
      */
     function eliminarTarea($conexion, $tarea){
         $conexion->autocommit(FALSE); // Desactivo el autocommit
         
-        // Primero elimino las subtareas de la tarea que se quiere eliminar
-        if (eliminarSubtareas($conexion, $tarea)) { 
-            // Armo la consulta       
-            $sentencia = "DELETE FROM ".TABLA_TAREAS." WHERE id=".$tarea-> id;
-            
-            // Compruebo el resultado de la ejecución de la sentencia y devuelvo un booleano según corresponda
-            return comprobarResultadoDeQuery($conexion, $sentencia, "Se ha producido un error al intentar eliminar la tarea ".$tarea-> nombre." : ".$conexion-> connect_error);
+        if (is_object($tarea)) { // Si la variable es un objeto de tipo tarea
+            // Primero elimino las subtareas de la tarea que se quiere eliminar
+            if (eliminarSubtareas($conexion, $tarea)) { 
+                // Armo la consulta       
+                $sentencia = "DELETE FROM ".TABLA_TAREAS." WHERE id=".$tarea-> id;
+                
+                // Compruebo el resultado de la ejecución de la sentencia y devuelvo un booleano según corresponda
+                return comprobarResultadoDeQuery($conexion, $sentencia, "Se ha producido un error al intentar eliminar la tarea ".$tarea-> nombre." : ".$conexion-> connect_error);
+            }
+            else {
+                // Devuelvo el resultado de las acciones de error
+                return accionesDeError($conexion, "Se ha producido un error al intentar eliminar las subtareas de la tarea ".$tarea-> nombre." : ".$conexion-> connect_error);
+            }
         }
-        else {
-            // Devuelvo el resultado de las acciones de error
-            return accionesDeError($conexion, "Se ha producido un error al intentar eliminar las subtareas de la tarea ".$tarea-> nombre." : ".$conexion-> connect_error);
+        elseif (is_int($tarea)) { // Si la variable es el ID de la tarea
+            // Primero elimino las subtareas de la tarea que se quiere eliminar
+            if (eliminarSubtareas($conexion, $tarea)) { 
+                // Armo la consulta       
+                $sentencia = "DELETE FROM ".TABLA_TAREAS." WHERE id=".$tarea;
+                
+                // Compruebo el resultado de la ejecución de la sentencia y devuelvo un booleano según corresponda
+                return comprobarResultadoDeQuery($conexion, $sentencia, "Se ha producido un error al intentar eliminar la tarea : ".$conexion-> connect_error);
+            }
+            else {
+                // Devuelvo el resultado de las acciones de error
+                return accionesDeError($conexion, "Se ha producido un error al intentar eliminar las subtareas de la tarea : ".$conexion-> connect_error);
+            }            
         }
     }
     
@@ -607,25 +654,42 @@
      * Elimina todas las subtareas de una tarea
      * 
      * @param $conexion La conexión con la base de datos
-     * @param $tarea La tarea sobre la que queremos eliminar sus subtareas
+     * @param $tarea La tarea o su ID sobre la que queremos eliminar sus subtareas
      * 
      * @return Boolean indicando si la acción resultó con errores
      */
     function eliminarSubtareas($conexion, $tarea){
         $conexion->autocommit(FALSE); // Desactivo el autocommit
         
-        // Primero intento eliminar las subtareas finalizadas
-        $sentencia = "DELETE FROM ".TABLA_TAREAS_FINALIZADAS." WHERE parentID=".$tarea-> id;
-        if (mysqli_query($conexion, $sentencia)) { // Intento eliminar las subtareas finalizadas
-
-            // Ahora intento eliminar las subtareas activas
-            $sentencia = "DELETE FROM ".TABLA_TAREAS." WHERE parentID=".$tarea-> id;
-            // Compruebo el resultado de la ejecución de la sentencia y devuelvo un booleano según corresponda
-            return comprobarResultadoDeQuery($conexion, $sentencia, "Se ha producido un error al intentar eliminar las subtareas de la tarea ".$tarea-> nombre." : ".$conexion-> connect_error);
+        if (is_object($tarea)) { // Si la variable es un objeto de tipo tarea
+            // Primero intento eliminar las subtareas finalizadas
+            $sentencia = "DELETE FROM ".TABLA_TAREAS_FINALIZADAS." WHERE parentID=".$tarea-> id;
+            if (mysqli_query($conexion, $sentencia)) { // Intento eliminar las subtareas finalizadas
+    
+                // Ahora intento eliminar las subtareas activas
+                $sentencia = "DELETE FROM ".TABLA_TAREAS." WHERE parentID=".$tarea-> id;
+                // Compruebo el resultado de la ejecución de la sentencia y devuelvo un booleano según corresponda
+                return comprobarResultadoDeQuery($conexion, $sentencia, "Se ha producido un error al intentar eliminar las subtareas de la tarea ".$tarea-> nombre." : ".$conexion-> connect_error);
+            }
+            else {
+                // Devuelvo el resultado de las acciones de error
+                return accionesDeError($conexion, "Se ha producido un error al intentar eliminar las subtareas finalizadas de la tarea ".$tarea-> nombre." : ".$conexion-> connect_error);
+            }            
         }
-        else {
-            // Devuelvo el resultado de las acciones de error
-            return accionesDeError($conexion, "Se ha producido un error al intentar eliminar las subtareas finalizadas de la tarea ".$tarea-> nombre." : ".$conexion-> connect_error);
+        elseif (is_int($tarea)) { // Si la variable es el ID de la tarea
+            // Primero intento eliminar las subtareas finalizadas
+            $sentencia = "DELETE FROM ".TABLA_TAREAS_FINALIZADAS." WHERE parentID=".$tarea;
+            if (mysqli_query($conexion, $sentencia)) { // Intento eliminar las subtareas finalizadas
+    
+                // Ahora intento eliminar las subtareas activas
+                $sentencia = "DELETE FROM ".TABLA_TAREAS." WHERE parentID=".$tarea;
+                // Compruebo el resultado de la ejecución de la sentencia y devuelvo un booleano según corresponda
+                return comprobarResultadoDeQuery($conexion, $sentencia, "Se ha producido un error al intentar eliminar las subtareas de la tarea : ".$conexion-> connect_error);
+            }
+            else {
+                // Devuelvo el resultado de las acciones de error
+                return accionesDeError($conexion, "Se ha producido un error al intentar eliminar las subtareas finalizadas de la tarea : ".$conexion-> connect_error);
+            }            
         }
     }
 
@@ -646,19 +710,27 @@
             $sentencia = "SELECT * FROM ".TABLA_TAREAS." WHERE id=".$idTarea; // Establezco la sentencia para conseguir los datos de la tarea
             $resultado = mysqli_query($conexion, $sentencia); // Guardo el resultado en una variable para ser recorrido
 
-            $sentencia = "DELETE FROM".TABLA_TAREAS." WHERE id=".$idTarea; // Establezco la sentencia para eliminar la tarea de la tabla
+            $sentencia = "DELETE FROM ".TABLA_TAREAS." WHERE id=".$idTarea; // Establezco la sentencia para eliminar la tarea de la tabla
             if (mysqli_query($conexion, $sentencia)) { // Ejecuto la consulta y compruebo si ha resultado satisfactoria
                 while ($tarea = $resultado -> fetch_object()) {
+                    // Creo una variable auxiliar por si el campo parentID es null
+                    if (is_null($tarea-> parentID)) {
+                        $idPadre = "null";
+                    }
+                    else {
+                        $idPadre = $tarea-> parentID;
+                    }
+
                     // Establezco la sentencia para insertar los datos de la tarea en la tabla de tareas finalizadas
                     $sentencia = "INSERT INTO ".TABLA_TAREAS_FINALIZADAS." (nombre, descripcion, fecha_creacion, fecha_modificacion, proyecto, parentID) VALUES ('".
                     $tarea-> nombre.
                     "', '".$tarea-> descripcion.
-                    ", ".$tarea-> fecha_creacion.
-                    ", ".$tarea-> fecha_modificacion.
+                    "', NOW()".
+                    ", NOW()".
                     ", ".$tarea-> proyecto.
-                    ", ".$tarea-> parentID.");";
+                    ", ".$idPadre.");";
 
-                    // Compruebo el resultado de la ejecución de la sentencia y devuelvo un booleano según corresponda
+                    // Compruebo el resultado de la ejecución de la sentencia y devuelvo un booleano según corresponda                    
                     return comprobarResultadoDeQuery($conexion, $sentencia, "Se ha producido un error al intentar insertar la tarea ".$tarea-> nombre." a la tabla de tareas finalizadas : ".$conexion-> connect_error);
                 }
             }
@@ -669,7 +741,7 @@
         }
         else{
             // Devuelvo el resultado de las acciones de error
-            return accionesDeError($conexion, "Se ha producido un error al intentar finalizar las subtareas de la tarea ".$tarea-> nombre." : ".$conexion-> connect_error);
+            return accionesDeError($conexion, "Se ha producido un error al intentar finalizar las subtareas de la tarea : ".$conexion-> connect_error);
         }
     }
 
@@ -683,7 +755,7 @@
      * @return Boolean Indicando el resultado de la función
      */
     function finalizarSubtareas($conexion, $idTareaPadre){
-        $conexion->autocommit(FALSE); // Desactivo el autocommit
+        // No hace falta que desactive el autocommit porque ya lo está de antes
 
         $sentencia = "SELECT * FROM ".TABLA_TAREAS." WHERE parentID=".$idTareaPadre; // Consulto todas las subtareas activas
         $resultado = mysqli_query($conexion, $sentencia); // Guardo el resultado de la query
@@ -699,8 +771,8 @@
                 $sentencia = "INSERT INTO ".TABLA_TAREAS_FINALIZADAS." (nombre, descripcion, fecha_creacion, fecha_modificacion, proyecto, parentID) VALUES ('".
                 $subtarea->nombre.
                 "', '".$subtarea-> descripcion.
-                ", ".$subtarea-> fecha_creacion.
-                ", ".$subtarea-> fecha_modificacion.
+                "', NOW()".
+                ", NOW()".
                 ", ".$subtarea-> proyecto.
                 ", ".$subtarea-> parentID.");";
 
@@ -712,7 +784,7 @@
                     $conexion->rollback(); // Al salir algo mal, primero hago el rollback
 
                     // En caso incorrecto, muestro un mensaje de error en la consola
-                    consoleLog("Se ha producido un error al intentar introducir la subtarea".$subtarea-> nombre.
+                    consoleLog("Se ha producido un error al intentar introducir la subtarea ".$subtarea-> nombre.
                     " en la tabla de tareas finalizadas : ".$conexion-> connect_error);
                 }
             }
