@@ -154,3 +154,21 @@ Subiré aquí todos los archivos relacionados con el proyecto de fin de ciclo de
 		- Registrar un usuario
 		- Eliminar un usuario
 		- Actualizar usuario
+
+
+### 13/06/2022
+- Modificado archivo PHP para las funciones de manejo de la base de datos
+	- He cambiado la función PHP date() por la función SQL NOW() incluida en las sentencias que necesiten especificar fechas
+	- He añadido paréntesis de cierre en las sentencias INSERT INTO que no lo tenían
+	- He añadido la comprobación de si el proyecto existe a la función referente a crear una tarea
+	- He añadido una función para conseguir el/los datos que sean null a la hora de actualizar un usuario
+
+- Avances en la prueba de funciones :
+	- Funciona correctamente :
+		- Crear un proyecto
+		- Crear una tarea
+		- Eliminar todos los proyectos de usuario
+		- Eliminar un proyecto
+		- Eliminar todas las tareas de un usuario
+		- Eliminar un usuario
+		- 

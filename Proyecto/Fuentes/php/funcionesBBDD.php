@@ -120,11 +120,75 @@
      * @return Boolean Indicando el resultado de la ejecución de la función
      */
     function actualizarUsuario($conexion, $id, $email, $nickname, $password, $imagen, $rol){
+        // Compruebo si algún dato es null, para guardar en su lugar el que hay en la BBDD
+        if ($email == null) {
+            $email = conseguirDatoUsuario($conexion, $id, 0);
+        }
+
+        if ($nickname == null) {
+            $nickname = conseguirDatoUsuario($conexion, $id, 1);
+        }
+
+        if ($password == null) {
+            $password = conseguirDatoUsuario($conexion, $id, 2);
+        }
+
+        if ($imagen == null) {
+            $imagen = conseguirDatoUsuario($conexion, $id, 3);
+        }
+
+        if ($rol == null) {
+            $rol = conseguirDatoUsuario($conexion, $id, 4);
+        }
+
         // Armo la sentencia
         $sentencia = "UPDATE ".TABLA_USUARIOS." SET email = '".$email."', nickname = '".$nickname."', pwd = '".$password."', imagen = '".$imagen."' WHERE id = ".$id;
         
         // Compruebo el resultado de la ejecución de la sentencia y devuelvo un booleano según corresponda
-        return comprobarResultadoDeQuery($conexion, $sentencia, "Se ha producido un error al actualizar el usuario : ".$conexion-> connect_error);        
+        return comprobarResultadoDeQuery($conexion, $sentencia, "Se ha producido un error al actualizar el usuario : ".$conexion-> connect_error);       
+    }
+
+
+    /**
+     * Según la ID del usuairo y el código del dato, consigo y devuelvo el indicado de la BBDD
+     * 
+     * @param $conexion La conexión con la base de datos
+     * @param $id La ID del usuario sobre el que buscaremos el dato
+     * @param $dato Código numérico que indicará qué dato tenemos que obtener
+     * 
+     * @return Dato El dato que necesitamos conseguir
+     */
+    function conseguirDatoUsuario($conexion, $id, $codigoDato){
+        $sentencia = "SELECT * FROM ".TABLA_USUARIOS." WHERE id = ".$id;
+        $resultado = mysqli_query($conexion, $sentencia); // Guardo el resultado de la ejecución de la sentencia para recorrerse
+
+        // Recorro el resultado de la consulta y compruebo si la ID coincide
+        while ($usuario = $resultado -> fetch_object()) {
+            if ($usuario-> id == $id) {
+                switch ($codigoDato) { // Según el código de dato, devuelvo el dato correspondiente
+                    case 0:
+                        return $usuario-> email; 
+                        break;
+        
+                    case 1:
+                        return $usuario-> nickname; 
+                        break;
+        
+                    case 2:
+                        return $usuario-> pwd; 
+                        break;
+        
+                    case 3:
+                        return $usuario-> imagen; 
+                        break;
+        
+                    case 4:
+                        return $usuario-> rol;
+                        break;
+                }
+            }
+        }
+
     }
 
 
@@ -139,16 +203,10 @@
     function eliminarUsuario($conexion, $id){
         $conexion->autocommit(FALSE); // Desactivo el autocommit
 
-        $sentencia = "DELETE FROM ".TABLA_USUARIOS." WHERE id = ".$id; // Armo la sentencia
-        if (mysqli_query($conexion, $sentencia)) { // Compruebo si la consulta se ha ejecutado correctamente
-            $conexion->commit(); // Realizo el commit si ha salido bien
-
-            // Llamo a la función para que elimine todos los proyectos del usuario que acabo de eliminar
-            return eliminarProyectosDeUsuario($conexion, $id); // Y devuelvo una booleana según su resultado
-        }
-        else {
-            // Devuelvo el resultado de las acciones de error
-            return accionesDeError($conexion, "Se ha producido un error al eliminar al usuario con ID ".$id." : ".$conexion-> connect_error);
+        // Primero tengo que eliminar los proyectos del usuario, debido a que su ID es clave foránea en la tabla de proyectos
+        if (eliminarProyectosDeUsuario($conexion, $id)) {
+            $sentencia = "DELETE FROM ".TABLA_USUARIOS." WHERE id = ".$id.";"; // Armo la sentencia
+            return comprobarResultadoDeQuery($conexion, $sentencia, "Se ha producido un error al eliminar al usuario con ID ".$id." : ".$conexion-> connect_error);
         }
     }
 
@@ -259,7 +317,7 @@
         $idCreador.
         ", '".$nombre.
         "', '".$descripcion.
-        "', ".date("d-m-Y H:i:s"); // FIXME : Syntax Error con el datetime
+        "', NOW());";
         
         // Compruebo el resultado de la ejecución de la sentencia y devuelvo un booleano según corresponda
         return comprobarResultadoDeQuery($conexion, $sentencia, "Se ha producido un error al intentar crear el proyecto ".$nombre." : ".$conexion-> connect_error);
@@ -356,18 +414,32 @@
      */
     function crearTarea($conexion, $nombre, $descripcion, $proyecto, $parentID){
         $conexion->autocommit(FALSE); // Desactivo el autocommit
-        
-        // Armo la sentencia de creación
-        $sentencia = "INSERT INTO ".TABLA_TAREAS." (nombre, descripcion, fecha_creacion, fecha_modificacion, proyecto, parentID) VALUES ('".
-        $nombre.
-        "', '".$descripcion.
-        ", ".date("Y-m-d H:i:s").
-        ", ".date("Y-m-d H:i:s").
-        ", ".$proyecto.
-        ", ".$parentID;
-        
-        // Compruebo el resultado de la ejecución de la sentencia y devuelvo un booleano según corresponda
-        return comprobarResultadoDeQuery($conexion, $sentencia, "Se ha producido un error al intentar crear la tarea ".$nombre." : ".$conexion-> connect_error);
+
+        // Quiero comprobar primero si el proyecto en el que se quiere insertar la tarea existe en su tabla, usando su ID
+        $existe = false; // Booleana para comprobar si el proyecto existe
+        $sentencia = "SELECT * FROM ".TABLA_PROYECTOS." WHERE id = ".$proyecto.";"; // Armo la sentencia
+        $resultado = mysqli_query($conexion, $sentencia); // Guardo el resultado de la ejecución de la sentencia para recorrerse
+        // Recorro el resultado de la consulta y compruebo si el proyecto existe
+        while ($proyectoSentencia = $resultado -> fetch_object()) {
+            if ($proyectoSentencia-> id == $proyecto) {
+                $existe = true;
+            }
+        }
+
+        if ($existe) { // Si resulta que el proyecto existe, inserto la tarea
+            // Armo la sentencia de creación
+            $sentencia = "INSERT INTO ".TABLA_TAREAS." (nombre, descripcion, fecha_creacion, fecha_modificacion, proyecto, parentID) VALUES ('".$nombre.
+            "', '".$descripcion.
+            "', NOW(), NOW(), ". // Uso la función NOW() de MYSQL para las fechas de creación y modificación
+            $proyecto.
+            ", ".$parentID.");";
+            
+            // Compruebo el resultado de la ejecución de la sentencia y devuelvo un booleano según corresponda
+            return comprobarResultadoDeQuery($conexion, $sentencia, "Se ha producido un error al intentar crear la tarea ".$nombre." : ".$conexion-> connect_errno);
+        }
+        else { // Si el proyecto no existe, realizo las acciones de error
+            accionesDeError($conexion, "El proyecto en el que se quiere insertar la tarea no existe ");
+        }
     }
     
     
@@ -471,7 +543,7 @@
                     ", ".$tarea-> fecha_creacion.
                     ", ".$tarea-> fecha_modificacion.
                     ", ".$tarea-> proyecto.
-                    ", ".$tarea-> parentID;
+                    ", ".$tarea-> parentID.");";
 
                     // Compruebo el resultado de la ejecución de la sentencia y devuelvo un booleano según corresponda
                     return comprobarResultadoDeQuery($conexion, $sentencia, "Se ha producido un error al intentar insertar la tarea ".$tarea-> nombre." a la tabla de tareas finalizadas : ".$conexion-> connect_error);
@@ -517,7 +589,7 @@
                 ", ".$subtarea-> fecha_creacion.
                 ", ".$subtarea-> fecha_modificacion.
                 ", ".$subtarea-> proyecto.
-                ", ".$subtarea-> parentID;
+                ", ".$subtarea-> parentID.");";
 
                 if (mysqli_query($conexion, $sentencia)) {
                     $conexion->commit();
