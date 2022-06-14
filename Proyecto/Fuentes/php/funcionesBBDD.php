@@ -230,6 +230,25 @@
     }
 
 
+    /**
+     * Devuelve el rol de un usuario según su ID
+     * 
+     * @param $conexion La conexión con la base de datos
+     * @param $idUsuario La ID del usuario sobre el que queremos saber su rol
+     * 
+     * @return Int La ID de su rol
+     */
+    function conseguirRolDeUsuario($conexion, $idUsuario){
+        // Armo la sentencia para conseguir los datos del usuario en cuestión
+        $sentencia = "SELECT * FROM ".TABLA_USUARIOS." WHERE id = ".$idUsuario.";";
+        $resultado = mysqli_query($conexion, $sentencia); // Guardo su resultado
+
+        while ($usuario = $resultado -> fetch_object()) { // Consigo el resultado en formato objeto
+            return $usuario -> rol; // Y devuelvo el rol del usuario
+        }
+    }
+
+
 
 
     //------------------------------------------------------------- FUNCIONES PARA ROLES -----------------------------------------------
@@ -765,7 +784,6 @@
             $sentencia = "DELETE FROM ".TABLA_TAREAS." WHERE id=".$subtarea-> id; // Armo la sentencia para eliminar la subtarea actual
             if (mysqli_query($conexion, $sentencia)) { // Ejecuto la sentencia y compruebo que haya salido bien
                 $conexion->commit();
-                // TODO : Ver si hay una mejor manera de hacer esto
                 // Armo la sentencia para introducir la subtarea finalizada en la otra tabla
                 $sentencia = "INSERT INTO ".TABLA_TAREAS_FINALIZADAS." (nombre, descripcion, fecha_creacion, fecha_modificacion, proyecto, parentID) VALUES ('".
                 $subtarea->nombre.

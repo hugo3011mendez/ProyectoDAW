@@ -58,9 +58,9 @@ Subiré aquí todos los archivos relacionados con el proyecto de fin de ciclo de
 ### 23/05/2022
 - Modificado documento referente al hito "Plantillas" para corregir erratas
 
-- Creado archivo SQL para la creación de la base de datos
-	- Definidas tablas Usuarios, Roles y Privilegios
-	- Introducidos los datos pertinentes en la tabla Privilegios
+#### Creado archivo SQL para la creación de la base de datos
+- Definidas tablas Usuarios, Roles y Privilegios
+- Introducidos los datos pertinentes en la tabla Privilegios
 
 
 ### 24/05/2022
@@ -70,7 +70,7 @@ Subiré aquí todos los archivos relacionados con el proyecto de fin de ciclo de
 - Terminado archivo SQL para la creación de la base de datos
 	- Añadidas tablas "Proyectos", "Tareas" y "Tareas Finalizadas"
 
-- Creado archivo PHP referente a las acciones a realizar para la gestión de la base de datos
+#### Creado archivo PHP referente a las acciones a realizar para la gestión de la base de datos
 
 
 ### 25/05/2022
@@ -206,12 +206,14 @@ Subiré aquí todos los archivos relacionados con el proyecto de fin de ciclo de
 ### 14/06/2022
 - Modificado archivo PHP para las funciones de manejo de la base de datos
 	- He quitado una comilla simple que sobraba en la sentencia de la función para actualizar un rol, para que funcione correctamente
+	- He creado una función relacionada con la obtención del rol de un usuario específico
 
 - Avances en la prueba de funciones :
 	- Funciona correctamente :
 		- Crear un rol
 		- Actualizar un rol
 		- Eliminar un rol
+		- Conseguir el rol de un usuario
 
 ### <a name="funcionesBBDDprobadas">Se han terminado las pruebas de las funciones relacionadas con la base de datos</a>
 - Funciones probadas con un funcionamiento correcto :
@@ -223,6 +225,7 @@ Subiré aquí todos los archivos relacionados con el proyecto de fin de ciclo de
 	- conseguirDatoUsuario()
 	- eliminarUsuario()
 	- eliminarProyectosDeUsuario()
+	- conseguirRolDeUsuario()
 	- crearRol()
 	- actualizarRol()
 	- conseguirDatoRol()
@@ -239,3 +242,6 @@ Subiré aquí todos los archivos relacionados con el proyecto de fin de ciclo de
 	- eliminarSubtareas()
 	- finalizarTarea()
 	- finalizarSubtareas()
+
+#### Creado archivo PHP referente a las acciones a realizar para la gestión de la base de datos
+- He enlazado todos los archivos PHP necesarios a este, para su correcto funcionamiento
