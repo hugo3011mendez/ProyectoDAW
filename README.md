@@ -191,3 +191,41 @@ Subiré aquí todos los archivos relacionados con el proyecto de fin de ciclo de
 		- Eliminar subtareas con ID
 		- Finalizar una tarea
 		- Finalizar las subtareas de una tarea
+
+
+### 14/06/2022
+- Modificado archivo PHP para las funciones de manejo de la base de datos
+	- He quitado una comilla simple que sobraba en la sentencia de la función para actualizar un rol, para que funcione correctamente
+
+- Avances en la prueba de funciones :
+	- Funciona correctamente :
+		- Crear un rol
+		- Actualizar un rol
+		- Eliminar un rol
+
+### Se han terminado las pruebas de las funciones relacionadas con la base de datos
+- Funciones probadas con un funcionamiento correcto :
+	- conectarBBDD()
+	- comprobarResultadoDeQuery()
+	- accionesDeError()
+	- registrarUsuario()
+	- actualizarUsuario()
+	- conseguirDatoUsuario()
+	- eliminarUsuario()
+	- eliminarProyectosDeUsuario()
+	- crearRol()
+	- actualizarRol()
+	- conseguirDatoRol()
+	- eliminarRol()
+	- crearProyecto()
+	- actualizarProyecto()
+	- conseguirDatoProyecto()
+	- eliminarProyecto()
+	- eliminarTodasTareas()
+	- crearTarea()
+	- actualizarTarea()
+	- conseguirDatoTarea()
+	- eliminarTarea()
+	- eliminarSubtareas()
+	- finalizarTarea()
+	- finalizarSubtareas()
