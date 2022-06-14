@@ -1,11 +1,21 @@
 # ProyectoDAW
 Subiré aquí todos los archivos relacionados con el proyecto de fin de ciclo de Desarrollo de Aplicaciones Web.
 
+
+
+
 ## Idea para el proyecto
 - Un To Do Manager, para organizar tareas
 	- Con usuarios que tendrán roles los cuales poseerán privilegios, proyectos dentro de los cuales habrá tareas pendientes y realizadas 
 
+
+
+
 ## Changelog
+
+### Anclas
+#### [Funciones probadas relacionadas con la base de datos](#funcionesBBDDprobadas)
+
 
 ### 21/04/2022
 ### Repositorio creado e iniciada escritura en este Readme
@@ -203,7 +213,7 @@ Subiré aquí todos los archivos relacionados con el proyecto de fin de ciclo de
 		- Actualizar un rol
 		- Eliminar un rol
 
-### Se han terminado las pruebas de las funciones relacionadas con la base de datos
+### <a name="funcionesBBDDprobadas">Se han terminado las pruebas de las funciones relacionadas con la base de datos</a>
 - Funciones probadas con un funcionamiento correcto :
 	- conectarBBDD()
 	- comprobarResultadoDeQuery()
