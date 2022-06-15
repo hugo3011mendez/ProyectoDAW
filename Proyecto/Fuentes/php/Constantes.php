@@ -7,7 +7,6 @@
     const TABLA_ROLES = "roles";
     const TABLA_PROYECTOS = "proyectos";
     const TABLA_TAREAS = "tareas";
-    const TABLA_TAREAS_FINALIZADAS = "tareas_finalizadas";
 
     // Constantes referentes a los roles de los usuarios
     const ROL_USUARIO = 1;
@@ -17,4 +16,8 @@
     const PRIVILEGIOS_LECTURA = 1;
     const PRIVILEGIOS_ESCRITURA = 2;
     const PRIVILEGIOS_SOBRE_USUARIOS = 3;
+
+    // Constantes referentes al estado de las tareas
+    const ESTADO_PENDIENTE = 0;
+    const ESTADO_FINALIZADO = 1;
 ?>

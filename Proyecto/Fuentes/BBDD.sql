@@ -59,21 +59,7 @@ create table tareas
     fecha_modificacion datetime not null, /* Su formato es (YYYY-MM-DD HH:MI:SS) */
     proyecto smallint not null,
     parentID smallint,
-    constraint pk_tareas primary key (id), /* El campo ID es la clave primaria de la tabla */
-    constraint foreign key (proyecto) references proyectos(id) /* El proyecto es una clave foránea de la ID del proyecto en cuestión */
-);
-
-
-/* Tabla Tareas Finalizadas */
-create table tareas_finalizadas
-(
-    id smallint not null AUTO_INCREMENT,
-    nombre varchar(20) character set utf8 collate utf8_general_ci not null,
-    descripcion varchar(100) character set utf8 collate utf8_general_ci,
-    fecha_creacion datetime not null, /* Su formato es (YYYY-MM-DD HH:MI:SS) */
-    fecha_modificacion datetime not null, /* Su formato es (YYYY-MM-DD HH:MI:SS) */
-    proyecto smallint not null,
-    parentID smallint,
+    estado bit not null,
     constraint pk_tareas primary key (id), /* El campo ID es la clave primaria de la tabla */
     constraint foreign key (proyecto) references proyectos(id) /* El proyecto es una clave foránea de la ID del proyecto en cuestión */
 );

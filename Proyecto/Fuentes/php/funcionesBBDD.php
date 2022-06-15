@@ -536,7 +536,7 @@
      * 
      * @return Boolean Indicando el resultado de la ejecución de la función
      */
-    function crearTarea($conexion, $nombre, $descripcion, $proyecto, $parentID){
+    function crearTarea($conexion, $nombre, $descripcion, $proyecto, $parentID){ // TODO : Añadir el estado de la tarea
         $conexion->autocommit(FALSE); // Desactivo el autocommit
 
         // Quiero comprobar primero si el proyecto en el que se quiere insertar la tarea existe en su tabla, usando su ID
@@ -578,7 +578,7 @@
      * 
      * @return Boolean Indicando el resultado de la ejecución de la función
      */
-    function actualizarTarea($conexion, $id, $nombre, $descripcion, $parentID){
+    function actualizarTarea($conexion, $id, $nombre, $descripcion, $parentID){ // TODO : Añadir el estado de la tarea
         $conexion->autocommit(FALSE); // Desactivo el autocommit
         
         // Compruebo si alguno de estos dos datos es null para autocompletarlo con el existente en la BBDD
@@ -611,7 +611,7 @@
      * 
      * @return Dato El dato que necesitamos conseguir
      */
-    function conseguirDatoTarea($conexion, $id, $codigoDato){
+    function conseguirDatoTarea($conexion, $id, $codigoDato){ // TODO : Añadir el estado de la tarea
         $sentencia = "SELECT * FROM ".TABLA_TAREAS." WHERE id = ".$id;
         $resultado = mysqli_query($conexion, $sentencia); // Guardo el resultado de la ejecución de la sentencia para recorrerse
         // Recorro el resultado de la consulta y compruebo si la ID coincide
@@ -690,7 +690,7 @@
      * 
      * @return Boolean indicando si la acción resultó con errores
      */
-    function eliminarSubtareas($conexion, $tarea){
+    function eliminarSubtareas($conexion, $tarea){ // TODO : Eliminar la tabla de tareas finalizadas
         $conexion->autocommit(FALSE); // Desactivo el autocommit
         
         if (is_object($tarea)) { // Si la variable es un objeto de tipo tarea
@@ -734,7 +734,7 @@
      * 
      * @return Boolean Indicando el resultado de la función
      */
-    function finalizarTarea($conexion, $idTarea){
+    function finalizarTarea($conexion, $idTarea){ // TODO : Eliminar la tabla de tareas finalizadas, añadir el estado de la tarea
         $conexion->autocommit(FALSE); // Desactivo el autocommit
 
         // Primero, intento finalizar sus subtareas
@@ -787,6 +787,7 @@
      * @return Boolean Indicando el resultado de la función
      */
     function finalizarSubtareas($conexion, $idTareaPadre){ // TODO : Actualizar el parentID de las subtareas
+        // TODO : Eliminar la tabla de tareas finalizadas, añadir el estado de la tarea
         // No hace falta que desactive el autocommit porque ya lo está de antes
 
         $sentencia = "SELECT * FROM ".TABLA_TAREAS." WHERE parentID=".$idTareaPadre; // Consulto todas las subtareas activas
@@ -850,6 +851,7 @@
      * @return Boolean Indicando el resultado de la ejecución de la función
      */
     function actualizarTareaFinalizada($conexion, $id, $nombre, $descripcion, $parentID){
+        // TODO : Eliminar la tabla de tareas finalizadas, añadir el estado de la tarea
         $conexion->autocommit(FALSE); // Desactivo el autocommit
         
         // Compruebo si alguno de estos dos datos es null para autocompletarlo con el existente en la BBDD
@@ -882,7 +884,7 @@
      * 
      * @return Dato El dato que necesitamos conseguir
      */
-    function conseguirDatoTareaFinalizada($conexion, $id, $codigoDato){
+    function conseguirDatoTareaFinalizada($conexion, $id, $codigoDato){ // TODO : Eliminar esta función porque sólo hay una tabla
         $sentencia = "SELECT * FROM ".TABLA_TAREAS_FINALIZADAS." WHERE id = ".$id;
         $resultado = mysqli_query($conexion, $sentencia); // Guardo el resultado de la ejecución de la sentencia para recorrerse
         // Recorro el resultado de la consulta y compruebo si la ID coincide
