@@ -215,6 +215,25 @@ Subiré aquí todos los archivos relacionados con el proyecto de fin de ciclo de
 		- Eliminar un rol
 		- Conseguir el rol de un usuario
 
+#### Creado archivo PHP referente a las acciones a realizar para la gestión de la base de datos
+- He enlazado todos los archivos PHP necesarios a este, para su correcto funcionamiento
+
+
+### 15/06/2022
+- Modificado archivo PHP para las funciones de manejo de la base de datos
+	- He modificado las funciones referentes a actualizar una tarea y conseguir datos de una tarea añadiendo el dato parentID
+	- He creado una función relacionada con actualizar los datos de una tarea finalizada
+	- He creado una función relacionada con conseguir los datos de una tarea finalizada
+	- He creado una función relacionada con devolver una tarea finalizada a pendiente
+	- He modificado la función para conseguir datos de una tarea pendiente, si parentID es null devolverá una cadena "null"
+
+- Avances en la prueba de funciones :
+	- Funciona correctamente :
+		- actualizarTareaFinalizada()
+		- conseguirDatoTareaFinalizada()
+	- Pendiente de corregir fallos en :
+		- ponerTareaEnPendiente()
+	
 ### <a name="funcionesBBDDprobadas">Se han terminado las pruebas de las funciones relacionadas con la base de datos</a>
 - Funciones probadas con un funcionamiento correcto :
 	- conectarBBDD()
@@ -242,6 +261,3 @@ Subiré aquí todos los archivos relacionados con el proyecto de fin de ciclo de
 	- eliminarSubtareas()
 	- finalizarTarea()
 	- finalizarSubtareas()
-
-#### Creado archivo PHP referente a las acciones a realizar para la gestión de la base de datos
-- He enlazado todos los archivos PHP necesarios a este, para su correcto funcionamiento
