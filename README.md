@@ -243,7 +243,28 @@ Subiré aquí todos los archivos relacionados con el proyecto de fin de ciclo de
 		- conseguirDatoTareaFinalizada()
 	- Pendiente de corregir fallos en :
 		- ponerTareaEnPendiente()
-	
+
+
+### 16/06/2022
+- Modificado archivo PHP para las funciones de manejo de la base de datos
+	- He añadido el campo de estado de la tarea a crear en la función referente a crear una tarea
+	- He añadido el campo de estado de la tarea a actualizar en la función referente a actualizar una tarea
+	- He añadido el campo de estado para conseguir su info en la función referente a conseguir un dato de una tarea
+	- He modificado y acortado la función referente a eliminar las subtareas de una tarea padre debido a la eliminación de la tabla de tareas finalizadas
+	- He acortado la función referente a finalizar una tarea usando sólo una sentencia UPDATE
+	- He acortado la función referente a finalizar las subtareas de una tarea padre usando sólo una sentencia UPDATE
+	- He acortado y modificado la función referente a poner una tarea en pendiente debido a los cambios recientes en la BBDD
+
+- Avances en la prueba de funciones :
+	- Pendiente de prueba :
+	- crearTarea()
+	- actualizarTarea()
+	- conseguirDatoTarea()
+	- eliminarSubtareas()
+	- finalizarTarea() 
+	- finalizarSubtareas()
+	- ponerEnPendiente()
+
 ### <a name="funcionesBBDDprobadas">Se han terminado las pruebas de las funciones relacionadas con la base de datos</a>
 - Funciones probadas con un funcionamiento correcto :
 	- conectarBBDD()
@@ -264,10 +285,4 @@ Subiré aquí todos los archivos relacionados con el proyecto de fin de ciclo de
 	- conseguirDatoProyecto()
 	- eliminarProyecto()
 	- eliminarTodasTareas()
-	- crearTarea()
-	- actualizarTarea()
-	- conseguirDatoTarea()
 	- eliminarTarea()
-	- eliminarSubtareas()
-	- finalizarTarea()
-	- finalizarSubtareas()
