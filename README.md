@@ -247,23 +247,15 @@ Subiré aquí todos los archivos relacionados con el proyecto de fin de ciclo de
 
 ### 16/06/2022
 - Modificado archivo PHP para las funciones de manejo de la base de datos
-	- He añadido el campo de estado de la tarea a crear en la función referente a crear una tarea
+	- He añadido el campo de estado de la tarea a crear y he comprobado si es una tarea padre en la función referente a crear una tarea
 	- He añadido el campo de estado de la tarea a actualizar en la función referente a actualizar una tarea
 	- He añadido el campo de estado para conseguir su info en la función referente a conseguir un dato de una tarea
 	- He modificado y acortado la función referente a eliminar las subtareas de una tarea padre debido a la eliminación de la tabla de tareas finalizadas
-	- He acortado la función referente a finalizar una tarea usando sólo una sentencia UPDATE
-	- He acortado la función referente a finalizar las subtareas de una tarea padre usando sólo una sentencia UPDATE
-	- He acortado y modificado la función referente a poner una tarea en pendiente debido a los cambios recientes en la BBDD
-
-- Avances en la prueba de funciones :
-	- Pendiente de prueba :
-	- crearTarea()
-	- actualizarTarea()
-	- conseguirDatoTarea()
-	- eliminarSubtareas()
-	- finalizarTarea() 
-	- finalizarSubtareas()
-	- ponerEnPendiente()
+	- He acortado la función referente a finalizar una tarea usando sólo una sentencia UPDATE y actualizando su fecha de modificación
+	- He acortado la función referente a finalizar las subtareas de una tarea padre usando sólo una sentencia UPDATE y actualizando su fecha de modificación
+	- He acortado y modificado la función referente a poner una tarea en pendiente debido a los cambios recientes en la BBDD y he actualizado las fechas de modificación
+	- He modificado la función referente a eliminar todas las tareas de un proyecto debido a los últimos cambios en la BBDD
+	- He cambiado todas las comprobaciones igualando a null por el uso de la función is_null()
 
 ### <a name="funcionesBBDDprobadas">Se han terminado las pruebas de las funciones relacionadas con la base de datos</a>
 - Funciones probadas con un funcionamiento correcto :
@@ -285,4 +277,11 @@ Subiré aquí todos los archivos relacionados con el proyecto de fin de ciclo de
 	- conseguirDatoProyecto()
 	- eliminarProyecto()
 	- eliminarTodasTareas()
+	- crearTarea()
+	- actualizarTarea()
+	- conseguirDatoTarea()
+	- finalizarTarea() 
+	- finalizarSubtareas()
 	- eliminarTarea()
+	- eliminarSubtareas()
+	- ponerEnPendiente()

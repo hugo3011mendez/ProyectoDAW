@@ -80,9 +80,10 @@
      * 
      * @return Boolean indicando si la acción resultó con errores
      */ 
-    function registrarUsuario($conexion, $email, $nickname, $password, $imagen, $rol){ // TODO : Encriptar la contraseña
+    function registrarUsuario($conexion, $email, $nickname, $password, $imagen, $rol){
         $conexion->autocommit(FALSE); // Desactivo el autocommit
 
+        $password = md5($password); // Primero hasheo la contraseña para guardarla en la BBDD
         $yaRegistrado = false; // Booleano para indicar si el email del usuario ya está en la BBDD
         $sentencia = "SELECT * FROM ".TABLA_USUARIOS." WHERE email = '".$email."'"; // Armo la sentencia
         $resultado = mysqli_query($conexion, $sentencia); // Guardo el resultado de la ejecución de la sentencia para recorrerse
@@ -119,25 +120,28 @@
      * 
      * @return Boolean Indicando el resultado de la ejecución de la función
      */
-    function actualizarUsuario($conexion, $id, $email, $nickname, $password, $imagen, $rol){ // TODO : Encriptar la contraseña
+    function actualizarUsuario($conexion, $id, $email, $nickname, $password, $imagen, $rol){
         // Compruebo si algún dato es null, para guardar en su lugar el que hay en la BBDD
-        if ($email == null) {
+        if (is_null($email)) {
             $email = conseguirDatoUsuario($conexion, $id, 0);
         }
 
-        if ($nickname == null) {
+        if (is_null($nickname)) {
             $nickname = conseguirDatoUsuario($conexion, $id, 1);
         }
 
-        if ($password == null) {
+        if (is_null($password)) {
             $password = conseguirDatoUsuario($conexion, $id, 2);
         }
+        else{
+            $password = md5($password); // Hasheo la contraseña para actualizar el dato en la BBDD
+        }
 
-        if ($imagen == null) {
+        if (is_null($imagen)) {
             $imagen = conseguirDatoUsuario($conexion, $id, 3);
         }
 
-        if ($rol == null) {
+        if (is_null($rol)) {
             $rol = conseguirDatoUsuario($conexion, $id, 4);
         }
 
@@ -286,11 +290,11 @@
         $conexion->autocommit(FALSE); // Desactivo el autocommit
         
         // Compruebo si alguno de estos dos valores es null, para autocompletarlo con el existente en la BBDD
-        if ($nombre == null) {
+        if (is_null($nombre)) {
             $nombre = conseguirDatoRol($conexion, $id, 0);
         }
 
-        if ($privilegios == null) {
+        if (is_null($privilegios)) {
             $privilegios = conseguirDatoRol($conexion, $id, 1);
         }
 
@@ -393,11 +397,11 @@
         $conexion->autocommit(FALSE); // Desactivo el autocommit
         
         // Compruebo si alguno de estos dos datos es null para autocompletarlo con el existente en la BBDD
-        if ($nombre == null) {
+        if (is_null($nombre)) {
             $nombre = conseguirDatoProyecto($conexion, $id, 0);
         }
 
-        if ($descripcion == null) {
+        if (is_null($descripcion)) {
             $descripcion = conseguirDatoProyecto($conexion, $id, 1);
         }
 
@@ -488,36 +492,16 @@
     function eliminarTodasTareas($conexion, $proyecto){
         $conexion->autocommit(FALSE); // Desactivo el autocommit
         
-        if (is_object($proyecto)) { // Si la variable se trata de un objeto representando al proyecto
-            // Armo la consulta para eliminar primero las tareas finalizadas del proyecto
-            $sentencia = "DELETE FROM ".TABLA_TAREAS_FINALIZADAS." WHERE proyecto =".$proyecto-> id;
-            if (mysqli_query($conexion, $sentencia)) { // Intento eliminar las tareas finalizadas
-            
-                // Armo la consulta para eliminar ahora las tareas del proyecto
-                $sentencia = "DELETE FROM ".TABLA_TAREAS." WHERE proyecto =".$proyecto-> id;
-                // Compruebo el resultado de la ejecución de la sentencia y devuelvo un booleano según corresponda
-                return comprobarResultadoDeQuery($conexion, $sentencia, "Se ha producido un error al intentar eliminar las tareas correspondientes al proyecto ".$proyecto-> nombre.". ".$conexion-> connect_error);
-            }
-            else {
-                // Devuelvo el resultado de las acciones de error
-                return accionesDeError($conexion, "Se ha producido un error al intentar eliminar las tareas finalizadas correspondientes al proyecto ".$proyecto-> nombre.". ".$conexion-> connect_error);
-            }            
+        // Armo la sentencia para eliminar todas las tareas según el tipo de variable que sea el parámetro referente al proyecto
+        if (is_object($proyecto)) { // Si el parámetro es el objeto del proyecto
+            $sentencia = "DELETE FROM ".TABLA_TAREAS." WHERE proyecto =".$proyecto-> id.";";
         }
-        elseif (is_int($proyecto)) { // Si resulta que la variable se trata de la ID del proyecto
-            // Armo la consulta para eliminar primero las tareas finalizadas del proyecto
-            $sentencia = "DELETE FROM ".TABLA_TAREAS_FINALIZADAS." WHERE proyecto =".$proyecto;
-            if (mysqli_query($conexion, $sentencia)) { // Intento eliminar las tareas finalizadas
-            
-                // Armo la consulta para eliminar ahora las tareas del proyecto
-                $sentencia = "DELETE FROM ".TABLA_TAREAS." WHERE proyecto =".$proyecto;
-                // Compruebo el resultado de la ejecución de la sentencia y devuelvo un booleano según corresponda
-                return comprobarResultadoDeQuery($conexion, $sentencia, "Se ha producido un error al intentar eliminar las tareas correspondientes al proyecto. ".$conexion-> connect_error);
-            }
-            else {
-                // Devuelvo el resultado de las acciones de error
-                return accionesDeError($conexion, "Se ha producido un error al intentar eliminar las tareas finalizadas correspondientes al proyecto. ".$conexion-> connect_error);
-            }            
+        elseif (is_int($proyecto)) { // Si el parámetro es la ID del proyecto
+            $sentencia = "DELETE FROM ".TABLA_TAREAS." WHERE proyecto =".$proyecto.";";
         }
+
+        // Devuelvo el resultado de ejecutar la consulta previamente armada
+        return comprobarResultadoDeQuery($conexion, $sentencia, "Ha ocurrido un error a la hora de eliminar todas las tareas del proyecto. ".$conexion-> connect_error);
     }
     
     
@@ -552,6 +536,8 @@
         }
 
         if ($existe) { // Si resulta que el proyecto existe, inserto la tarea
+            $parentID = is_null($parentID) ? "null" : $parentID; // Si es una tarea padre, establezco el valor como una cadena
+
             // Armo la sentencia de creación
             $sentencia = "INSERT INTO ".TABLA_TAREAS." (nombre, descripcion, fecha_creacion, fecha_modificacion, proyecto, parentID, estado) VALUES ('".$nombre.
             "', '".$descripcion.
@@ -585,25 +571,24 @@
         $conexion->autocommit(FALSE); // Desactivo el autocommit
         
         // Compruebo si alguno de estos dos datos es null para autocompletarlo con el existente en la BBDD
-        if ($nombre == null) {
+        if (is_null($nombre)) {
             $nombre = conseguirDatoTarea($conexion, $id, 0);
         }
         
-        if($descripcion == null){
+        if(is_null($descripcion)){
             $descripcion = conseguirDatoTarea($conexion, $id, 1);
         }
 
-        if($parentID == null){
+        if(is_null($parentID)){
             $parentID = conseguirDatoTarea($conexion, $id, 2);
         }
 
-        if ($estado == null) {
+        if (is_null($estado)) {
             $estado = conseguirDatoTarea($conexion, $id, 3);
         }
 
         // Armo la sentencia
         $sentencia = "UPDATE ".TABLA_TAREAS." SET nombre = '".$nombre."', descripcion = '".$descripcion."', fecha_modificacion = NOW(), parentID = ".$parentID.", estado = ".$estado." WHERE id = ".$id;
-        
         // Compruebo el resultado de la ejecución de la sentencia y devuelvo un booleano según corresponda
         return comprobarResultadoDeQuery($conexion, $sentencia, "Se ha producido un error al intentar actualizar la tarea con ID ".$id.". ".$conexion-> connect_error);
     }
@@ -725,14 +710,13 @@
      * 
      * @return Boolean Indicando el resultado de la función
      */
-    function finalizarTarea($conexion, $idTarea){ // TODO : Actualizar fecha de modificación
+    function finalizarTarea($conexion, $idTarea){
         $conexion->autocommit(FALSE); // Desactivo el autocommit
 
         // Primero, intento finalizar sus subtareas
         if (finalizarSubtareas($conexion, $idTarea)) { // Compruebo el resultado de la función que intenta finalizar las subtareas de la tarea
             // Armo la sentencia para actualizar el estado de la tarea que quiero finalizar
-            $sentencia = "UPDATE ".TABLA_TAREAS." SET estado =".ESTADO_FINALIZADO." WHERE id=".$idTarea.";";
-
+            $sentencia = "UPDATE ".TABLA_TAREAS." SET fecha_modificacion= NOW(), estado =".ESTADO_FINALIZADO." WHERE id=".$idTarea.";";
             // Devuelvo un booleano según el resultado de la ejecución de la query
             return comprobarResultadoDeQuery($conexion, $sentencia, "Se ha producido un error al intentar finalizar la tarea con ID ".$idTarea.". ".$conexion-> connect_error);
         }
@@ -751,11 +735,11 @@
      * 
      * @return Boolean Indicando el resultado de la función
      */
-    function finalizarSubtareas($conexion, $idTareaPadre){ // TODO : Actualizar fecha de modificación
+    function finalizarSubtareas($conexion, $idTareaPadre){
         // No hace falta que desactive el autocommit porque ya lo está de antes
 
         // Armo la sentencia para actualizar las subtareas y finalizarlas
-        $sentencia = "UPDATE ".TABLA_TAREAS." SET estado=".ESTADO_FINALIZADO." WHERE parentID=".$idTareaPadre.";";
+        $sentencia = "UPDATE ".TABLA_TAREAS." SET fecha_modificacion = NOW(), estado=".ESTADO_FINALIZADO." WHERE parentID=".$idTareaPadre.";";
         return comprobarResultadoDeQuery($conexion, $sentencia, "Ha ocurrido un error al finalizar las subtareas de la tarea con ID ".$idTareaPadre.". ".$conexion-> connect_error);
     }
 
@@ -768,18 +752,23 @@
      * 
      * @return Boolean Indicando el resultado de la función
      */
-    function ponerEnPendiente($conexion, $id){ // TODO : Actualizar fechas de modificación
+    function ponerEnPendiente($conexion, $id){
         $conexion->autocommit(FALSE); // Desactivo el autocommit
 
         // Primero consigo la ID de su tarea padre si la tiene
-        $sentencia = "SELECT parentID FROM ".TABLA_TAREAS." WHERE id=".$id.";";
-        $parentID = mysqli_query($conexion, $sentencia); // TODO : Comprobar si pilla bien el dato
-        if ($parentID != null) { // Compruebo si tiene tarea padre
+        $sentencia = "SELECT * FROM ".TABLA_TAREAS." WHERE id=".$id.";";
+        $resultado = mysqli_query($conexion, $sentencia);
+        // Así consigo su parentID
+        while ($tarea = $resultado->fetch_object()) {
+            $parentID = $tarea-> parentID;
+        }
+
+        if (!is_null($parentID)) { // Compruebo si tiene tarea padre
             // Pongo en pendiente su tarea padre
-            $sentencia = "UPDATE ".TABLA_TAREAS." SET estado=".ESTADO_PENDIENTE." WHERE id=".$parentID.";";
+            $sentencia = "UPDATE ".TABLA_TAREAS." SET fecha_modificacion = NOW(), estado=".ESTADO_PENDIENTE." WHERE id=".$parentID.";";
 
             if (mysqli_query($conexion, $sentencia)) { // Ejecuto la sentencia y compruebo si ha salido bien
-                $sentencia = "UPDATE ".TABLA_TAREAS." SET estado=".ESTADO_PENDIENTE." WHERE id=".$id.";"; // Armo la sentencia para poner la tarea en pendiente
+                $sentencia = "UPDATE ".TABLA_TAREAS." SET fecha_modificacion = NOW(), estado=".ESTADO_PENDIENTE." WHERE id=".$id.";"; // Armo la sentencia para poner la tarea en pendiente
                 // Finalmente compruebo el resultado de la query y lo devuelvo
                 return comprobarResultadoDeQuery($conexion, $sentencia, "Ha ocurrido un error al poner en pendiente la subtarea con ID ".$id.". ".$conexion-> connect_error);
             }
@@ -788,7 +777,7 @@
             }
         }
         else { // Si no tiene tarea padre
-            $sentencia = "UPDATE ".TABLA_TAREAS." SET estado=".ESTADO_PENDIENTE." WHERE id=".$id.";"; // Armo la sentencia para poner la tarea en pendiente 
+            $sentencia = "UPDATE ".TABLA_TAREAS." SET fecha_modificacion = NOW(), estado=".ESTADO_PENDIENTE." WHERE id=".$id.";"; // Armo la sentencia para poner la tarea en pendiente 
             // Compruebo el resultado de la query y lo devuelvo
             return comprobarResultadoDeQuery($conexion, $sentencia, "Ha ocurrido un error al poner en pendiente la subtarea con ID ".$id.". ".$conexion-> connect_error);
         }
