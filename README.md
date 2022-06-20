@@ -285,3 +285,13 @@ Subiré aquí todos los archivos relacionados con el proyecto de fin de ciclo de
 	- eliminarTarea()
 	- eliminarSubtareas()
 	- ponerEnPendiente()
+
+
+### 20/06/2022
+- Modificado archivo SQL de creación de la base de datos
+	- He modificado el límite de caracteres para el campo referente a la contraseña en la tabla de usuarios, para que quepa ahí todo el código MD5
+
+- Modificado archivo PHP para las funciones de gestión de usuarios
+	- Modificado formato de los comentarios
+	- Añadida función referente a la comprobación del email introducido con el de algún usuario de la BBDD
+	- Añadida función referente a la comprobación de la contraseña introducida con el de algún usuario de la BBDD
