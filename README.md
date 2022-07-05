@@ -295,3 +295,8 @@ Subiré aquí todos los archivos relacionados con el proyecto de fin de ciclo de
 	- Modificado formato de los comentarios
 	- Añadida función referente a la comprobación del email introducido con el de algún usuario de la BBDD
 	- Añadida función referente a la comprobación de la contraseña introducida con el de algún usuario de la BBDD
+
+
+### 05/07/2022
+- Modificado archivo PHP para las funciones de gestión de usuarios
+	- Creada función referente al inicio de sesión del usuario que ha introducido sus credenciales
