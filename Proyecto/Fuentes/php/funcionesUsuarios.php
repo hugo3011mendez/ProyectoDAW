@@ -9,62 +9,52 @@
      * @param $conexion La conexión con la base de datos
      * @param $email El email introducido para comprobar
      * 
-     * @return Boolean Dependiendo si la consulta encuentra coincidencias
+     * @return Boolean Dependiendo del resultado de la función
      */
     function comprobarEmail($conexion, $email){
         $sentencia = "SELECT * FROM ".TABLA_USUARIOS." WHERE email='".$email."';"; // Armo la sentencia
         $resultado = mysqli_query($conexion, $sentencia); // Y guardo el resultado de su ejecución
 
         if ($resultado-> num_rows > 0) { // Compruebo que haya encontrado un usuario que coincida
-            return true; // Devuelvo verdadero
+            setcookie("email", $email); // Guardo el email correcto en una cookie para usarlo más adelante
+
+            return true; // Devuelvo true
         }
-        else {
+        else { // Si no hay usuarios con los que coincida, devuelvo false y un error
+
             return accionesDeError($conexion, "No se encuentra el email introducido en la base de datos.");
         }
     }
 
 
     /**
-     * Comprueba que la contraseña introducida coincida con la de un usuario guardado en la base de datos
+     * Inicia la sesión del usuario que haya introucido bien sus credenciales
+     * Compruebo si la contraseña se ha introducido correctamente y en caso afirmativo, inicio la sesión
      * 
      * @param $conexion La conexión con la base de datos
-     * @param $password La contraseña introducida para comprobar
-     * 
-     * @return Boolean Dependiendo si la consulta encuentra coincidencias
+     * @param $password La contraseña del usuario para iniciar sesión
      */
-    function comprobarPassword($conexion, $password){
+    function login($conexion, $password){     
         $password = md5($password); // Primero encripto la contraseña introducida
-        $sentencia = "SELECT * FROM ".TABLA_USUARIOS." WHERE pwd='".$password."';"; // Armo la sentencia
+        // Armo la sentencia para buscar el usuario con el email y la contraseña introducidos
+        $sentencia = "SELECT * FROM ".TABLA_USUARIOS." WHERE email='".$_COOKIE["email"]."' AND pwd='".$password."';";
         $resultado = mysqli_query($conexion, $sentencia); // Y guardo el resultado de su ejecución
 
-        if ($resultado-> num_rows > 0) { // Compruebo que haya encontrado un usuario que coincida
-            return true; // Devuelvo verdadero
+        if ($resultado-> num_rows > 0) { // Si hay un usuario que coincida
+            session_start(); // Inicio la sesión
+            while ($usuario = $resultado -> fetch_object()) { // Consigo el resultado en formato objeto
+                // Guardo los datos importantes del usuario en la sesión
+                $_SESSION["id"] = $usuario-> id;
+                $_SESSION["email"] = $usuario-> email;
+                $_SESSION["nickname"] = $usuario-> nickname;
+                $_SESSION["password"] = $usuario-> pwd;
+                $_SESSION["rol"] = $usuario-> rol;
+            }
+
+            return true; // Devuelvo true     
         }
-        else {
-            return accionesDeError($conexion, "No se encuentra la contraseña introducida en la base de datos."); // Devuelvo falso
+        else { // Si no hay usuarios que coincidan, devuelvo falso y un mensaje de error
+            return accionesDeError($conexion, "No se encuentran coincidencias de las credeniales en la base de datos.");
         }
-    }
-
-
-    /**
-     * Inicia la sesión del usuario que haya introucido bien sus credenciales
-     * 
-     * @param $conexion La conexión con la base de datos
-     * @param $email El email del usuario que a iniciar sesión
-     */
-    function login($conexion, $email){
-        session_start(); // Inicio la sesión
-        $_SESSION["email"] = $email; // Guardo el email, dato único, en la sesión para poder identificarla
-
-        // Armo la sentencia para conseguir los datos del usuario
-        $sentencia = "SELECT * FROM ".TABLA_USUARIOS." WHERE email = ".$email.";";
-        $resultado = mysqli_query($conexion, $sentencia); // Guardo su resultado
-        
-        while ($usuario = $resultado -> fetch_object()) { // Consigo el resultado en formato objeto
-            // Guardo los datos importantes del usuario en la sesión
-            $_SESSION["id"] = $usuario-> id;
-            $_SESSION["nickname"] = $usuario-> nickname;
-            $_SESSION["rol"] = $usuario-> rol;
-        }        
     }
 ?>

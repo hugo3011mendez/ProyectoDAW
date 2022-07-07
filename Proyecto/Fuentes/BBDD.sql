@@ -24,7 +24,7 @@ create table roles
 
 /* Tabla Usuarios */
 create table usuarios
-( 
+(
     id smallint not null AUTO_INCREMENT,
     email varchar(40) character set utf8 collate utf8_general_ci not null,
     nickname varchar(20) character set utf8 collate utf8_general_ci not null,
