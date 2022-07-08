@@ -15,6 +15,7 @@ Subiré aquí todos los archivos relacionados con el proyecto de fin de ciclo de
 
 ### Anclas
 #### [Funciones probadas relacionadas con la base de datos](#funcionesBBDDprobadas)
+#### [Funciones probadas relacionadas con la gestión de usuarios](#funcionesUsuariosProbadas)
 
 
 ### 21/04/2022
@@ -311,4 +312,8 @@ Subiré aquí todos los archivos relacionados con el proyecto de fin de ciclo de
 ### 08/07/2022
 - Modificado archivo PHP para las funciones de gestión de usuarios
 	- He modificado la función referente al inicio de sesión para que elimine la cookie creada anteriormente en caso de que todo vaya bien
-	
+
+- <a name="funcionesUsuariosProbadas">Se han hecho avances en las pruebas de las funciones relacionadas con la gestión de usuarios</a> :
+	- Funciona correctamente :
+		- comprobarEmail()
+		- login()
