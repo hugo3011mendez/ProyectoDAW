@@ -302,7 +302,13 @@ Subiré aquí todos los archivos relacionados con el proyecto de fin de ciclo de
 	- Creada función referente al inicio de sesión del usuario que ha introducido sus credenciales
 
 
-### 06/07/2022
+### 07/07/2022
 - Modificado archivo PHP para las funciones de gestión de usuarios
 	- He eliminado la función referente a comprobar la contraseña del usuario, para incorporarla a la función referente al inicio de sesión
-	- He modificado la función referente al inicio de sesión par que compruebe la contraseña y en caso afirmativo haga login
+	- He modificado la función referente al inicio de sesión para que compruebe la contraseña y en caso afirmativo haga login
+
+
+### 08/07/2022
+- Modificado archivo PHP para las funciones de gestión de usuarios
+	- He modificado la función referente al inicio de sesión para que elimine la cookie creada anteriormente en caso de que todo vaya bien
+	

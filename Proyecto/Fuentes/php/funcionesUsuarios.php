@@ -41,6 +41,7 @@
         $resultado = mysqli_query($conexion, $sentencia); // Y guardo el resultado de su ejecución
 
         if ($resultado-> num_rows > 0) { // Si hay un usuario que coincida
+            setcookie("email", $email, time() - 10000); // Elimino la cookie
             session_start(); // Inicio la sesión
             while ($usuario = $resultado -> fetch_object()) { // Consigo el resultado en formato objeto
                 // Guardo los datos importantes del usuario en la sesión
