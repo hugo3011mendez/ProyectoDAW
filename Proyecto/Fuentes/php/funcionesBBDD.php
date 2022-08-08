@@ -11,6 +11,7 @@
      * @return La conexión a la BBDD si no hay errores, o false si ocurre algún error
      */
     function conectarBBDD(){
+        // TODO : Ver cómo conseguir en forma de variable de entorno el user de MySQL del equipo
         $conexionBD = new mysqli("localhost", "root", "", NOMBRE_BBDD); // Me conecto a la BBDD
         $error = $conexionBD-> connect_error; // Recojo el código de error que la conexión haya generado
         

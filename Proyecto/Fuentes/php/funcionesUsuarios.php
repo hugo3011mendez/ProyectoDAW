@@ -39,7 +39,6 @@
 
         // Armo la sentencia para buscar el usuario con el email y la contraseña introducidos
         $sentencia = "SELECT * FROM ".TABLA_USUARIOS." WHERE email='".$_COOKIE["email"]."' AND pwd='".$password."';";
-        var_dump($sentencia);
         $resultado = mysqli_query($conexion, $sentencia); // Y guardo el resultado de su ejecución
 
         if ($resultado-> num_rows > 0) { // Si hay un usuario que coincida
