@@ -29,7 +29,6 @@ create table usuarios
     email varchar(40) character set utf8 collate utf8_general_ci not null,
     nickname varchar(20) character set utf8 collate utf8_general_ci not null,
     pwd varchar(200) character set utf8 collate utf8_general_ci not null,
-    imagen varchar(10000) character set utf8 collate utf8_general_ci, /* TODO : Pendiente de como representar este dato */
     rol smallint not null,
     constraint pk_usuarios primary key (id), /* El campo ID es la clave primaria de la tabla */
     constraint fk_rol_usuario foreign key (rol) references roles(id) /* Clave foránea haciendo referencia a la ID de la tabla Roles */

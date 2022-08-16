@@ -322,3 +322,7 @@ Subiré aquí todos los archivos relacionados con el proyecto de fin de ciclo de
 	- Funciona correctamente :
 		- comprobarEmail()
 		- login()
+
+### 16/08/2022
+- Modificado archivo SQL de creación de la base de datos
+	- He eliminado el campo referente a la imagen en la tabla de usuarios
