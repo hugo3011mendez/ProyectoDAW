@@ -331,3 +331,4 @@ Subiré aquí todos los archivos relacionados con el proyecto de fin de ciclo de
 
 ### 17/08/2022
 - Creado proyecto de React referente al ToDo Manager
+- Añadido paquete Axios con NPM para la gestión de la BBDD
