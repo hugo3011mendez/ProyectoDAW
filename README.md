@@ -331,5 +331,12 @@ Subiré aquí todos los archivos relacionados con el proyecto de fin de ciclo de
 
 ### 17/08/2022
 - Creado proyecto de React referente al ToDo Manager
-- Añadido paquete Axios con NPM para la gestión de la BBDD
-- Añadido paquete SweetAlert2 con NPM para la gestión de la BBDD
+	- Añadido paquete Router v6 con NPM
+	- Añadido paquete Axios con NPM para la gestión de la BBDD
+	- Añadido paquete SweetAlert2 con NPM
+	- Eliminados archivos que no hacen falta en el proyecto de React
+	- Creadas carpetas para los diferentes tipos de archivos en React en el proyecto
+
+- Cambiado el nombre de la carpeta de archivos PHP a `old-php`
+
+- Copiada y pegada la carpeta de archivos PHP realizados en el proyecto [Aprendiendo-React](https://github.com/hugo3011mendez/Aprendiendo-React) llamada `php`
