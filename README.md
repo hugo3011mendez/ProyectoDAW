@@ -143,7 +143,7 @@ Subiré aquí todos los archivos relacionados con el proyecto de fin de ciclo de
 
 - Modificado archivo SQL de creación de la base de datos
 	- Añadidos comentarios sobre el formato del tipo de dato datetime
-	- Pendiente de saber cómo representar la imagen de los usuarios
+	- **Pendiente de** saber cómo representar la imagen de los usuarios
 
 
 ### 08/06/2022
@@ -247,7 +247,7 @@ Subiré aquí todos los archivos relacionados con el proyecto de fin de ciclo de
 	- Funciona correctamente :
 		- actualizarTareaFinalizada()
 		- conseguirDatoTareaFinalizada()
-	- Pendiente de corregir fallos en :
+	- **Pendiente de** corregir fallos en :
 		- ponerTareaEnPendiente()
 
 
@@ -340,3 +340,18 @@ Subiré aquí todos los archivos relacionados con el proyecto de fin de ciclo de
 - Cambiado el nombre de la carpeta de archivos PHP a `old-php`
 
 - Copiada y pegada la carpeta de archivos PHP realizados en el proyecto [Aprendiendo-React](https://github.com/hugo3011mendez/Aprendiendo-React) llamada `php`
+
+
+### 18/08/2022
+- Proyecto de React con ToDo Manager
+	- Añadidos archivos JSX referentes a rutas de inicio de sesión, registro, vista del perfil y vista principal de proyectos
+	- Añadidos hooks personalizados para la comunicación con la BBDD y la comprobación de formularios
+	- Añadidos componentes referentes a la pantalla de carga y un formulario
+	- Incluyo Bootstrap al proyecto
+	- Modificados archivos *index.js* y *App.jsx* para la estructura del proyecto
+
+- Modificados archivos PHP del lado del servidor
+	- Creados más archivos PHP para dividir las funciones en entidades de la base de datos
+	- Modificado el archivo index.php según la nueva info sobre usuarios
+	- **Pendiente de** adecuar todos los archivos PHP a su uso
+	

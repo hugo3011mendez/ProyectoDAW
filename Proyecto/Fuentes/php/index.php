@@ -1,5 +1,9 @@
 <?php
-    require_once "funcionesBBDD.php";
+    require_once "funcionesBBDDusuarios.php";
+    require_once "funcionesBBDDroles.php";
+    require_once "funcionesBBDDproyectos.php";
+    require_once "funcionesBBDDtareas.php";
+
     include "cors.php"; // IMPORTANTE incluir el CORS
 
     $conexionBBDD = conectarBBDD(); // Consigo la conexión a la BBDD
@@ -49,9 +53,9 @@
                 $pwdCambiada ? $password = md5($data->txtPassword) : $password = $data->txtPassword; // Compruebo la flag y establezco la PWD
                 
                 if(actualizarUsuario($conexionBBDD, $id, $email, $nickname, $password, $rol)){
-                    echo json_encode(["success"=>1, "message"=>"Usuario actualizado correctamente"]);
+                    echo json_encode(["success"=>1, "message"=>"Usuario ".$nickname." actualizado correctamente"]);
                 }
-                else {echo json_encode(["success"=>0, "message"=>"Error al actualizar el usuario"]);}
+                else {echo json_encode(["success"=>0, "message"=>"Error al actualizar el usuario".$nickname]);}
         
                 break;
         }
@@ -72,26 +76,11 @@
 
     // READ :
     if (isset($_GET["listaUsuarios"])) {
-        // Codifico los usuarios de la BBDD
-        $sentencia = "SELECT * FROM ".TABLA_USUARIOS.";";
-        $resultado = mysqli_query($conexionBBDD, $sentencia); // Guardo el resultado de la ejecución de la sentencia para recorrerse
-    
-        if(mysqli_num_rows($resultado) > 0){
-            $usuarios = mysqli_fetch_all($resultado, MYSQLI_ASSOC);
-            echo json_encode($usuarios);
-            exit();
-        }
+        echo leerUsuarios($conexionBBDD);
     }
 
     // $_GET["conseguirUsuario"] es la ID del usuario
     if (isset($_GET["conseguirUsuario"])) {
-        $sentencia = "SELECT * FROM ".TABLA_USUARIOS." WHERE id=".$_GET["conseguirUsuario"].";";
-        $resultado = mysqli_query($conexionBBDD, $sentencia); // Guardo el resultado de la ejecución de la sentencia para recorrerse
-
-        if(mysqli_num_rows($resultado) > 0){
-            $usuario = mysqli_fetch_all($resultado, MYSQLI_ASSOC);
-            echo json_encode($usuario);
-            exit();
-        }
+        echo leerUsuario($conexionBBDD);
     }
 ?>
