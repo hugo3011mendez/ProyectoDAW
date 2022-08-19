@@ -354,4 +354,13 @@ Subiré aquí todos los archivos relacionados con el proyecto de fin de ciclo de
 	- Creados más archivos PHP para dividir las funciones en entidades de la base de datos
 	- Modificado el archivo index.php según la nueva info sobre usuarios
 	- **Pendiente de** adecuar todos los archivos PHP a su uso
-	
+
+
+### 19/08/2022
+- Modificados archivos PHP del lado del servidor
+	- Modificado archivo de funciones referentes a la API de los usuarios
+	- Creados y editados archivos referentes a la API de los proyectos : Usuarios, proyectos, tareas y roles
+
+- Proyecto de React con ToDo Manager
+	- Editado archivo referente a las constantes de la API con todas las URLs necesarias
+	- Exportadas todas las URLs necesarias en el archivo referente a las constantes de la API

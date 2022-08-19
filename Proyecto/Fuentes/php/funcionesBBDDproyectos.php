@@ -51,6 +51,25 @@
     }
 
 
+    /**
+     * Consigo la información de un proyecto en la base de datos según su ID
+     * 
+     * @param $conexion La conexión con la base de datos
+     * @param $id La ID del proyecto a buscar
+     * 
+     * @return Array asociativo referente al proyecto que queremos buscar
+     */
+    function leerProyecto($conexion, $id){
+        $sentencia = "SELECT * FROM ".TABLA_PROYECTOS." WHERE id=".$id.";";
+        $resultado = mysqli_query($conexion, $sentencia); // Guardo el resultado de la ejecución de la sentencia para recorrerse
+
+        if(mysqli_num_rows($resultado) > 0){
+            $proyecto = mysqli_fetch_all($resultado, MYSQLI_ASSOC);
+            return json_encode($proyecto);
+        }
+    }
+
+
 
 
     //------------------------------------------------------------- UPDATE -----------------------------------------------

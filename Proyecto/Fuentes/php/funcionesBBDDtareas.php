@@ -91,6 +91,25 @@
     }
 
 
+    /**
+     * Consigo la información de una tarea en la base de datos según su ID
+     * 
+     * @param $conexion La conexión con la base de datos
+     * @param $id La ID de la tarea a buscar
+     * 
+     * @return Array asociativo referente a la tarea que queremos buscar
+     */
+    function leerTarea($conexion, $id){
+        $sentencia = "SELECT * FROM ".TABLA_TAREAS." WHERE id=".$id.";";
+        $resultado = mysqli_query($conexion, $sentencia); // Guardo el resultado de la ejecución de la sentencia para recorrerse
+
+        if(mysqli_num_rows($resultado) > 0){
+            $tarea = mysqli_fetch_all($resultado, MYSQLI_ASSOC);
+            return json_encode($tarea);
+        }
+    }
+
+
 
     
     //------------------------------------------------------------- UPDATE -----------------------------------------------

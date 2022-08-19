@@ -15,7 +15,6 @@
      * @return Boolean Indicando el resultado de la ejecución de la función
      */
     function crearRol($conexion, $nombre, $privilegios){
-
         $sentencia = "INSERT INTO ".TABLA_ROLES." (nombre, privilegios) VALUES('".$nombre."', ".$privilegios.")";
 
         // Compruebo el resultado de la ejecución de la sentencia y devuelvo un booleano según corresponda
@@ -41,6 +40,25 @@
         if(mysqli_num_rows($resultado) > 0){
             $roles = mysqli_fetch_all($resultado, MYSQLI_ASSOC);
             return json_encode($roles);
+        }
+    }
+
+
+    /**
+     * Consigo la información de un rol en la base de datos según su ID
+     * 
+     * @param $conexion La conexión con la base de datos
+     * @param $id La ID del rol a buscar
+     * 
+     * @return Array asociativo referente al rol que queremos buscar
+     */
+    function leerProyecto($conexion, $id){
+        $sentencia = "SELECT * FROM ".TABLA_ROLES." WHERE id=".$id.";";
+        $resultado = mysqli_query($conexion, $sentencia); // Guardo el resultado de la ejecución de la sentencia para recorrerse
+
+        if(mysqli_num_rows($resultado) > 0){
+            $rol = mysqli_fetch_all($resultado, MYSQLI_ASSOC);
+            return json_encode($rol);
         }
     }
 

@@ -1,8 +1,7 @@
 <?php
+    // Incluyo los archivos de funciones referentes a usuarios y a proyectos, necesarios para que esto funcione
     require_once "funcionesBBDDusuarios.php";
-    require_once "funcionesBBDDroles.php";
     require_once "funcionesBBDDproyectos.php";
-    require_once "funcionesBBDDtareas.php";
 
     include "cors.php"; // IMPORTANTE incluir el CORS
 
@@ -10,7 +9,6 @@
     $conexionBBDD->autocommit(FALSE); // Desactivo el autocommit
 
 
-    
     // CREATE :
     if (isset($_GET["registrarUsuario"])) {
         $method = $_SERVER["REQUEST_METHOD"]; // Consigo el método de petición del servidor
@@ -35,6 +33,17 @@
     }
 
 
+    // READ :
+    if (isset($_GET["listaUsuarios"])) {
+        echo leerUsuarios($conexionBBDD);
+    }
+
+    // $_GET["conseguirUsuario"] es la ID del usuario
+    if (isset($_GET["conseguirUsuario"])) { // TODO : Ver si por temas de seguridad es mejor pasar la ID por POST
+        echo leerUsuario($conexionBBDD);
+    }
+
+
     // UPDATE :
     if (isset($_GET["actualizarUsuario"])){
         $method = $_SERVER["REQUEST_METHOD"]; // Consigo el método de petición del servidor
@@ -45,7 +54,6 @@
                 $id = $data->id;
                 $email = $data->txtEmail;
                 $nickname = $data->txtNickname;
-                $imagen = "a";
                 $rol = $data->rol;
 
                 $pwdCambiada = $data->flag; // Consigo la variable
@@ -65,22 +73,11 @@
 
 
     // DELETE : $_GET["eliminarUsuario"] es la ID del usuario
-    if (isset($_GET["eliminarUsuario"])){
+    if (isset($_GET["eliminarUsuario"])){ // TODO : Ver si por temas de seguridad es mejor pasar la ID por POST
         if(eliminarUsuario($conexionBBDD, $_GET["eliminarUsuario"])){
             echo json_encode(["success"=>1, "message"=>"Usuario eliminado correctamente"]);
             exit();
         }
         else{echo json_encode(["success"=>0, "message"=>"Error al eliminar el usuario"]);}
-    }
-
-
-    // READ :
-    if (isset($_GET["listaUsuarios"])) {
-        echo leerUsuarios($conexionBBDD);
-    }
-
-    // $_GET["conseguirUsuario"] es la ID del usuario
-    if (isset($_GET["conseguirUsuario"])) {
-        echo leerUsuario($conexionBBDD);
     }
 ?>
