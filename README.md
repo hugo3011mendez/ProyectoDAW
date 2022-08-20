@@ -364,3 +364,30 @@ Subiré aquí todos los archivos relacionados con el proyecto de fin de ciclo de
 - Proyecto de React con ToDo Manager
 	- Editado archivo referente a las constantes de la API con todas las URLs necesarias
 	- Exportadas todas las URLs necesarias en el archivo referente a las constantes de la API
+
+
+### 20/08/2022
+- Proyecto de React con ToDo Manager
+	- Modificado título de la pestaña en *index.html*
+	- Quitada clase container en *App.jsx*
+	- Añadido gradiente de fondo a las rutas *Login.jsx* y *Registro.jsx*
+	- *FormularioLogin.jsx* y *FormularioRegistro.jsx* :
+		- Añadido un card en el que se meterá el form
+		- Añadidos estilos, **pendiente de terminarlos**
+	- *FormularioLogin.jsx* :
+		- Añadido hook referente al mensaje de error
+		- 
+	- *FormularioRegistro.jsx* :
+		- Añadido link que va de vuelta a la página *Login.jsx*
+		- Añadidos hooks referentes al mensaje de error y a la navegación hacia la página de login
+		- Añadidas comprobaciones y peticiones a la API del servidor
+		- Añadida expresión regular para validar el email del nuevo usuario
+		- Mejoradas todas las validaciones y comprobaciones
+		- **TERMINADA LÓGICA DE ESTE COMPONENTE**
+	- *API.js* :
+		- Añadida URL de login
+
+- Modificados archivos PHP del lado del servidor
+	- He cambiado el mensaje de error a la hora de registrar un usuario
+	- He añadido la posibilidad de login
+	- Añadidas funciones y comprobaciones necesarias para el listado de las tareas finalizadas en un proyecto

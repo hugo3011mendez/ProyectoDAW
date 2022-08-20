@@ -62,7 +62,7 @@
      * @return Array asociativo referente a las tareas del proyecto indicado que están en la base de datos
      */
     function leerTareasDeProyecto($conexion, $idProyecto){
-        $sentencia = "SELECT * FROM ".TABLA_TAREAS." WHERE id=".$idProyecto.";"; // Realizo la sentencia
+        $sentencia = "SELECT * FROM ".TABLA_TAREAS." WHERE proyecto=".$idProyecto.";"; // Realizo la sentencia
         $resultado = mysqli_query($conexion, $sentencia); // Guardo el resultado de la ejecución de la sentencia para recorrerse
     
         if(mysqli_num_rows($resultado) > 0){
@@ -89,6 +89,25 @@
             return json_encode($tareas);
         }
     }
+
+    /**
+     * Consigo las tareas finalizadas dentro de un proyecto dado
+     * 
+     * @param $conexion La conexión con la base de datos
+     * @param $idProyecto La ID del proyecto donde las quiero buscar
+     * 
+     * @return Array asociativo referente a las tareas finalizadas del proyecto indicado
+     */
+    function leerTareasFinalizadasDeProyecto($conexion, $idProyecto){
+        $sentencia = "SELECT * FROM ".TABLA_TAREAS." WHERE proyecto=".$idProyecto." AND estado=".ESTADO_FINALIZADO.";"; // Realizo la sentencia
+        $resultado = mysqli_query($conexion, $sentencia); // Guardo el resultado de la ejecución de la sentencia para recorrerse
+
+        if(mysqli_num_rows($resultado) > 0){
+            $tareas = mysqli_fetch_all($resultado, MYSQLI_ASSOC);
+            return json_encode($tareas);
+        }
+    }
+
 
 
     /**

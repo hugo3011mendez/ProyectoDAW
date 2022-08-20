@@ -46,7 +46,12 @@
     // $_GET["conseguirTarea"] es la ID de la tarea
     if (isset($_GET["conseguirTarea"])) {
         echo leerTarea($conexionBBDD, $_GET["conseguirTarea"]);
-    }    
+    }
+
+    // $_GET["listaTareasFinalizadas"] es la ID del proyecto en el que quiero buscar
+    if (isset($_GET["listaTareasFinalizadas"])) { // TODO : Ver si pasarlo por GET o hacerlo por POST para mejor seguridad y que no puedan ver otros usuarios
+        echo leerTareasFinalizadasDeProyecto($conexionBBDD, $_GET["conseguirTarea"]);
+    }
 
 
     // UPDATE :

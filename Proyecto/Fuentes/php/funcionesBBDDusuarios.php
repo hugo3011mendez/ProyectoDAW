@@ -4,7 +4,7 @@
     require_once "funcionesBBDDproyectos.php"; // Linkeo el archivo referente a las funciones sobre proyectos
 
     //------------------------------------------------------------- COMPROBACIONES Y LOGIN -----------------------------------------------
-
+    // TODO : Mirar lo de inicio de sesión
     /**
      * Comprueba que el email introducido coincida con el de un usuario guardado en la base de datos
      * 
@@ -100,7 +100,7 @@
             return comprobarResultadoDeQuery($conexion, $sentencia);       
         }
         else {
-            accionesDeError($conexion, "Error al registrarse : El email del usuario ya se encuentra en la base de datos");
+            accionesDeError($conexion);
         }
     }
 

@@ -24,7 +24,7 @@
                 if(registrarUsuario($conexionBBDD, $email, $nickname, $password, $rol)){ // Compruebo que el usuario se haya registrado correctamente
                     echo json_encode(["success"=>1, "message"=>"Usuario registrado correctamente"]);
                 }
-                else {echo json_encode(["success"=>0, "message"=>"Error al registrar el usuario"]);}
+                else {echo json_encode(["success"=>0, "message"=>"El email ya se encuentra en la base de datos"]);}
 
                 break;
         }
@@ -79,5 +79,11 @@
             exit();
         }
         else{echo json_encode(["success"=>0, "message"=>"Error al eliminar el usuario"]);}
+    }
+
+
+    // COMPROBACIONES Y LOGIN :
+    if (isset($_GET["loginUsuario"])) {
+        // TODO : Mirar lo de inicio de sesión
     }
 ?>
