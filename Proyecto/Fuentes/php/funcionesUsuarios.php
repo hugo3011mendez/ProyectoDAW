@@ -48,6 +48,11 @@
         echo conseguirNickname($conexionBBDD, $_GET["conseguirNickname"]);
     }
 
+    // $_GET["conseguirRol"] es la ID del usuario
+    if (isset($_GET["conseguirRol"])) {
+        echo conseguirRol($conexionBBDD, $_GET["conseguirRol"]);
+    }
+
 
     // UPDATE :
     if (isset($_GET["actualizarUsuario"])){

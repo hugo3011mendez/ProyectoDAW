@@ -402,6 +402,12 @@ Subiré aquí todos los archivos relacionados con el proyecto de fin de ciclo de
 		- Realizado código para mandar un email al usuario cuando se registre
 	- Añadida función referente al cierre de la sesión en el archivo *API.js*
 	- Añadidas comprobaciones y peticiones Axios necesarias para el login en *FormularioLogin.jsx*
+	- Creado componente referente al navbar en las pantallas referentes al visualizado de tareas
+	- Creada carpeta y un archivo dentro referentes a los contextos y al contexto de la info del usuario respectivamente
+	- Creado archivo de constantes referentes a las rutas de las páginas
+	- Creado componente referente al navbar en las pantallas referentes al perfil y el menú del admin
+	- Añadidas rutas en el código del formulario para login
+	- Añadido Navbar para el menú de admin
 
 - Modificado archivo SQL de creación de la base de datos
 	- He añadido un registro que se creará automátiamente en la tabla usuarios referente al administrador
@@ -409,3 +415,4 @@ Subiré aquí todos los archivos relacionados con el proyecto de fin de ciclo de
 - Modificados archivos PHP del lado del servidor
 	- Quitado establecimiento de la cookie en la función referente a comprobar el email para login
 	- Añadida comprobación y función referentes a la obtención del nickname de un usuario dado
+	- He eliminado la carpeta antigua de PHP ya que no me sirve de utilidad

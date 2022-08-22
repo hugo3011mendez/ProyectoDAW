@@ -1,15 +1,22 @@
-import { useState } from "react"; // Importamos el hook de React
+import { useState, useContext } from "react"; // Importamos módulos de React
 import { Link, useNavigate } from "react-router-dom"; // Importación de componentes de React Router DOM
 import { useFormulario } from "../hooks/useFormulario"; // Importación del hook personalizado del form
 import axios from "axios"; // Importo Axios
-import { URL_LOGIN_USUARIO, URL_NICKNAME_USUARIO } from "../services/API"; // Importación de URLs del archivo de constantes
+import { URL_LOGIN_USUARIO, URL_NICKNAME_USUARIO, URL_ROL_USUARIO } from "../services/API"; // Importación de URLs de la API
+import { UserContext } from '../context/UserProvider'; // Importo el contexto del usuario
+import { RUTA_MAIN, RUTA_REGISTRO } from '../services/Rutas'; // Importo el servicio de rutas
 
+/**
+ * Componente referente al formulario de inicio de sesión
+ */
 const FormularioLogin = () => {
 
   const navigate = useNavigate(); // Establezco el hook referente a cambiar de ruta
   if (localStorage.getItem("ID") && localStorage.getItem("nickname")) { // TODO : Mejorar la redirección
-    navigate("/main");
+    navigate(RUTA_MAIN);
   }
+
+  let {id, nickname, rol} = useContext(UserContext); // Consigo las variables del contexto
 
   // Declaro una variable con los valores iniciales que deben tomar los elementos del form
   const initialState = { // Deben tener el mismo nombre que el atributo name de cada elemento
@@ -47,14 +54,22 @@ const FormularioLogin = () => {
       axios.post(URL_LOGIN_USUARIO, cuerpo).then(function(response){
         if (response.data.success == 1) { // Si he recibido una respuesta OK
           localStorage.setItem("ID", response.data.id); // Establezco la ID en el localStorage
+          id=response.data.id; // Establezco la variable referente al ID en el contexto
 
           // Realizo la petición para conseguir el nickname del usuario que iniciará sesión
           axios.get(URL_NICKNAME_USUARIO+response.data.id).then(function(response){
             localStorage.setItem("nickname", response.data); // Establezco el nickname en el localStorage
+            nickname=response.data; // Establezco la variable referente al nickname en el contexto
+          });
+
+          // Realizo la petición para conseguir el rol del usuario que iniciará sesión
+          axios.get(URL_ROL_USUARIO+response.data.id).then(function(response){
+            localStorage.setItem("rol", response.data); // Establezco el rol en el localStorage
+            rol=response.data; // Establezco la variable referente al rol en el contexto
           });
 
           setError(false); // Establezco a falso el error
-          navigate("/main"); // Voy hasta la página principal
+          navigate(RUTA_MAIN); // Voy hasta la página principal
         }
         else{
           setMessage(response.data.message);
@@ -105,7 +120,7 @@ const FormularioLogin = () => {
 
             <div className="card-footer">
               {/* Pongo un enlace a la página de registro para que el usuario pueda crearse una cuenta */}
-              No tienes una cuenta? <Link to={"/registro"} className="link-primary" style={{textDecoration: "none"}}>Regístrate</Link>
+              No tienes una cuenta? <Link to={RUTA_REGISTRO} className="link-primary" style={{textDecoration: "none"}}>Regístrate</Link>
             </div>
           </form>
         </div>

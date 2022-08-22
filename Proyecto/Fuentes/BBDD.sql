@@ -81,5 +81,5 @@ INSERT INTO roles (nombre, privilegios) VALUES ('Administrador', 3);
 
 
 /* Introduzco un usuario creado previamente, referente al administrador de la app */
-/* La contraseña es '1234' */
-INSERT INTO usuarios (email, nickname, pwd, rol) VALUES ('admin@admin.com', 'Admin', 'ec6a6536ca304edf844d1d248a4f08dc', 2);
+/* La contraseña es 'admin' */
+INSERT INTO usuarios (email, nickname, pwd, rol) VALUES ('admin@admin.com', 'Admin', '21232f297a57a5a743894a0e4a801fc3', 2);
