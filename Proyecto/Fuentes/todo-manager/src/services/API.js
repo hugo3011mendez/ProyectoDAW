@@ -1,6 +1,7 @@
 // Archivo donde estableceré las constantes referentes al proyecto
 // const URL_USUARIO = "https://localhost/ToDoManager/funcionesUsuarios.php";
-const URL_LOGIN_USUARIO = "https://localhost/ToDoManager/funcionesUsuarios.php?loginUsuario=1"; // TODO : Mirar lo de inicio de sesión
+const URL_LOGIN_USUARIO = "https://localhost/ToDoManager/funcionesUsuarios.php?loginUsuario=1";
+const URL_NICKNAME_USUARIO = "https://localhost/ToDoManager/funcionesUsuarios.php?conseguirNickname="; // Concatenar con la ID cuando se use
 const URL_REGISTRAR_USUARIO = "https://localhost/ToDoManager/funcionesUsuarios.php?registrarUsuario=1";
 const URL_LEER_USUARIOS = "https://localhost/ToDoManager/funcionesUsuarios.php?listaUsuarios=1";
 const URL_LEER_USUARIO = "https://localhost/ToDoManager/funcionesUsuarios.php?conseguirUsuario="; // Concatenar con la ID cuando se use
@@ -32,8 +33,17 @@ const URL_LEER_ROL = "https://localhost/ToDoManager/funcionesRoles.php?conseguir
 const URL_ACTUALIZAR_ROL = "https://localhost/ToDoManager/funcionesRoles.php?actualizarRol=1";
 const URL_ELIMINAR_ROL = "https://localhost/ToDoManager/funcionesRoles.php?eliminarRol="; // Concatenar con la ID cuando se use
 
-export { URL_REGISTRAR_USUARIO, URL_LEER_USUARIOS, URL_LEER_USUARIO, URL_ACTUALIZAR_USUARIO, URL_ELIMINAR_USUARIO,
+/**
+ * Cierra la sesión del usuario 
+ */
+function logout(){
+    localStorage.removeItem("ID");
+    localStorage.removeItem("nickname");
+}
+
+export { URL_LOGIN_USUARIO, URL_NICKNAME_USUARIO, URL_REGISTRAR_USUARIO, URL_LEER_USUARIOS, URL_LEER_USUARIO, URL_ACTUALIZAR_USUARIO, URL_ELIMINAR_USUARIO,
     URL_CREAR_PROYECTO, URL_LEER_PROYECTOS, URL_LEER_PROYECTO, URL_ACTUALIZAR_PROYECTO, URL_ELIMINAR_PROYECTO,
     URL_CREAR_TAREA, URL_LEER_TAREAS_DE_PROYECTO, URL_LEER_SUBTAREAS, URL_LEER_TAREA, URL_ACTUALIZAR_TAREA, URL_ELIMINAR_TAREA,
-    URL_CREAR_ROL, URL_LEER_ROLES, URL_LEER_ROL, URL_ACTUALIZAR_ROL, URL_ELIMINAR_ROL
+    URL_CREAR_ROL, URL_LEER_ROLES, URL_LEER_ROL, URL_ACTUALIZAR_ROL, URL_ELIMINAR_ROL,
+    logout
 }

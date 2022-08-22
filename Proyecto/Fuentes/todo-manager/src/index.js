@@ -4,8 +4,9 @@ import App from './App';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 // Importaciones de rutas
 import Login from './routes/Login';
-import Perfil from './routes/Perfil';
 import Registro from './routes/Registro';
+import Main from './routes/Main';
+import Perfil from './routes/Perfil';
 import PageNotFound from './routes/PageNotFound';
 
 
@@ -19,6 +20,7 @@ root.render(
         <Route path='/' element={<App />}> {/* Para que se muestren las rutas dentro de App, hay que anidarlas y en App.jsx escribir <Outlet /> donde se quieran mostrar */}
           <Route index element={<Login />} /> {/* Este componente comparte la ruta de App - Referente al inicio de sesión */}
           <Route path='/registro' element={<Registro />} /> {/* Ruta referente al registro del usuario */}
+          <Route path='/main' element={<Main />} /> {/* Ruta referente a la vista principal */}
           <Route path='/perfil' element={<Perfil />} /> {/* Ruta referente al perfil del usuario */}
           <Route path='*' element={<PageNotFound />} /> {/* Este componente se mostrará cada vez que se ponga en la URL algo diferente a las páginas declaradas */}
         </Route>

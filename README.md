@@ -391,3 +391,21 @@ Subiré aquí todos los archivos relacionados con el proyecto de fin de ciclo de
 	- He cambiado el mensaje de error a la hora de registrar un usuario
 	- He añadido la posibilidad de login
 	- Añadidas funciones y comprobaciones necesarias para el listado de las tareas finalizadas en un proyecto
+
+
+### 22/08/2022
+- Proyecto de React con ToDo Manager
+	- Añadida exportación de la ruta de Login en el archivo *API.js*
+	- Quito la función de reinicio en el caso de que las contraseñas no coincidan a la hora de registrar el usuario
+	- Creado servicio de email para mandar un email de registro al usuario que quiera registrarse
+		- Instalado paquete EmailJS para mandar un correo de registro
+		- Realizado código para mandar un email al usuario cuando se registre
+	- Añadida función referente al cierre de la sesión en el archivo *API.js*
+	- Añadidas comprobaciones y peticiones Axios necesarias para el login en *FormularioLogin.jsx*
+
+- Modificado archivo SQL de creación de la base de datos
+	- He añadido un registro que se creará automátiamente en la tabla usuarios referente al administrador
+
+- Modificados archivos PHP del lado del servidor
+	- Quitado establecimiento de la cookie en la función referente a comprobar el email para login
+	- Añadida comprobación y función referentes a la obtención del nickname de un usuario dado

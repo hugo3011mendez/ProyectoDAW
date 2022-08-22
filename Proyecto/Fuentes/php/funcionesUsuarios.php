@@ -40,7 +40,12 @@
 
     // $_GET["conseguirUsuario"] es la ID del usuario
     if (isset($_GET["conseguirUsuario"])) { // TODO : Ver si por temas de seguridad es mejor pasar la ID por POST
-        echo leerUsuario($conexionBBDD);
+        echo leerUsuario($conexionBBDD, $_GET["conseguirUsuario"]);
+    }
+
+    // $_GET["conseguirNickname"] es la ID del usuario
+    if (isset($_GET["conseguirNickname"])) {
+        echo conseguirNickname($conexionBBDD, $_GET["conseguirNickname"]);
     }
 
 
@@ -82,8 +87,23 @@
     }
 
 
-    // COMPROBACIONES Y LOGIN :
+    // LOGIN :
     if (isset($_GET["loginUsuario"])) {
-        // TODO : Mirar lo de inicio de sesión
+        $method = $_SERVER["REQUEST_METHOD"]; // Consigo el método de petición del servidor
+        switch ($method) { // Compruebo que el método sea POST
+            case 'POST':
+                $data = json_decode(file_get_contents("php://input")); // Consigo los datos que el usuario ha escrito
+                // Los guardo en sus variables correspondientes
+                $email = $data->txtEmail;
+                $password = $data->txtPassword;
+                
+                if(login($conexionBBDD, $email, $password)){ // Si no hay errores
+                    // Devuelvo también la ID del usuario
+                    echo json_encode(["success"=>1, "message"=>"El usuario ha iniciado sesión correctamente", "id"=>login($conexionBBDD, $email, $password)]);
+                }
+                else {echo json_encode(["success"=>0, "message"=>"Error al iniciar sesión : Los datos no coinciden"]);}
+        
+                break;
+        }
     }
 ?>

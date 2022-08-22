@@ -73,6 +73,13 @@ INSERT INTO privilegios (nombre) VALUES ('Sobre otros usuarios');
 
 
 /* Introduzco los 3 roles que va a haber, en su tabla correspondiente */
-INSERT INTO roles (nombre, privilegios) VALUES ('Usuario', 2); /* Un usuario que puede leer y modificar sus propios datos */
+/* Un usuario que puede leer y modificar sus propios datos */
+INSERT INTO roles (nombre, privilegios) VALUES ('Usuario', 2);
 
-INSERT INTO roles (nombre, privilegios) VALUES ('Administrador', 3); /* Un administrador que puede leer y modificar sus propios datos, además de gestionar a los demás usuarios */
+/* Un administrador que puede leer y modificar sus propios datos, además de gestionar a los demás usuarios y ver sus datos también */
+INSERT INTO roles (nombre, privilegios) VALUES ('Administrador', 3);
+
+
+/* Introduzco un usuario creado previamente, referente al administrador de la app */
+/* La contraseña es '1234' */
+INSERT INTO usuarios (email, nickname, pwd, rol) VALUES ('admin@admin.com', 'Admin', 'ec6a6536ca304edf844d1d248a4f08dc', 2);

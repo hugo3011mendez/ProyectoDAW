@@ -3,62 +3,29 @@
     require_once "Constantes.php"; // Linkeo el archivo de las constantes a este, para utilizarlas en las funciones de la BBDD
     require_once "funcionesBBDDproyectos.php"; // Linkeo el archivo referente a las funciones sobre proyectos
 
-    //------------------------------------------------------------- COMPROBACIONES Y LOGIN -----------------------------------------------
-    // TODO : Mirar lo de inicio de sesión
-    /**
-     * Comprueba que el email introducido coincida con el de un usuario guardado en la base de datos
-     * 
-     * @param $conexion La conexión con la base de datos
-     * @param $email El email introducido para comprobar
-     * 
-     * @return Boolean Dependiendo del resultado de la función
-     */
-    function comprobarEmail($conexion, $email){
-        $sentencia = "SELECT * FROM ".TABLA_USUARIOS." WHERE email='".$email."';"; // Armo la sentencia
-        $resultado = mysqli_query($conexion, $sentencia); // Y guardo el resultado de su ejecución
-
-        if ($resultado-> num_rows > 0) { // Compruebo que haya encontrado un usuario que coincida
-            setcookie("email", $email); // Guardo el email correcto en una cookie para usarlo más adelante
-
-            return true; // Devuelvo true
-        }
-        else { // Si no hay usuarios con los que coincida, devuelvo false y un error
-
-            return accionesDeError($conexion);
-        }
-    }
-
-
+    //------------------------------------------------------------- COMPROBACIONES Y LOGIN / LOGOUT -----------------------------------------------
     /**
      * Inicia la sesión del usuario que haya introucido bien sus credenciales
+     * Comprueba que el email introducido coincida con el de un usuario guardado en la base de datos
      * Compruebo si la contraseña se ha introducido correctamente y en caso afirmativo, inicio la sesión
      * 
      * @param $conexion La conexión con la base de datos
+     * @param $email El email introducido para comprobar
      * @param $password La contraseña del usuario para iniciar sesión
+     * 
+     * @return Boolean indicando si la acción resultó con errores
      */
-    function login($conexion, $password){     
-        $password = md5($password); // Primero encripto la contraseña introducida
-
+    function login($conexion, $email, $password){
+        $password = md5($password); // Encripto la contraseña introducida
         // Armo la sentencia para buscar el usuario con el email y la contraseña introducidos
-        $sentencia = "SELECT * FROM ".TABLA_USUARIOS." WHERE email='".$_COOKIE["email"]."' AND pwd='".$password."';";
+        $sentencia = "SELECT * FROM ".TABLA_USUARIOS." WHERE email='".$email."' AND pwd='".$password."';";
         $resultado = mysqli_query($conexion, $sentencia); // Y guardo el resultado de su ejecución
-
+    
         if ($resultado-> num_rows > 0) { // Si hay un usuario que coincida
-            setcookie("email", "", time() - 10000); // Elimino la cookie
-            session_start(); // Inicio la sesión
-            
-            while ($usuario = $resultado -> fetch_object()) { // Consigo el resultado en formato objeto
-                // Guardo los datos importantes del usuario en la sesión
-                $_SESSION["id"] = $usuario-> id;
-                $_SESSION["email"] = $usuario-> email;
-                $_SESSION["nickname"] = $usuario-> nickname;
-                $_SESSION["password"] = $usuario-> pwd;
-                $_SESSION["rol"] = $usuario-> rol;
-            }
-
-            return true; // Devuelvo true     
+            $usuario = $resultado -> fetch_object(); // Consigo los datos en forma de objeto
+            return $usuario->id; // Devuelvo la ID del usuario encontrado
         }
-        else { // Si no hay usuarios que coincidan, devuelvo falso y un mensaje de error
+        else { // Si no hay usuarios que coincidan, devuelvo false y un mensaje de error
             return accionesDeError($conexion);
         }
     }
@@ -161,6 +128,24 @@
         if(mysqli_num_rows($resultado) > 0){
             $usuario = mysqli_fetch_all($resultado, MYSQLI_ASSOC);
             return json_encode($usuario);
+        }
+    }
+
+    /**
+     * Devuelve el nickname del usuario indicado
+     * 
+     * @param $conexion La conexión con la base de datos
+     * @param $id La ID del usuario a buscar
+     * 
+     * @return String El nickname del usuario buscado
+     */
+    function conseguirNickname($conexion, $id){
+        $sentencia = "SELECT nickname FROM ".TABLA_USUARIOS." WHERE id=".$id.";";
+        $resultado = mysqli_query($conexion, $sentencia); // Guardo el resultado de la ejecución de la sentencia para recorrerse
+
+        if(mysqli_num_rows($resultado) > 0){
+            $datos = $resultado -> fetch_object();
+            return $datos->nickname;
         }
     }
 

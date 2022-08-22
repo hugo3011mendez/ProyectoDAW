@@ -1,8 +1,15 @@
 import { useState } from "react"; // Importamos el hook de React
-import { Link } from "react-router-dom"; // Importación de componentes de React Router DOM
-import { useFormulario } from "../hooks/useFormulario"; // Importación del hook personalizado
+import { Link, useNavigate } from "react-router-dom"; // Importación de componentes de React Router DOM
+import { useFormulario } from "../hooks/useFormulario"; // Importación del hook personalizado del form
+import axios from "axios"; // Importo Axios
+import { URL_LOGIN_USUARIO, URL_NICKNAME_USUARIO } from "../services/API"; // Importación de URLs del archivo de constantes
 
 const FormularioLogin = () => {
+
+  const navigate = useNavigate(); // Establezco el hook referente a cambiar de ruta
+  if (localStorage.getItem("ID") && localStorage.getItem("nickname")) { // TODO : Mejorar la redirección
+    navigate("/main");
+  }
 
   // Declaro una variable con los valores iniciales que deben tomar los elementos del form
   const initialState = { // Deben tener el mismo nombre que el atributo name de cada elemento
@@ -32,11 +39,28 @@ const FormularioLogin = () => {
       reset();
     }
     else{
-      setError(false); // Cambio el error a false ya que los datos están bien puestos
-      console.log("Email : " + txtEmail.trim());
-      console.log("Password : " + txtPassword.trim());
+      // Defino el cuerpo del mensaje que le mandaré a la API con los datos introducidos
+      const datosEnviar = {"txtEmail":txtEmail.trim(), "txtPassword":txtPassword.trim()};
+      const cuerpo = JSON.stringify(datosEnviar); // Convierto a JSON los datos a enviar a la API
 
-      // TODO : Realizar comprobaciones de login
+      // Realizo la petición a la API enviándole los datos del cuerpo previamente establecido
+      axios.post(URL_LOGIN_USUARIO, cuerpo).then(function(response){
+        if (response.data.success == 1) { // Si he recibido una respuesta OK
+          localStorage.setItem("ID", response.data.id); // Establezco la ID en el localStorage
+
+          // Realizo la petición para conseguir el nickname del usuario que iniciará sesión
+          axios.get(URL_NICKNAME_USUARIO+response.data.id).then(function(response){
+            localStorage.setItem("nickname", response.data); // Establezco el nickname en el localStorage
+          });
+
+          setError(false); // Establezco a falso el error
+          navigate("/main"); // Voy hasta la página principal
+        }
+        else{
+          setMessage(response.data.message);
+          setError(true);
+        }
+      });
     }
   };
 
@@ -44,8 +68,8 @@ const FormularioLogin = () => {
   const PintarError = () => (
     <div className="alert alert-danger" role="alert">{message}</div>
   );
-
   
+
   return (
     <>
       {/* Compruebo si existe algún error con el hook, y en caso afirmativo pinto el mensaje */}

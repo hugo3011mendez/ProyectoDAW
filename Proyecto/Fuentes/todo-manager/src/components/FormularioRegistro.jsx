@@ -3,6 +3,7 @@ import { useFormulario } from "../hooks/useFormulario"; // Importación del hook
 import { Link, useNavigate } from "react-router-dom"; // Importación de componentes de React Router DOM
 import axios from "axios"; // Importo Axios
 import {URL_REGISTRAR_USUARIO} from "../services/API"; // Importación de URLs del archivo de constantes
+import emailjs from '@emailjs/browser'; // Importo EmailJS
 
 const FormularioRegistro = () => {
 
@@ -40,7 +41,6 @@ const FormularioRegistro = () => {
     else if(txtPassword.trim()!==txtRePassword.trim()){ // En el caso de que las contraseñas no coincidan
       setMessage("Las contraseñas no coinciden"); // Establezco el valor del mensaje de error
       setError(true); // Cambio el error a true ya que hay espacios vacíos
-      reset(); // Termino reiniciando el estado de los inputs
     }
     else{
       setError(false); // Cambio el error a false ya que los datos están bien puestos
@@ -54,6 +54,8 @@ const FormularioRegistro = () => {
       axios.post(URL_REGISTRAR_USUARIO, cuerpo).then(function(response){
         if (response.data.success === 1) { // Compruebo si el resultado del success es correcto
           setError(false); // Quito la alerta en el caso de error
+          // Mando un email 
+          emailjs.send("service_127gzsg","template_qoen1zh",{to_name: txtEmail.trim()}, "EivE0959jTxI2uoZq");
           navigate("/"); // Vuelvo a la página de login
         }
         else{ // Y en el caso de que haya algún error
