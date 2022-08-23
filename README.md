@@ -416,3 +416,12 @@ Subiré aquí todos los archivos relacionados con el proyecto de fin de ciclo de
 	- Quitado establecimiento de la cookie en la función referente a comprobar el email para login
 	- Añadida comprobación y función referentes a la obtención del nickname de un usuario dado
 	- He eliminado la carpeta antigua de PHP ya que no me sirve de utilidad
+
+### 23/08/2022
+- Proyecto de React con ToDo Manager
+	- Quitado componente referente al error y añadido modal de SweetAlert en su lugar para los formularios de login y registro
+	- Creados nuevos componentes referentes a la lista de tareas y a la lista de proyectos para la ruta Main
+	- Creado nuevo componente referente al formulario de cambio de datos del usuario actual
+	- Quitados NavBar individuales, añadido un NavBar para todas las rutas
+	- Modificado archivo de rutas según la forma correcta
+	- Añadida función `comprobarLogin()` al contexto del usuario para que nadie pueda acceder a las páginas donde se use sin antes haber iniciado sesión

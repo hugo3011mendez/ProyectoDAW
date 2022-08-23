@@ -18,15 +18,17 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <UserProvider> {/* Incorporo el contexto para las variables referentes al usuario que ha iniciado sesión */}
-        <Routes>
-          {/* Aquí van las rutas */}
-          <Route path='/' element={<App />}> {/* Para que se muestren las rutas dentro de App, hay que anidarlas y en App.jsx escribir <Outlet /> donde se quieran mostrar */}
-            <Route index element={<Login />} /> {/* Este componente comparte la ruta de App - Referente al inicio de sesión */}
-            <Route path={RUTA_REGISTRO} element={<Registro />} /> {/* Ruta referente al registro del usuario */}
-            <Route path={RUTA_MAIN} element={<Main />} /> {/* Ruta referente a la vista principal */}
+        <Routes> {/* Aquí van todas las rutas */}
+          <Route path="/" element={<Login />} /> {/* Ruta referente al inicio de sesión */}
+          <Route path={RUTA_REGISTRO} element={<Registro />} /> {/* Ruta referente al registro del usuario */}
+          {/* Este componente se mostrará cada vez que se ponga en la URL algo diferente a las páginas declaradas */}
+          <Route path='*' element={<PageNotFound />} />
+
+          {/* Vista de todas las rutas excepto login y registro */}
+          <Route path={RUTA_MAIN} element={<App />} >
+            <Route index element={<Main />} /> {/* Este componente comparte la ruta de App - Referente a la vista principal */}
             <Route path={RUTA_PERFIL} element={<Perfil />} /> {/* Ruta referente al perfil del usuario */}
-            <Route path={RUTA_ADMIN} element={<Admin />} /> {/* Ruta referente al perfil del usuario */}
-            <Route path='*' element={<PageNotFound />} /> {/* Este componente se mostrará cada vez que se ponga en la URL algo diferente a las páginas declaradas */}
+            <Route path={RUTA_ADMIN} element={<Admin />} /> {/* Ruta referente al menú de admin del usuario */}
           </Route>
         </Routes>
       </UserProvider>

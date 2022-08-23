@@ -5,6 +5,8 @@ import axios from "axios"; // Importo Axios
 import { URL_LOGIN_USUARIO, URL_NICKNAME_USUARIO, URL_ROL_USUARIO } from "../services/API"; // Importación de URLs de la API
 import { UserContext } from '../context/UserProvider'; // Importo el contexto del usuario
 import { RUTA_MAIN, RUTA_REGISTRO } from '../services/Rutas'; // Importo el servicio de rutas
+import Swal from 'sweetalert2' // Importo el paquete de Sweet Alert 2 que he instalado previamente en el proyecto
+
 
 /**
  * Componente referente al formulario de inicio de sesión
@@ -12,7 +14,7 @@ import { RUTA_MAIN, RUTA_REGISTRO } from '../services/Rutas'; // Importo el serv
 const FormularioLogin = () => {
 
   const navigate = useNavigate(); // Establezco el hook referente a cambiar de ruta
-  if (localStorage.getItem("ID") && localStorage.getItem("nickname")) { // TODO : Mejorar la redirección
+  if (localStorage.getItem("ID") && localStorage.getItem("nickname")) {
     navigate(RUTA_MAIN);
   }
 
@@ -24,7 +26,6 @@ const FormularioLogin = () => {
     txtPassword: ""
   };
 
-  const [error, setError] = useState(false); // Un hook referente al error, por defecto a false
   const [message, setMessage] = useState(""); // Un hook referente al mensaje de error o de acción correcta, por defecto una cadena vacía
 
   const [inputs, handleChange, reset] = useFormulario(initialState); // Uso el hook personalizado en Utils
@@ -39,10 +40,16 @@ const FormularioLogin = () => {
     e.preventDefault();
 
     let regexpEmail = new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/); // Creo una expresión regular adecuada para validar el email
-
+    // Compruebo que no haya datos vacíos y que el email se adecúe a la expresión regular
     if (!txtEmail.trim() || !regexpEmail.test(txtEmail.trim()) || !txtPassword.trim()) {
       setMessage("Hay errores en la escritura de los datos");
-      setError(true); // Cambio el error a true ya que hay espacios vacíos
+      Swal.fire({ // Muestro el modal indicando error
+        title: 'Error',
+        text: ""+message,
+        icon: 'error',
+        showConfirmButton: false,
+        timer: 1500
+      });
       reset();
     }
     else{
@@ -68,28 +75,33 @@ const FormularioLogin = () => {
             rol=response.data; // Establezco la variable referente al rol en el contexto
           });
 
-          setError(false); // Establezco a falso el error
+          setMessage(response.data.message); // Consigo el mensaje de la petición
+          Swal.fire({ // Muestro el modal indicando éxito
+            title: 'Éxito!',
+            text: ""+message,
+            icon: 'success',
+            showConfirmButton: false,
+            timer: 1500
+          });
           navigate(RUTA_MAIN); // Voy hasta la página principal
         }
         else{
           setMessage(response.data.message);
-          setError(true);
+          Swal.fire({ // Muestro el modal indicando error
+            title: 'Error',
+            text: ""+message,
+            icon: 'error',
+            showConfirmButton: false,
+            timer: 1500
+          });    
         }
       });
     }
   };
-
-  // Creo un nuevo componente pequeño, referente a mostrar el error
-  const PintarError = () => (
-    <div className="alert alert-danger" role="alert">{message}</div>
-  );
-  
+ 
 
   return (
     <>
-      {/* Compruebo si existe algún error con el hook, y en caso afirmativo pinto el mensaje */}
-      {error && <PintarError />} {/* Con '&&' se hace una ternaria con sólo el caso afirmativo */}
-
       <div className="card p-0" style={{width: "18rem"}}> {/* Un card para meter el formulario dentro */}
         <div className="card-header text-center">
           <h5 className="card-title">Iniciar Sesión</h5>

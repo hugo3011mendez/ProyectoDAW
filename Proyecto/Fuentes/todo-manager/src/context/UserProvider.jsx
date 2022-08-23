@@ -27,9 +27,31 @@ const UserProvider = (props) => { // Los demás componentes que estemos viendo a
     navigate("/"); // Y vuelvo a la página de inicio
   };
 
+  /**
+   * Comprueba si están presentes los datos de inicio de sesión
+   * Y en caso de que no lo estén, vuelve a la página de login
+   */
+  const comprobarLogin = () => {
+    // Compruebo si no están guardados los datos de la sesión
+    if (id == "" && nickname == "" && rol == null) {
+      navigate("/"); // Y vuelvo a la página del login
+    }
+  }
+
+  /**
+   * Comprueba si están presentes los datos de inicio de sesión para la página del admin
+   * Y en caso de que no lo estén, vuelve a la página de login
+   */
+   const comprobarLoginAdmin = () => {
+    // Compruebo si no están guardados los datos de la sesión
+    if (id == "" && nickname == "" && rol == null) {
+      navigate("/"); // Y vuelvo a la página del login
+    }
+  }
+
   return (
     <div> {/* Uso el contexto para pasar la info que quiero que los demás componentes puedan acceder */}
-        <UserContext.Provider value={{id, nickname, rol, signOut}}>
+        <UserContext.Provider value={{id, nickname, rol, signOut, comprobarLogin}}>
           {props.children} {/* Meto a los demás componentes en el Provider */}
         </UserContext.Provider>
     </div>
