@@ -9,30 +9,23 @@ import axios from "axios";
 
 // Ruta referente a la vista del perfil del usuario
 const Perfil = () => {
-  const {id} = useContext(UserContext); // Consigo las variables del contexto
-  // const {data, loading, error} = useFetch(URL_LEER_USUARIO+id); // FIXME : Se ejecuta varias veces
-  // console.log(data);
+  const {id, comprobarLogin} = useContext(UserContext); // Consigo las variables del contexto
+  const {data, loading, error} = useFetch(URL_LEER_USUARIO+id); // FIXME : Se ejecuta varias veces, acaba después de renderizarse
 
-  function conseguirDatos(){
-    axios.get(URL_LEER_USUARIO+id).then(function(response){
-      return response.data[0];
-    });
-  }
-  let usuario = conseguirDatos();
-  console.log(usuario);
-
+  comprobarLogin(); // Añado comprobación del login
+  
   // if (loading) { // Compruebo que esté cargando los datos para mostrar el spinner
   //   return <Loading />;
   // }
-  
+    
   // if (error !== "") { // Compruebo que haya algún error para mostrarlo
   //   console.log(error);
   //   return <div className="alert alert-danger" role="alert">Error de petición a la API</div>
   // }
 
-
   return (
     <div className="container">
+      Main
       {/* <FormularioCambioPerfil usuario={data[0]} /> {/* Muestro el formulario de cambio de datos del usuario */}
     </div>
   )

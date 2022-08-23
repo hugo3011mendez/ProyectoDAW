@@ -424,4 +424,5 @@ Subiré aquí todos los archivos relacionados con el proyecto de fin de ciclo de
 	- Creado nuevo componente referente al formulario de cambio de datos del usuario actual
 	- Quitados NavBar individuales, añadido un NavBar para todas las rutas
 	- Modificado archivo de rutas según la forma correcta
-	- Añadida función `comprobarLogin()` al contexto del usuario para que nadie pueda acceder a las páginas donde se use sin antes haber iniciado sesión
+	- Añadidas funciones `comprobarLogin()` y `comprobarLoginAdmin()` al contexto del usuario para que nadie pueda acceder a las páginas donde se use sin antes haber iniciado sesión
+	- He puesto las funciones de comprobación de login en todas las rutas establecidas de momento

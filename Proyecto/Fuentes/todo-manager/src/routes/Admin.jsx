@@ -4,7 +4,8 @@ import { UserContext } from '../context/UserProvider'; // Importo el contexto de
 import ListaUsuarios from "../components/ListaUsuarios";
 
 const Admin = () => {
-  // const {id, nickname} = useContext(UserContext); // Consigo las variables del contexto
+  const {comprobarLoginAdmin} = useContext(UserContext); // Consigo las variables del contexto
+  comprobarLoginAdmin(); // Añado comprobación del login
 
   return (
     <>

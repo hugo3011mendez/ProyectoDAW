@@ -7,7 +7,8 @@ import { UserContext } from '../context/UserProvider'; // Importo el contexto de
  * Ruta referente a la vista principal de los proyectos y las tareas del usuario
  *  */ 
 const Main = () => {
-  const {nickname} = useContext(UserContext); // Consigo la variable del contexto
+  const {nickname, comprobarLogin} = useContext(UserContext); // Consigo la variable del contexto
+  comprobarLogin(); // Añado comprobación del login
 
   return (
     <>
