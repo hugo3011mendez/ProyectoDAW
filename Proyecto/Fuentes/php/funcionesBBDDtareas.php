@@ -62,7 +62,7 @@
      * @return Array asociativo referente a las tareas del proyecto indicado que están en la base de datos
      */
     function leerTareasDeProyecto($conexion, $idProyecto){
-        $sentencia = "SELECT * FROM ".TABLA_TAREAS." WHERE proyecto=".$idProyecto.";"; // Realizo la sentencia
+        $sentencia = "SELECT * FROM ".TABLA_TAREAS." WHERE proyecto=".$idProyecto." AND parentID=null;"; // Realizo la sentencia
         $resultado = mysqli_query($conexion, $sentencia); // Guardo el resultado de la ejecución de la sentencia para recorrerse
     
         if(mysqli_num_rows($resultado) > 0){
@@ -140,14 +140,13 @@
      * @param $id ID de la tarea que queremos actualizar
      * @param $nombre El nombre de la tarea
      * @param $descripcion La descripción de la tarea
-     * @param $parentID La ID de su tarea padre
      * @param $estado El estado de la tarea
      * 
      * @return Boolean Indicando el resultado de la ejecución de la función
      */
-    function actualizarTarea($conexion, $id, $nombre, $descripcion, $parentID, $estado){
+    function actualizarTarea($conexion, $id, $nombre, $descripcion, $estado){
         // Armo la sentencia
-        $sentencia = "UPDATE ".TABLA_TAREAS." SET nombre = '".$nombre."', descripcion = '".$descripcion."', fecha_modificacion = NOW(), parentID = ".$parentID.", estado = ".$estado." WHERE id = ".$id;
+        $sentencia = "UPDATE ".TABLA_TAREAS." SET nombre = '".$nombre."', descripcion = '".$descripcion."', fecha_modificacion = NOW(), estado = ".$estado." WHERE id = ".$id;
         // Compruebo el resultado de la ejecución de la sentencia y devuelvo un booleano según corresponda
         return comprobarResultadoDeQuery($conexion, $sentencia);
     }

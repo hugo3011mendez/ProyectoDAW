@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { useFetch } from '../hooks/useFetch';
 import Loading from './Loading';
 import {URL_LEER_USUARIOS, URL_ELIMINAR_USUARIO} from '../services/API'; // Importo la constante referente a la API
@@ -9,7 +8,8 @@ const ListaUsuarios = () => { // Referente a listar los usuarios
 
   // Consigo los datos del hook personalizado llamándolo y pasándole la URL a la que quiero realizarla
   const {data, error, loading} = useFetch(URL_LEER_USUARIOS);
-  console.log(data);
+  console.log(data); // FIXME : Se ejecuta varias veces y devuelve undefined
+
   if (loading) { // Compruebo que esté cargando los datos para mostrar el spinner
     return <Loading />;
   }
@@ -49,7 +49,7 @@ const ListaUsuarios = () => { // Referente a listar los usuarios
             <th scope="col">ID</th>
             <th scope="col">Email</th>
             <th scope="col">Nickname</th>
-            <th scope="col">Password</th>
+            <th scope="col">Contraseña</th>
             <th scope="col">Rol</th>
             <th scope='col'>Acciones</th>
         </thead>

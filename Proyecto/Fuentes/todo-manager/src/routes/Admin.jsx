@@ -8,9 +8,9 @@ const Admin = () => {
   comprobarLoginAdmin(); // Añado comprobación del login
 
   return (
-    <>
+    <div className="container">
       <ListaUsuarios /> {/* Muestro la lista de los usuarios en la base de datos */}
-    </>
+    </div>
   )
 }
 

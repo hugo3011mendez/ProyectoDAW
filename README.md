@@ -417,6 +417,7 @@ Subiré aquí todos los archivos relacionados con el proyecto de fin de ciclo de
 	- Añadida comprobación y función referentes a la obtención del nickname de un usuario dado
 	- He eliminado la carpeta antigua de PHP ya que no me sirve de utilidad
 
+
 ### 23/08/2022
 - Proyecto de React con ToDo Manager
 	- Quitado componente referente al error y añadido modal de SweetAlert en su lugar para los formularios de login y registro
@@ -426,3 +427,25 @@ Subiré aquí todos los archivos relacionados con el proyecto de fin de ciclo de
 	- Modificado archivo de rutas según la forma correcta
 	- Añadidas funciones `comprobarLogin()` y `comprobarLoginAdmin()` al contexto del usuario para que nadie pueda acceder a las páginas donde se use sin antes haber iniciado sesión
 	- He puesto las funciones de comprobación de login en todas las rutas establecidas de momento
+
+
+### 24/08/2022
+- Proyecto de React con ToDo Manager
+	- Añadida exportación de `comprobarLoginAdmin()` en el contexto del usuario
+	- Establecido un fragment en la ruta *Perfil*
+	- Cambiado diseño de *ListaUsuarios.jsx*
+	- *Main.jsx* :
+		- Importados y añadidos *ListaProyectos.jsx* y *ListaTareas.jsx*
+	- Quitada clase container en el div de *App.jsx* y añadida clase container a las rutas *Perfil.jsx* y *Admin.jsx*
+	- Creada nueva URL en *API.js* referente a leer los proyectos de un usuario
+	- Creada ruta a la página de editar un proyecto en *Rutas.js* y en *index.js*
+	- Creado componente referente al formulario para editar un proyecto
+	- Modificados los comentarios en el formulario referente a editar los datos del perfil
+	- Creada ruta a la página de editar una tarea en *Rutas.js* y en *index.js*
+	- Mostrada tabla en *ListaTareas.jsx*
+	- Modificados parámetros de envío en el cuerpo JSON de los formularios que editan entidades
+
+- Modificados archivos PHP del lado del servidor
+	- Añadidas funciones para leer los proyectos de un usuario creador
+	- Modificada sentencia en la función que lista las tareas, para que sólo se muestren las tareas padre
+	- Quitado ParentID de la función referente a actualizar una tarea

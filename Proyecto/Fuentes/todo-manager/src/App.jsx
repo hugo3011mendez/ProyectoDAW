@@ -1,5 +1,6 @@
-import { Outlet } from "react-router-dom";
-import Navbar from "./components/Navbar";
+import { Outlet } from "react-router-dom"; // Importaciones de módulos de React Router DOM
+// Importaciones de componentes :
+import Navbar from "./components/Navbar"; 
 
 // Aplicación principal
 const App = () => {
@@ -7,7 +8,7 @@ const App = () => {
     <div>
       <Navbar /> {/* Llamo al componente antes del título porque es un Navbar */}
 
-      <div className="container">
+      <div>
         <Outlet /> {/* Con esta etiqueta indicamos que aquí se debe pintar el componente referente a la ruta en la que esté */}
       </div>
 

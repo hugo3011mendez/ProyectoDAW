@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import UserProvider  from './context/UserProvider'; // Importo el contexto del usuario
-import { RUTA_ADMIN, RUTA_MAIN, RUTA_PERFIL, RUTA_REGISTRO } from './services/Rutas'; // Importo el servicio de rutas
+import { RUTA_ADMIN, RUTA_EDITAR_PROYECTO, RUTA_EDITAR_TAREA, RUTA_MAIN, RUTA_PERFIL, RUTA_REGISTRO } from './services/Rutas'; // Importo el servicio de rutas
 // Importaciones de rutas
 import Login from './routes/Login';
 import Registro from './routes/Registro';
@@ -11,6 +11,8 @@ import Main from './routes/Main';
 import Perfil from './routes/Perfil';
 import Admin from './routes/Admin';
 import PageNotFound from './routes/PageNotFound';
+import EditarProyecto from './routes/EditarProyecto';
+import EditarTarea from './routes/EditarTarea';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -27,7 +29,9 @@ root.render(
           {/* Vista de todas las rutas excepto login y registro */}
           <Route path={RUTA_MAIN} element={<App />} >
             <Route index element={<Main />} /> {/* Este componente comparte la ruta de App - Referente a la vista principal */}
-            <Route path={RUTA_PERFIL} element={<Perfil />} /> {/* Ruta referente al perfil del usuario */}
+            <Route path={RUTA_EDITAR_PROYECTO} element={<EditarProyecto />} /> {/* Para editar un proyecto en la BBDD */}
+            <Route path={RUTA_EDITAR_TAREA} element={<EditarTarea />} /> {/* Para editar una tarea en la BBDD */}
+            <Route path={RUTA_PERFIL} element={<Perfil />} /> {/* Este componente comparte la ruta de App - Referente a la vista principal */}
             <Route path={RUTA_ADMIN} element={<Admin />} /> {/* Ruta referente al menú de admin del usuario */}
           </Route>
         </Routes>

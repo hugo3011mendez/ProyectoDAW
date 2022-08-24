@@ -32,9 +32,8 @@
     
 
     //------------------------------------------------------------- READ -----------------------------------------------
-
     /**
-     * Consigo todos los proyectos de la base de datos y devuelvo la info
+     * Consigo todos los proyectos de un usuario de la base de datos y devuelvo la info
      * 
      * @param $conexion La conexión con la base de datos
      * 
@@ -42,6 +41,25 @@
      */
     function leerProyectos($conexion){
         $sentencia = "SELECT * FROM ".TABLA_PROYECTOS.";";
+        $resultado = mysqli_query($conexion, $sentencia); // Guardo el resultado de la ejecución de la sentencia para recorrerse
+    
+        if(mysqli_num_rows($resultado) > 0){
+            $proyectos = mysqli_fetch_all($resultado, MYSQLI_ASSOC);
+            return json_encode($proyectos);
+        }
+    }
+
+
+    /**
+     * Consigo todos los proyectos de un usuario de la base de datos y devuelvo la info
+     * 
+     * @param $conexion La conexión con la base de datos
+     * @param $idUsuario La ID del usuario creador del proyecto
+     * 
+     * @return Array asociativo referente a los proyectos que están en la base de datos
+     */
+    function leerProyectosDeUsuario($conexion, $idUsuario){
+        $sentencia = "SELECT * FROM ".TABLA_PROYECTOS." WHERE usuario_creador=".$idUsuario.";";
         $resultado = mysqli_query($conexion, $sentencia); // Guardo el resultado de la ejecución de la sentencia para recorrerse
     
         if(mysqli_num_rows($resultado) > 0){

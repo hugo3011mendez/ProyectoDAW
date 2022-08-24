@@ -1,23 +1,22 @@
 import { useState, useContext } from "react"; // Importamos el hook de React
 import { useFormulario } from "../hooks/useFormulario"; // Importación del hook personalizado referente al form
 import axios from "axios"; // Importo Axios
-import { URL_ACTUALIZAR_USUARIO } from "../services/API"; // Importación de URLs del archivo de constantes
+import { URL_ACTUALIZAR_TAREA } from "../services/API"; // Importación de URLs del archivo de constantes
 import Swal from 'sweetalert2' // Importo el paquete de Sweet Alert 2 que he instalado previamente en el proyecto
 
-const FormularioCambioPerfil = ({usuario}) => {
+const FormularioCambioTarea = ({tarea}) => {
  
   // Declaro una variable con los valores iniciales que deben tomar los elementos del form
   const initialState = { // El estado inicial de los campos es igual al de los valores del usuario
-    txtEmail: usuario.email,
-    txtNickname: usuario.nickname,
-    txtPassword: usuario.pwd,
-    txtRePassword: ""
+    txtNombre: tarea.nombre,
+    txtDescripcion: tarea.descripcion,
+    estado: null, // Establezco el estado inicial a null para que el usuario tenga que escogerlo de nuevo
   };
 
   const [message, setMessage] = useState(""); // Un hook referente al mensaje de error por defecto una cadena vacía
 
   const [inputs, handleChange, reset] = useFormulario(initialState); // Uso el hook personalizado en Utils
-  const {txtEmail, txtPassword, txtNickname, txtRePassword} = inputs; // Destructuración de los valores de los inputs
+  const {txtNombre, txtDescripcion, estado} = inputs; // Destructuración de los valores de los inputs
 
   /**
     * Función para controlar el evento onSubmit
@@ -25,11 +24,9 @@ const FormularioCambioPerfil = ({usuario}) => {
     */
   const handleSubmit = e => {
     e.preventDefault();
-    
-    let regexpEmail = new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/); // Creo una expresión regular adecuada para validar el email
 
     // Compruebo los datos escritos
-    if (!txtEmail.trim() || !regexpEmail.test(txtEmail.trim()) || !txtNickname.trim() || !txtPassword.trim() || !txtRePassword.trim()) {
+    if (!txtNombre.trim() || !txtDescripcion.trim() || estado == null) {
       setMessage("Errores en la escritura de los datos"); // Establezco el valor del mensaje de error
       Swal.fire({ // Muestro el modal indicando error
         title: 'Error',
@@ -40,23 +37,13 @@ const FormularioCambioPerfil = ({usuario}) => {
       });
       reset(); // Termino reiniciando el estado de los inputs
     }
-    else if(txtPassword.trim()!==txtRePassword.trim()){ // En el caso de que las contraseñas no coincidan
-      setMessage("Las contraseñas no coinciden"); // Establezco el valor del mensaje de error
-      Swal.fire({ // Muestro el modal indicando error
-        title: 'Error',
-        text: ""+message,
-        icon: 'error',
-        showConfirmButton: false,
-        timer: 1500
-      });
-    }
     else{
       // Defino el cuerpo del mensaje que le mandaré a la API con los datos introducidos
-      const datosEnviar = {"id":usuario.id, "txtEmail":txtEmail.trim(), "txtNickname":txtNickname.trim(), "txtPassword":txtPassword.trim(), "rol":1};
+      const datosEnviar = {"id": tarea.id, "txtNombre":txtNombre.trim(), "txtDescripcion":txtDescripcion.trim(), "estado":parseInt(estado)};
       const cuerpo = JSON.stringify(datosEnviar); // Convierto a JSON los datos a enviar a la API
 
       // Realizo la petición a la API con Axios
-      axios.post(URL_ACTUALIZAR_USUARIO, cuerpo).then(function(response){
+      axios.post(URL_ACTUALIZAR_TAREA, cuerpo).then(function(response){
         if (response.data.success == 1) {
           setMessage(response.data.message); // Consigo el mensaje de la petición
           Swal.fire({ // Muestro el modal indicando éxito
@@ -86,45 +73,40 @@ const FormularioCambioPerfil = ({usuario}) => {
     <>
       <h5>Datos del perfil</h5>
       <form className="mb-3" onSubmit={handleSubmit}> {/* Le paso el hook a la referencia y le adjunto el evento onSubmit */}
-        {/* Campo referente al email del usuario */}
-        <label htmlFor="txtEmail"> Email : </label>
+        {/* Campo referente al nombre de la tarea */}
+        <label htmlFor="txtNombre"> Nombre : </label>
         <input
           type="text"
-          name="txtEmail"
+          name="txtNombre"
           className="form-control mb-2" 
           onChange={handleChange}
-          value={txtEmail}
+          value={txtNombre}
         /> {/* Le asocio el evento onChange referenciando a su función manejadora y el valor a cambiar correspondiente */}
 
-        {/* Campo referente al nickname del usuario */}
-        <label htmlFor="txtNickname"> Nickname : </label>
-        <input
+        {/* Campo referente al descripción del usuario */}
+        <label htmlFor="txtDescripcion"> Descripción : </label>
+        <textarea
           type="text"
-          name="txtNickname"
+          name="txtDescripcion"
           className="form-control mb-2" 
           onChange={handleChange}
-          value={txtNickname}
+          value={txtDescripcion}
         /> {/* Le asocio el evento onChange referenciando a su función manejadora y el valor a cambiar correspondiente */}
 
-        {/* Campo referente a la contraseña del usuario */}
-        <label htmlFor="txtPassword"> Contraseña : </label>
-        <input
-          type="password"
-          name="txtPassword"
-          className="form-control mb-2" 
-          onChange={handleChange}
-          value={txtPassword}
-        /> {/* Le asocio el evento onChange referenciando a su función manejadora y el valor a cambiar correspondiente */}
-            
-        {/* Campo referente a la repetición de la contraseña del usuario */}
-        <label htmlFor="txtRePassword"> Repite la contraseña : </label>
-        <input
-          type="password"
-          name="txtRePassword"
-          className="form-control mb-2" 
-          onChange={handleChange}
-          value={txtRePassword}
-        /> {/* Le asocio el evento onChange referenciando a su función manejadora y el valor a cambiar correspondiente */}
+
+        {/* Radio Buttons referentes al estado de la tarea : */}
+        <div className="form-check">
+          <input className="form-check-input" type="radio" name="estado" id="pendiente" value={0} onChange={handleChange} />
+          <label className="form-check-label" htmlFor="pendiente">
+            Pendiente
+          </label>
+        </div>
+        <div className="form-check">
+          <input className="form-check-input" type="radio" name="estado" id="finalizada" value={1} onChange={handleChange} />
+          <label className="form-check-label" htmlFor="finalizada">
+            Finalizada
+          </label>
+        </div>
 
         <button type="submit" className="btn btn-warning">Actualizar datos</button>
       </form>
@@ -132,4 +114,4 @@ const FormularioCambioPerfil = ({usuario}) => {
   )
 }
 
-export default FormularioCambioPerfil
+export default FormularioCambioTarea

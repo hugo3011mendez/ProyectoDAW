@@ -64,10 +64,9 @@
                 $id = $data->id;
                 $nombre = $data->txtNombre;
                 $descripcion = $data->txtDescripcion;
-                $parentID = $data->parentID;
                 $estado = $data->estado;
                 
-                if(actualizarTarea($conexionBBDD, $id, $nombre, $descripcion, $parentID, $estado)){
+                if(actualizarTarea($conexionBBDD, $id, $nombre, $descripcion, $estado)){
                     echo json_encode(["success"=>1, "message"=>"Tarea ".$nombre." actualizada correctamente"]);
                 }
                 else {echo json_encode(["success"=>0, "message"=>"Error al actualizar la tarea".$nombre]);}

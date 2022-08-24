@@ -36,6 +36,11 @@
     if (isset($_GET["listaProyectos"])) {
         echo leerProyectos($conexionBBDD);
     }
+
+    // $_GET["leerProyectosDeUsuario"] es la ID del usuario creador
+    if (isset($_GET["leerProyectosDeUsuario"])) {
+        echo leerProyectosDeUsuario($conexionBBDD, $_GET["leerProyectosDeUsuario"]);
+    }
     
     // $_GET["conseguirProyecto"] es la ID del proyecto
     if (isset($_GET["conseguirProyecto"])) {

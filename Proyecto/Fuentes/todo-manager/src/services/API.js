@@ -13,6 +13,7 @@ const URL_ELIMINAR_USUARIO = "https://localhost/ToDoManager/funcionesUsuarios.ph
 // const URL_PROYECTO = "https://localhost/ToDoManager/funcionesProyectos.php";
 const URL_CREAR_PROYECTO = "https://localhost/ToDoManager/funcionesProyectos.php?crearProyecto=1";
 const URL_LEER_PROYECTOS = "https://localhost/ToDoManager/funcionesProyectos.php?listaProyectos=1";
+const URL_LEER_PROYECTOS_DE_USUARIO = "https://localhost/ToDoManager/funcionesProyectos.php?leerProyectosDeUsuario="; // Concatenar con la ID cuando se use
 const URL_LEER_PROYECTO = "https://localhost/ToDoManager/funcionesProyectos.php?conseguirProyecto="; // Concatenar con la ID cuando se use
 const URL_ACTUALIZAR_PROYECTO = "https://localhost/ToDoManager/funcionesProyectos.php?actualizarProyecto=1";
 const URL_ELIMINAR_PROYECTO = "https://localhost/ToDoManager/funcionesProyectos.php?eliminarProyecto="; // Concatenar con la ID cuando se use
@@ -36,7 +37,7 @@ const URL_ELIMINAR_ROL = "https://localhost/ToDoManager/funcionesRoles.php?elimi
 
 
 export { URL_LOGIN_USUARIO, URL_NICKNAME_USUARIO, URL_ROL_USUARIO, URL_REGISTRAR_USUARIO, URL_LEER_USUARIOS, URL_LEER_USUARIO, URL_ACTUALIZAR_USUARIO, URL_ELIMINAR_USUARIO,
-    URL_CREAR_PROYECTO, URL_LEER_PROYECTOS, URL_LEER_PROYECTO, URL_ACTUALIZAR_PROYECTO, URL_ELIMINAR_PROYECTO,
+    URL_CREAR_PROYECTO, URL_LEER_PROYECTOS, URL_LEER_PROYECTOS_DE_USUARIO, URL_LEER_PROYECTO, URL_ACTUALIZAR_PROYECTO, URL_ELIMINAR_PROYECTO,
     URL_CREAR_TAREA, URL_LEER_TAREAS_DE_PROYECTO, URL_LEER_SUBTAREAS, URL_LEER_TAREA, URL_ACTUALIZAR_TAREA, URL_ELIMINAR_TAREA,
     URL_CREAR_ROL, URL_LEER_ROLES, URL_LEER_ROL, URL_ACTUALIZAR_ROL, URL_ELIMINAR_ROL
 }

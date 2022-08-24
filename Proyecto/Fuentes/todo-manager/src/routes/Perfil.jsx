@@ -1,11 +1,10 @@
-import { useContext, useEffect } from "react"; // Importamos módulos de React
+import { useContext } from "react"; // Importamos módulos de React
 import { UserContext } from '../context/UserProvider'; // Importo el contexto del usuario
 import { useFetch } from '../hooks/useFetch'; // Importo el hook personalizado referente al fetch
 import { URL_LEER_USUARIO } from "../services/API"; // Importación de URLs del archivo de constantes
 // Importación de componentes personalizados
 import FormularioCambioPerfil from "../components/FormularioCambioPerfil";
 import Loading from '../components/Loading';
-import axios from "axios";
 
 // Ruta referente a la vista del perfil del usuario
 const Perfil = () => {
@@ -25,7 +24,7 @@ const Perfil = () => {
 
   return (
     <div className="container">
-      Main
+      Perfil
       {/* <FormularioCambioPerfil usuario={data[0]} /> {/* Muestro el formulario de cambio de datos del usuario */}
     </div>
   )

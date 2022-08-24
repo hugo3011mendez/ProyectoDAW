@@ -12,6 +12,7 @@ const UserProvider = (props) => { // Los demás componentes que estemos viendo a
   // Referente al rol del usuario
   let rol = localStorage.getItem("rol") ? localStorage.getItem("rol") : null;
   
+  
   const navigate = useNavigate(); // Establezco el hook referente a cambiar de ruta
 
   /**
@@ -51,7 +52,7 @@ const UserProvider = (props) => { // Los demás componentes que estemos viendo a
 
   return (
     <div> {/* Uso el contexto para pasar la info que quiero que los demás componentes puedan acceder */}
-        <UserContext.Provider value={{id, nickname, rol, signOut, comprobarLogin}}>
+        <UserContext.Provider value={{id, nickname, rol, signOut, comprobarLogin, comprobarLoginAdmin}}>
           {props.children} {/* Meto a los demás componentes en el Provider */}
         </UserContext.Provider>
     </div>
