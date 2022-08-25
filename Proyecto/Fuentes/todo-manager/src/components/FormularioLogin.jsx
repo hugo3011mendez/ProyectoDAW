@@ -1,23 +1,16 @@
 import { useState, useContext } from "react"; // Importamos módulos de React
-import { Link, useNavigate } from "react-router-dom"; // Importación de componentes de React Router DOM
+import { Link } from "react-router-dom"; // Importación de componentes de React Router DOM
 import { useFormulario } from "../hooks/useFormulario"; // Importación del hook personalizado del form
 import axios from "axios"; // Importo Axios
 import { URL_LOGIN_USUARIO, URL_NICKNAME_USUARIO, URL_ROL_USUARIO } from "../services/API"; // Importación de URLs de la API
 import { UserContext } from '../context/UserProvider'; // Importo el contexto del usuario
-import { RUTA_MAIN, RUTA_REGISTRO } from '../services/Rutas'; // Importo el servicio de rutas
+import { RUTA_REGISTRO } from '../services/Rutas'; // Importo el servicio de rutas
 import Swal from 'sweetalert2' // Importo el paquete de Sweet Alert 2 que he instalado previamente en el proyecto
-
 
 /**
  * Componente referente al formulario de inicio de sesión
  */
 const FormularioLogin = () => {
-
-  const navigate = useNavigate(); // Establezco el hook referente a cambiar de ruta
-  if (localStorage.getItem("ID") && localStorage.getItem("nickname")) {
-    navigate(RUTA_MAIN);
-  }
-
   let {id, nickname, rol} = useContext(UserContext); // Consigo las variables del contexto
 
   // Declaro una variable con los valores iniciales que deben tomar los elementos del form
@@ -83,7 +76,7 @@ const FormularioLogin = () => {
             showConfirmButton: false,
             timer: 1500
           });
-          navigate(RUTA_MAIN); // Voy hasta la página principal
+          window.location.reload(); // Recargo la página para que el localStorage y el contexto se guarden
         }
         else{
           setMessage(response.data.message);

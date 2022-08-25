@@ -449,3 +449,10 @@ Subiré aquí todos los archivos relacionados con el proyecto de fin de ciclo de
 	- Añadidas funciones para leer los proyectos de un usuario creador
 	- Modificada sentencia en la función que lista las tareas, para que sólo se muestren las tareas padre
 	- Quitado ParentID de la función referente a actualizar una tarea
+
+
+### 25/08/2022
+- Proyecto de React con ToDo Manager
+	- Modificado formulario de login para que una vez loggeado se recargue la página 
+	- Modificada ruta de login para que compruebe si el usuario está loggeado y navegue directamente hacia Main
+	- 

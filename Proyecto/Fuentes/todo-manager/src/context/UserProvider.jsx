@@ -12,7 +12,6 @@ const UserProvider = (props) => { // Los demás componentes que estemos viendo a
   // Referente al rol del usuario
   let rol = localStorage.getItem("rol") ? localStorage.getItem("rol") : null;
   
-  
   const navigate = useNavigate(); // Establezco el hook referente a cambiar de ruta
 
   /**

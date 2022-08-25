@@ -7,9 +7,10 @@ import FormularioLogin from '../components/FormularioLogin';
 // Ruta referente a la página de Login del usuario
 const Login = () => {
   const navigate = useNavigate(); // Establezco el hook referente a cambiar de ruta
-  // Meto la comprobación del inicio de sesión dentro de este hook para que lo compruebe cada vez que se tenga que renderizar la ruta
-  useEffect(()=>{
-    if (localStorage.getItem("ID") && localStorage.getItem("nickname")) { // TODO : Mejorar la redirección
+  
+  // Si existen los elementos en el localStorage significa que el usuario habrá iniciado sesión así que voy directamente hacia Main
+  useEffect(()=>{ // Uso el hook para que se ejecute la primera vez que se renderice
+    if (localStorage.getItem("ID") && localStorage.getItem("nickname")) {
       navigate(RUTA_MAIN);
     }
   }, []);

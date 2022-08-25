@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useContext } from "react"; // Importación de módulos de React
 import { NavLink } from "react-router-dom"; // Importación de componentes de React Router DOM
 import { UserContext } from '../context/UserProvider'; // Importo el contexto del usuario
@@ -7,7 +6,7 @@ import { RUTA_ADMIN, RUTA_MAIN, RUTA_PERFIL } from '../services/Rutas'; // Impor
 /**
  * Navbar que se mostrará en todas las páginas después del login
  */
-const Navbar = () => { // TODO : Ver para que se recargue sólo 1 vez
+const Navbar = () => {
   const {nickname, rol, signOut} = useContext(UserContext); // Consigo la variable del contexto referente a cerrar sesión
 
   return (

@@ -31,7 +31,7 @@ const ListaTareas = ({proyecto}) => { // Recibo la ID del proyecto como prop
   }
   
 
-  return ( // TODO : Mostrar las tareas
+  return (
   <>
     <h4>Tareas</h4>
     <table className='col-10 border-start table'>
