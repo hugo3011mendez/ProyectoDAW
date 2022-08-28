@@ -455,4 +455,9 @@ Subiré aquí todos los archivos relacionados con el proyecto de fin de ciclo de
 - Proyecto de React con ToDo Manager
 	- Modificado formulario de login para que una vez loggeado se recargue la página 
 	- Modificada ruta de login para que compruebe si el usuario está loggeado y navegue directamente hacia Main
-	- 
+
+
+### 28/08/2022
+- Proyecto de React con ToDo Manager
+	- Cambiado el nombre del hook relacionado con realizar peticiones con Axios
+	- Añadido hook referente a realizar peticiones a la API con fetch()

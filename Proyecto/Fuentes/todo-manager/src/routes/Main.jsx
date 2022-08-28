@@ -3,6 +3,7 @@ import { UserContext } from '../context/UserProvider'; // Importo el contexto de
 // Importación de componentes personalizados
 import ListaProyectos from "../components/ListaProyectos";
 import ListaTareas from "../components/ListaTareas";
+import { useEffect } from "react";
 
 
 /**
@@ -10,7 +11,10 @@ import ListaTareas from "../components/ListaTareas";
  *  */ 
 const Main = () => {
   const {comprobarLogin} = useContext(UserContext); // Consigo la variable del contexto
-  comprobarLogin(); // Añado comprobación del login
+  
+  useEffect(()=>{
+    comprobarLogin(); // Añado comprobación del login
+  }, []);
 
   // TODO : Pendiente para añadir una tarea
   // TODO : Pendiente para añadir un proyecto

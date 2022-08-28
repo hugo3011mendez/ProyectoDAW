@@ -37,10 +37,10 @@ const ListaProyectos = () => {
   return (
     <div className="col-2 border-end">
       <h4>Proyectos</h4>
-      <ul class="list-group">
+      <ul className="list-group">
         { // Listo todos los proyectos del usuario que haya para que se muestren
           data.map(item =>
-            <li class="list-group-item">
+            <li className="list-group-item">
               {item.nombre} {/* Muestro el nombre del proyecto */}
               {/* Pongo un botón que elimine el proyecto */}
               <button type="button" className="btn btn-danger ms-1" onClick={() => eliminarProyecto(item.id)}>Eliminar</button>
