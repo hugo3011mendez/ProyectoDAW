@@ -18,12 +18,12 @@
     function login($conexion, $email, $password){
         $password = md5($password); // Encripto la contraseña introducida
         // Armo la sentencia para buscar el usuario con el email y la contraseña introducidos
-        $sentencia = "SELECT * FROM ".TABLA_USUARIOS." WHERE email='".$email."' AND pwd='".$password."';";
+        $sentencia = "SELECT id, nickname, rol FROM ".TABLA_USUARIOS." WHERE email='".$email."' AND pwd='".$password."';";
         $resultado = mysqli_query($conexion, $sentencia); // Y guardo el resultado de su ejecución
     
         if ($resultado-> num_rows > 0) { // Si hay un usuario que coincida
             $usuario = $resultado -> fetch_object(); // Consigo los datos en forma de objeto
-            return $usuario->id; // Devuelvo la ID del usuario encontrado
+            return $usuario; // Devuelvo el usuario encontrado
         }
         else { // Si no hay usuarios que coincidan, devuelvo false y un mensaje de error
             return accionesDeError($conexion);
@@ -131,42 +131,42 @@
         }
     }
 
-    /**
-     * Devuelve el nickname del usuario indicado
-     * 
-     * @param $conexion La conexión con la base de datos
-     * @param $id La ID del usuario a buscar
-     * 
-     * @return String El nickname del usuario buscado
-     */
-    function conseguirNickname($conexion, $id){
-        $sentencia = "SELECT nickname FROM ".TABLA_USUARIOS." WHERE id=".$id.";";
-        $resultado = mysqli_query($conexion, $sentencia); // Guardo el resultado de la ejecución de la sentencia para recorrerse
+    // /**
+    //  * Devuelve el nickname del usuario indicado
+    //  * 
+    //  * @param $conexion La conexión con la base de datos
+    //  * @param $id La ID del usuario a buscar
+    //  * 
+    //  * @return String El nickname del usuario buscado
+    //  */
+    // function conseguirNickname($conexion, $id){
+    //     $sentencia = "SELECT nickname FROM ".TABLA_USUARIOS." WHERE id=".$id.";";
+    //     $resultado = mysqli_query($conexion, $sentencia); // Guardo el resultado de la ejecución de la sentencia para recorrerse
 
-        if(mysqli_num_rows($resultado) > 0){
-            $datos = $resultado -> fetch_object();
-            return $datos->nickname;
-        }
-    }
+    //     if(mysqli_num_rows($resultado) > 0){
+    //         $datos = $resultado -> fetch_object();
+    //         return $datos->nickname;
+    //     }
+    // }
 
 
-    /**
-     * Devuelve el rol del usuario indicado
-     * 
-     * @param $conexion La conexión con la base de datos
-     * @param $id La ID del usuario a buscar
-     * 
-     * @return Int El rol del usuario buscado
-     */
-    function conseguirRol($conexion, $id){
-        $sentencia = "SELECT rol FROM ".TABLA_USUARIOS." WHERE id=".$id.";";
-        $resultado = mysqli_query($conexion, $sentencia); // Guardo el resultado de la ejecución de la sentencia para recorrerse
+    // /**
+    //  * Devuelve el rol del usuario indicado
+    //  * 
+    //  * @param $conexion La conexión con la base de datos
+    //  * @param $id La ID del usuario a buscar
+    //  * 
+    //  * @return Int El rol del usuario buscado
+    //  */
+    // function conseguirRol($conexion, $id){
+    //     $sentencia = "SELECT rol FROM ".TABLA_USUARIOS." WHERE id=".$id.";";
+    //     $resultado = mysqli_query($conexion, $sentencia); // Guardo el resultado de la ejecución de la sentencia para recorrerse
 
-        if(mysqli_num_rows($resultado) > 0){
-            $datos = $resultado -> fetch_object();
-            return $datos->rol;
-        }
-    }
+    //     if(mysqli_num_rows($resultado) > 0){
+    //         $datos = $resultado -> fetch_object();
+    //         return $datos->rol;
+    //     }
+    // }
 
 
 

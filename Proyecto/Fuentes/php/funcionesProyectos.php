@@ -44,7 +44,7 @@
     
     // $_GET["conseguirProyecto"] es la ID del proyecto
     if (isset($_GET["conseguirProyecto"])) {
-        echo leerProyecto($conexionBBDD);
+        echo leerProyecto($conexionBBDD, $_GET["conseguirProyecto"]);
     }    
 
 

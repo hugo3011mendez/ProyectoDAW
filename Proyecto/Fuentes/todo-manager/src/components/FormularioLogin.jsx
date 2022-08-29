@@ -2,7 +2,7 @@ import { useState, useContext } from "react"; // Importamos módulos de React
 import { Link } from "react-router-dom"; // Importación de componentes de React Router DOM
 import { useFormulario } from "../hooks/useFormulario"; // Importación del hook personalizado del form
 import axios from "axios"; // Importo Axios
-import { URL_LOGIN_USUARIO, URL_NICKNAME_USUARIO, URL_ROL_USUARIO } from "../services/API"; // Importación de URLs de la API
+import { URL_LOGIN_USUARIO } from "../services/API"; // Importación de URLs de la API
 import { UserContext } from '../context/UserProvider'; // Importo el contexto del usuario
 import { RUTA_REGISTRO } from '../services/Rutas'; // Importo el servicio de rutas
 import Swal from 'sweetalert2' // Importo el paquete de Sweet Alert 2 que he instalado previamente en el proyecto
@@ -49,37 +49,34 @@ const FormularioLogin = () => {
       // Defino el cuerpo del mensaje que le mandaré a la API con los datos introducidos
       const datosEnviar = {"txtEmail":txtEmail.trim(), "txtPassword":txtPassword.trim()};
       const cuerpo = JSON.stringify(datosEnviar); // Convierto a JSON los datos a enviar a la API
-
+      
       // Realizo la petición a la API enviándole los datos del cuerpo previamente establecido
       axios.post(URL_LOGIN_USUARIO, cuerpo).then(function(response){
         if (response.data.success == 1) { // Si he recibido una respuesta OK
-          localStorage.setItem("ID", response.data.id); // Establezco la ID en el localStorage
-          id=response.data.id; // Establezco la variable referente al ID en el contexto
+          localStorage.setItem("ID", response.data.usuario.id); // Establezco la ID en el localStorage
+          id = response.data.usuario.id; // Establezco la variable referente al ID en el contexto
 
-          // Realizo la petición para conseguir el nickname del usuario que iniciará sesión
-          axios.get(URL_NICKNAME_USUARIO+response.data.id).then(function(response){
-            localStorage.setItem("nickname", response.data); // Establezco el nickname en el localStorage
-            nickname=response.data; // Establezco la variable referente al nickname en el contexto
-          });
+          localStorage.setItem("nickname", response.data.usuario.nickname); // Establezco el nickname en el localStorage
+          nickname = response.data.usuario.nickname; // Establezco la variable referente al nickname en el contexto
 
-          // Realizo la petición para conseguir el rol del usuario que iniciará sesión
-          axios.get(URL_ROL_USUARIO+response.data.id).then(function(response){
-            localStorage.setItem("rol", response.data); // Establezco el rol en el localStorage
-            rol=response.data; // Establezco la variable referente al rol en el contexto
-          });
+          localStorage.setItem("rol", response.data.usuario.rol); // Establezco el rol en el localStorage
+          rol = response.data.usuario.rol; // Establezco la variable referente al rol en el contexto
 
-          setMessage(response.data.message); // Consigo el mensaje de la petición
-          Swal.fire({ // Muestro el modal indicando éxito
-            title: 'Éxito!',
-            text: ""+message,
-            icon: 'success',
-            showConfirmButton: false,
-            timer: 1500
-          });
-          window.location.reload(); // Recargo la página para que el localStorage y el contexto se guarden
+          if (id != "" && nickname != "" && rol != null) { // Compruebo que las variables del contexto estén bien puestas
+            setMessage(response.data.message); // Establezco el mensaje que se mostrará en SweetAlert
+            Swal.fire({ // Muestro el modal indicando éxito
+              title: 'Éxito!',
+              text: ""+message,
+              icon: 'success',
+              showConfirmButton: false,
+              timer: 1500
+            });
+
+            window.location.reload(); // Recargo la página para que pase a Main
+          }
         }
-        else{
-          setMessage(response.data.message);
+        else{ // Si la respuesta no da OK
+          setMessage(response.data.message); // Establezco el mensaje que se mostrará en SweetAlert
           Swal.fire({ // Muestro el modal indicando error
             title: 'Error',
             text: ""+message,

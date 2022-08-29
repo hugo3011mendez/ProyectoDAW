@@ -2,11 +2,11 @@ import { useContext } from "react"; // Importamos módulos de React
 import { Link } from "react-router-dom";
 import { UserContext } from '../context/UserProvider'; // Importo el contexto del usuario
 import { useFetch } from '../hooks/useFetch'; // Importo el hook personalizado referente al fetch
-import { URL_ELIMINAR_TAREA, URL_LEER_TAREAS_DE_PROYECTO, URL_ACTUALIZAR_TAREA, URL_CREAR_TAREA } from "../services/API"; // Importación de URLs del archivo de constantes
+import { URL_ELIMINAR_TAREA, URL_LEER_TAREAS_DE_PROYECTO, URL_CREAR_TAREA } from "../services/API"; // Importación de URLs del archivo de constantes
 import axios from "axios";
 // Importaciones de componentes personalizados
 import Loading from './Loading';
-import { RUTA_EDITAR_TAREA_SIN_ID } from "../services/Rutas";
+import { RUTA_CREAR_TAREA, RUTA_EDITAR_TAREA_SIN_ID } from "../services/Rutas";
 
 const ListaTareas = ({proyecto}) => { // Recibo la ID del proyecto como prop
   // Consigo los datos del hook personalizado llamándolo y pasándole la URL a la que quiero realizarla
@@ -18,7 +18,7 @@ const ListaTareas = ({proyecto}) => { // Recibo la ID del proyecto como prop
   }
     
   if (error !== "") { // Compruebo que haya algún error para mostrarlo
-    return <div className="col-10 border-start alert alert-danger" role="alert">Error de petición a la API</div>
+    return <div className="col-9 border-start alert alert-danger" role="alert">{error}</div>
   }
 
   /**
@@ -34,7 +34,7 @@ const ListaTareas = ({proyecto}) => { // Recibo la ID del proyecto como prop
   return (
   <>
     <h4>Tareas</h4>
-    <table className='col-10 border-start table'>
+    <table className='col-9 border-start table'>
       <thead>
           <th scope="col">ID</th>
           <th scope="col">Nombre</th>
@@ -63,6 +63,7 @@ const ListaTareas = ({proyecto}) => { // Recibo la ID del proyecto como prop
         }
       </tbody>
     </table>
+    <Link to={RUTA_CREAR_TAREA} className="btn btn-primary mt-3 ms-2">Crear Tarea</Link>
   </>
   )
 }

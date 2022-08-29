@@ -4,6 +4,8 @@ import { UserContext } from '../context/UserProvider'; // Importo el contexto de
 import ListaProyectos from "../components/ListaProyectos";
 import ListaTareas from "../components/ListaTareas";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
+import { RUTA_CREAR_PROYECTO } from "../services/Rutas";
 
 
 /**
@@ -17,10 +19,14 @@ const Main = () => {
   }, []);
 
   // TODO : Pendiente para añadir una tarea
-  // TODO : Pendiente para añadir un proyecto
+  // TODO : Pendiente hacer contexto referente al proyecto seleccionado
   return (
     <div className="row">
-      <ListaProyectos />
+      <div className="col-3 border-end">
+        <ListaProyectos />
+        <Link to={RUTA_CREAR_PROYECTO} className="btn btn-primary mt-3 ms-2">Crear Proyecto</Link>
+      </div>
+
       <ListaTareas proyecto={1} /> {/* TODO : Cuando corrija errores de Axios, cambiar el valor del prop */}
     </div>
   )

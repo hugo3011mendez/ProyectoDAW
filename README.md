@@ -461,3 +461,17 @@ Subiré aquí todos los archivos relacionados con el proyecto de fin de ciclo de
 - Proyecto de React con ToDo Manager
 	- Cambiado el nombre del hook relacionado con realizar peticiones con Axios
 	- Añadido hook referente a realizar peticiones a la API con fetch()
+
+
+### 29/08/2022
+- Proyecto de React con ToDo Manager
+	- Modificado formulario de Login
+		- Conseguidos datos del usuario que inicia sesión y establecidos valores del contexto y localStorage realizando una sola petición a la API
+		- Cambiados mensajes de error de la petición a la API en la lista de proyectos, lista de tareas y editar proyecto
+		- Modificada ruta y formulario referentes a editar un proyecto, ahora funciona correctamente
+		- Añadida ruta y formulario referentes a crear un proyecto
+
+- Modificados archivos PHP del lado del servidor
+	- Cambiadas funciones referentes al login para que devuelvan los datos necesarios del usuario que inicia sesión
+	- Comentadas funciones referentes a conseguir el nickname y el rol de un usuario, pendientes de eliminación
+	- Añadido parámetro referente a la ID del proyecto en la función relacionada a leer los datos de un proyecto

@@ -15,8 +15,8 @@ const EditarProyecto = () => {
     const {comprobarLogin} = useContext(UserContext); // Consigo las variables del contexto
     comprobarLogin(); // Añado comprobación del login
 
-    // FIXME : Se ejecuta varias veces, acaba después de renderizarse
-    const {data, loading, error} = useFetch(URL_LEER_PROYECTO+idProyecto);  
+    const {data, loading, error} = useFetch(URL_LEER_PROYECTO+idProyecto);
+    console.log(data[0]);
     
     if (loading) { // Compruebo que esté cargando los datos para mostrar el spinner
       return <Loading />;
@@ -24,13 +24,15 @@ const EditarProyecto = () => {
       
     if (error !== "") { // Compruebo que haya algún error para mostrarlo
       console.log(error);
-      return <div className="alert alert-danger" role="alert">Error de petición a la API</div>
+      return <div className="alert alert-danger" role="alert">{error}</div>
     }
   
 
   return (
     <div className="container">
-        <FormularioCambioProyecto proyecto={data[0]} /> {/* Muestro el formulario de cambio de datos del proyecto */}
+      { // Compruebo que se hayan recogido los datos conseguidos y muestro el formulario
+        data[0] != undefined && <FormularioCambioProyecto proyecto={data[0]} /> /* Muestro el formulario de cambio de datos del proyecto */
+      }
     </div>
   )
 }

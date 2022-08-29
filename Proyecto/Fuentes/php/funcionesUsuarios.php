@@ -43,15 +43,15 @@
         echo leerUsuario($conexionBBDD, $_GET["conseguirUsuario"]);
     }
 
-    // $_GET["conseguirNickname"] es la ID del usuario
-    if (isset($_GET["conseguirNickname"])) {
-        echo conseguirNickname($conexionBBDD, $_GET["conseguirNickname"]);
-    }
+    // // $_GET["conseguirNickname"] es la ID del usuario
+    // if (isset($_GET["conseguirNickname"])) {
+    //     echo conseguirNickname($conexionBBDD, $_GET["conseguirNickname"]);
+    // }
 
-    // $_GET["conseguirRol"] es la ID del usuario
-    if (isset($_GET["conseguirRol"])) {
-        echo conseguirRol($conexionBBDD, $_GET["conseguirRol"]);
-    }
+    // // $_GET["conseguirRol"] es la ID del usuario
+    // if (isset($_GET["conseguirRol"])) {
+    //     echo conseguirRol($conexionBBDD, $_GET["conseguirRol"]);
+    // }
 
 
     // UPDATE :
@@ -104,7 +104,7 @@
                 
                 if(login($conexionBBDD, $email, $password)){ // Si no hay errores
                     // Devuelvo también la ID del usuario
-                    echo json_encode(["success"=>1, "message"=>"El usuario ha iniciado sesión correctamente", "id"=>login($conexionBBDD, $email, $password)]);
+                    echo json_encode(["success"=>1, "message"=>"El usuario ha iniciado sesión correctamente", "usuario"=>login($conexionBBDD, $email, $password)]);
                 }
                 else {echo json_encode(["success"=>0, "message"=>"Error al iniciar sesión : Los datos no coinciden"]);}
         
