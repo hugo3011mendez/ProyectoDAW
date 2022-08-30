@@ -22,7 +22,7 @@ const UserProvider = (props) => { // Los demás componentes que estemos viendo a
     id ="";
     nickname="";
     rol = null;
-    
+
     localStorage.clear(); // Limpio los elementos del localStorage
     navigate("/"); // Y vuelvo a la página de inicio
   };
@@ -33,7 +33,7 @@ const UserProvider = (props) => { // Los demás componentes que estemos viendo a
    */
   const comprobarLogin = () => {
     // Compruebo si no están guardados los datos de la sesión
-    if (id == "" && nickname == "" && rol == null) {
+    if (id == "" && nickname == "" && rol == null) {        
       navigate("/"); // Y vuelvo a la página del login
     }
   }

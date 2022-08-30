@@ -483,3 +483,10 @@ Subiré aquí todos los archivos relacionados con el proyecto de fin de ciclo de
 	- Mostrado el rol de manera correcta en la lista de usuarios del admin
 	- Establecido campo `flag` en el formulario de cambio de credenciales del usuario, para que se encripte la nueva contraseña
 	- Establecido de manera correcta el rol a la hora de actualizar las credenciales del usuario loggeado
+	- Modificado diseño de la lista de tareas para que se muestren en cards
+	- Añadido link en los proyectos para cambiar a la página de visualización de tareas
+	- Añadidas rutas para la lista de las tareas y la creación de tareas
+	- Funciona correctamente el crear tareas en un proyecto
+
+- Modificados archivos PHP del lado del servidor
+	- Modificada sentencia de listado de tareas de un proyecto para su correcto funcionamiento

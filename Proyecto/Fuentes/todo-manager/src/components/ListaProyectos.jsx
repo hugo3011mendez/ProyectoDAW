@@ -6,10 +6,10 @@ import { URL_ELIMINAR_PROYECTO, URL_LEER_PROYECTOS_DE_USUARIO } from "../service
 import axios from "axios";
 // Importaciones de componentes personalizados
 import Loading from './Loading';
-import { RUTA_EDITAR_PROYECTO_SIN_ID } from "../services/Rutas";
+import { RUTA_EDITAR_PROYECTO_SIN_ID, RUTA_LISTA_TAREAS_SIN_ID } from "../services/Rutas";
 
 const ListaProyectos = () => {
-  const {id} = useContext(UserContext); // Consigo la variable del contexto
+  let {id} = useContext(UserContext); // Consigo la variable del contexto
 
   // Consigo los datos del hook personalizado llamándolo y pasándole la URL a la que quiero realizarla
   const {data, error, loading} = useFetch(URL_LEER_PROYECTOS_DE_USUARIO+id);
@@ -46,7 +46,7 @@ const ListaProyectos = () => {
         { // Listo todos los proyectos del usuario que haya para que se muestren
           data.map(item =>
             <li key={item.id} className="list-group-item">
-              {item.nombre} {/* Muestro el nombre del proyecto */}
+              <Link to={RUTA_LISTA_TAREAS_SIN_ID+item.id} className="btn btn-primary">{item.nombre}</Link> {/* Muestro el nombre del proyecto */}
               {/* Y pongo un botón que edite el proyecto */}
               <Link to={RUTA_EDITAR_PROYECTO_SIN_ID+item.id} className="btn btn-warning">Editar</Link>
               {/* Pongo un botón que elimine el proyecto */}

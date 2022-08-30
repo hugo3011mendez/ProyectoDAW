@@ -62,7 +62,7 @@
      * @return Array asociativo referente a las tareas del proyecto indicado que están en la base de datos
      */
     function leerTareasDeProyecto($conexion, $idProyecto){
-        $sentencia = "SELECT * FROM ".TABLA_TAREAS." WHERE proyecto=".$idProyecto." AND parentID=null;"; // Realizo la sentencia
+        $sentencia = "SELECT * FROM ".TABLA_TAREAS." WHERE proyecto=".$idProyecto." AND parentID IS NULL;"; // Realizo la sentencia
         $resultado = mysqli_query($conexion, $sentencia); // Guardo el resultado de la ejecución de la sentencia para recorrerse
     
         if(mysqli_num_rows($resultado) > 0){

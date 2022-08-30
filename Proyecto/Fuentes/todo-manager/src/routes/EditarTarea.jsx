@@ -8,28 +8,27 @@ import FormularioCambioTarea from "../components/FormularioCambioProyecto";
 import Loading from '../components/Loading';
 
 const EditarTarea = () => {
-    let params = useParams(); // Recojo todos los parámetros en la URL
-    let idTarea = params.id; // Obtengo la ID del proyecto a editar
+  let params = useParams(); // Recojo todos los parámetros en la URL
+  let idTarea = params.id; // Obtengo la ID de la tarea
 
-    const {comprobarLogin} = useContext(UserContext); // Consigo las variables del contexto
-    comprobarLogin(); // Añado comprobación del login
+  const {comprobarLogin} = useContext(UserContext); // Consigo las variables del contexto
+  comprobarLogin(); // Añado comprobación del login
 
-    // FIXME : Se ejecuta varias veces, acaba después de renderizarse
-    const {data, loading, error} = useFetch(URL_LEER_TAREA+idTarea);  
+  // FIXME : Se ejecuta varias veces, acaba después de renderizarse
+  const {data, loading, error} = useFetch(URL_LEER_TAREA+idTarea);  
     
-    if (loading) { // Compruebo que esté cargando los datos para mostrar el spinner
-      return <Loading />;
-    }
+  if (loading) { // Compruebo que esté cargando los datos para mostrar el spinner
+    return <Loading />;
+  }
       
-    if (error !== "") { // Compruebo que haya algún error para mostrarlo
-      console.log(error);
-      return <div className="alert alert-danger" role="alert">Error de petición a la API</div>
-    }
-
+  if (error !== "") { // Compruebo que haya algún error para mostrarlo
+    console.log(error);
+    return <div className="alert alert-danger" role="alert">Error de petición a la API</div>
+  }
 
   return (
     <div className="container">
-        <FormularioCambioTarea proyecto={data[0]} /> {/* Muestro el formulario de cambio de datos del proyecto */}
+        <FormularioCambioTarea proyecto={data[0]} /> {/* Muestro el formulario de cambio de datos de la tarea */}
     </div>
   )
 }
