@@ -40,7 +40,7 @@ const FormularioCambioPerfil = ({usuario}) => {
       });
       reset(); // Termino reiniciando el estado de los inputs
     }
-    else if(txtPassword.trim()!==txtRePassword.trim()){ // En el caso de que las contraseñas no coincidan
+    else if(txtPassword.trim()!== txtRePassword.trim()){ // En el caso de que las contraseñas no coincidan
       setMessage("Las contraseñas no coinciden"); // Establezco el valor del mensaje de error
       Swal.fire({ // Muestro el modal indicando error
         title: 'Error',
@@ -52,7 +52,7 @@ const FormularioCambioPerfil = ({usuario}) => {
     }
     else{
       // Defino el cuerpo del mensaje que le mandaré a la API con los datos introducidos
-      const datosEnviar = {"id":usuario.id, "txtEmail":txtEmail.trim(), "txtNickname":txtNickname.trim(), "txtPassword":txtPassword.trim(), "rol":1};
+      const datosEnviar = {"id":usuario.id, "txtEmail":txtEmail.trim(), "txtNickname":txtNickname.trim(), "txtPassword":txtPassword.trim(), "rol":usuario.rol, "flag":true};
       const cuerpo = JSON.stringify(datosEnviar); // Convierto a JSON los datos a enviar a la API
 
       // Realizo la petición a la API con Axios

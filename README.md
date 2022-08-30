@@ -475,3 +475,11 @@ Subiré aquí todos los archivos relacionados con el proyecto de fin de ciclo de
 	- Cambiadas funciones referentes al login para que devuelvan los datos necesarios del usuario que inicia sesión
 	- Comentadas funciones referentes a conseguir el nickname y el rol de un usuario, pendientes de eliminación
 	- Añadido parámetro referente a la ID del proyecto en la función relacionada a leer los datos de un proyecto
+
+
+### 30/08/2022
+- Proyecto de React con ToDo Manager
+	- Añadida comprobación en la lista de usuarios, para que el mismo usuario loggeado no se pueda eliminar a sí mismo
+	- Mostrado el rol de manera correcta en la lista de usuarios del admin
+	- Establecido campo `flag` en el formulario de cambio de credenciales del usuario, para que se encripte la nueva contraseña
+	- Establecido de manera correcta el rol a la hora de actualizar las credenciales del usuario loggeado

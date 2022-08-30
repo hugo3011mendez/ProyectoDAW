@@ -1,6 +1,6 @@
 import { useContext } from "react"; // Importamos módulos de React
-import { Link } from "react-router-dom";
 import { UserContext } from '../context/UserProvider'; // Importo el contexto del usuario
+import { Link } from "react-router-dom";
 import { useFetch } from '../hooks/useFetch'; // Importo el hook personalizado referente al fetch
 import { URL_ELIMINAR_PROYECTO, URL_LEER_PROYECTOS_DE_USUARIO } from "../services/API"; // Importación de URLs del archivo de constantes
 import axios from "axios";
@@ -29,9 +29,13 @@ const ListaProyectos = () => {
   */
   function eliminarProyecto(id){
     axios.post(URL_ELIMINAR_PROYECTO+id).then(function(response){ // FIXME : Devuelve undefined
-      console.log(response.data.message);
+      if (response.data.success == 1) { // Si la petición a la API ha resultado bien
+        window.location.reload(); // Recargo la página para que se muestren los datos actualizados        
+      }
+      else{
+        console.log("ERROR");
+      }
     });
-    window.location.reload(); // Recargo la página para que se muestren los datos actualizados
   }
   
 

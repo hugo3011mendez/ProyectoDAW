@@ -9,23 +9,22 @@ import Loading from '../components/Loading';
 // Ruta referente a la vista del perfil del usuario
 const Perfil = () => {
   const {id, comprobarLogin} = useContext(UserContext); // Consigo las variables del contexto
-  const {data, loading, error} = useFetch(URL_LEER_USUARIO+id); // FIXME : Se ejecuta varias veces, acaba después de renderizarse
+  const {data, loading, error} = useFetch(URL_LEER_USUARIO+id);
 
   comprobarLogin(); // Añado comprobación del login
   
-  // if (loading) { // Compruebo que esté cargando los datos para mostrar el spinner
-  //   return <Loading />;
-  // }
+  if (loading) { // Compruebo que esté cargando los datos para mostrar el spinner
+    return <Loading />;
+  }
     
-  // if (error !== "") { // Compruebo que haya algún error para mostrarlo
-  //   console.log(error);
-  //   return <div className="alert alert-danger" role="alert">Error de petición a la API</div>
-  // }
+  if (error !== "") { // Compruebo que haya algún error para mostrarlo
+    console.log(error);
+    return <div className="alert alert-danger" role="alert">Error de petición a la API</div>
+  }
 
   return (
     <div className="container">
-      Perfil
-      {/* <FormularioCambioPerfil usuario={data[0]} /> {/* Muestro el formulario de cambio de datos del usuario */}
+      {data[0] != undefined && <FormularioCambioPerfil usuario={data[0]} /> /* Muestro el formulario de cambio de datos del usuario */}
     </div>
   )
 }
