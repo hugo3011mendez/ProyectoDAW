@@ -4,9 +4,12 @@ import { useFetch } from '../hooks/useFetch'; // Importo el hook personalizado r
 import { useParams } from "react-router-dom";
 import { URL_LEER_TAREA } from "../services/API"; // Importo el archivo de constantes con URLs
 // Importaciones de componentes personalizados
-import FormularioCambioTarea from "../components/FormularioCambioProyecto";
+import FormularioCambioTarea from "../components/FormularioCambioTarea";
 import Loading from '../components/Loading';
 
+/**
+ * Ruta referente a la edición de una tarea
+ */
 const EditarTarea = () => {
   let params = useParams(); // Recojo todos los parámetros en la URL
   let idTarea = params.id; // Obtengo la ID de la tarea

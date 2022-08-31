@@ -6,6 +6,10 @@ import { RUTA_MAIN } from "../services/Rutas";
 import { useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2' // Importo el paquete de Sweet Alert 2 que he instalado previamente en el proyecto
 
+/**
+ * Componente dedicado a editar la información de un proyecto
+ * @param proyecto Objeto con los datos del proyecto que se quiere editar
+ */
 const FormularioCambioProyecto = ({proyecto}) => {  
   // Declaro una variable con los valores iniciales que deben tomar los elementos del form
   const initialState = { // El estado inicial de los campos es igual al de los valores del usuario
@@ -37,7 +41,7 @@ const FormularioCambioProyecto = ({proyecto}) => {
         showConfirmButton: false,
         timer: 1500
       });
-      reset(); // Termino reiniciando el estado de los inputs
+      reset(); // Reinicio el estado de los inputs
     }
     else{
       // Defino el cuerpo del mensaje que le mandaré a la API con los datos introducidos

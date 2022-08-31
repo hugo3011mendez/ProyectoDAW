@@ -1,9 +1,9 @@
 import { useState } from "react" // Importamos el hook useState
 
 /**
- * Comprueba los inputs de un formulario
+ * Hook personalizado que comprueba los inputs de un formulario
  * 
- * @param {*} initialState Objeto referente al estado inicial de los inputs
+ * @param initialState Objeto referente al estado inicial de los inputs
  * 
  * @returns Los inputs, la función manejadora del OnChange y el método reset()
  */

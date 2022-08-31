@@ -3,6 +3,9 @@ import { UserContext } from '../context/UserProvider'; // Importo el contexto de
 // Importación de componentes personalizados
 import ListaUsuarios from "../components/ListaUsuarios";
 
+/**
+ * Ruta sólo accesible para los administradores, referente a la página en la que se encontrará la lista de usuarios
+ */
 const Admin = () => {
   const {comprobarLoginAdmin} = useContext(UserContext); // Consigo las variables del contexto
   comprobarLoginAdmin(); // Añado comprobación del login

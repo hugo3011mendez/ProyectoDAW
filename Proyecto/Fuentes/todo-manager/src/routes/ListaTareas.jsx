@@ -9,6 +9,9 @@ import { UserContext } from '../context/UserProvider'; // Importo el contexto de
 import Loading from '../components/Loading';
 import { useEffect } from "react";
 
+/**
+ * Ruta referente al mostrado de las tareas que se encuentran en un proyecto
+ */
 const ListaTareas = () => {
   const {comprobarLogin} = useContext(UserContext); // Consigo la variable del contexto
   
@@ -27,7 +30,12 @@ const ListaTareas = () => {
   }
     
   if (error !== "") { // Compruebo que haya algún error para mostrarlo
-    return <div className="col-9 border-start alert alert-danger" role="alert">{error}</div>
+    return (
+      <div className="ms-3">
+        <div className="col-9 border-start alert alert-danger" role="alert">{data.length == 0 ? "No hay tareas guardadas en el proyecto" : error}</div>
+        <Link to={RUTA_CREAR_TAREA_SIN_ID+idProyecto} className="btn btn-primary mt-3 ms-2">Crear Tarea</Link>
+      </div>
+    )
   }
 
   /**

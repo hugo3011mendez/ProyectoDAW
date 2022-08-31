@@ -8,6 +8,9 @@ import axios from "axios";
 import Loading from './Loading';
 import { RUTA_EDITAR_PROYECTO_SIN_ID, RUTA_LISTA_TAREAS_SIN_ID } from "../services/Rutas";
 
+/**
+ * Componente referente a la lista de los proyectos del usuario que haya iniciado sesión
+ */
 const ListaProyectos = () => {
   let {id} = useContext(UserContext); // Consigo la variable del contexto
 
@@ -19,7 +22,7 @@ const ListaProyectos = () => {
   }
     
   if (error !== "") { // Compruebo que haya algún error para mostrarlo
-    return <div className="col-2 border-end alert alert-danger" role="alert">{error}</div>
+    return <div className="col-2 border-end alert alert-danger" role="alert">{data.length == 0 ? "El usuario aún no tiene proyectos creados" : error}</div>
   }
   
 
@@ -47,10 +50,14 @@ const ListaProyectos = () => {
           data.map(item =>
             <li key={item.id} className="list-group-item">
               <Link to={RUTA_LISTA_TAREAS_SIN_ID+item.id} className="btn btn-primary">{item.nombre}</Link> {/* Muestro el nombre del proyecto */}
+
               {/* Y pongo un botón que edite el proyecto */}
               <Link to={RUTA_EDITAR_PROYECTO_SIN_ID+item.id} className="btn btn-warning">Editar</Link>
+              
               {/* Pongo un botón que elimine el proyecto */}
-              <button type="button" className="btn btn-danger ms-1" onClick={() => eliminarProyecto(item.id)}>Eliminar</button>
+              <button type="button" className="btn btn-danger ms-1 me-3" onClick={() => eliminarProyecto(item.id)}>Eliminar</button>
+
+              {item.descripcion} {/* Muestro la descripción del proyecto */}
             </li>
           )
         }

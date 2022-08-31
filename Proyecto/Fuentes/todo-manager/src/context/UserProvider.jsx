@@ -3,7 +3,10 @@ import { useNavigate } from "react-router-dom"; // Importación de componentes d
 
 export const UserContext = createContext(); // Creo el contexto
 
-// Contexto referente al usuario
+/**
+ * Contexto referente a los datos de inicio de sesión del usuario, para mantener la sesión activa si no decide cerrarse
+ * @param props Todas las rutas que tengan acceso a estos datos
+ */
 const UserProvider = (props) => { // Los demás componentes que estemos viendo accederán aquí
   // Referente a la ID del usuario que haya iniciado sesión
   let id = localStorage.getItem("ID") ? localStorage.getItem("ID") : "";

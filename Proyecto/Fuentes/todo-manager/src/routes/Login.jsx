@@ -4,7 +4,9 @@ import { RUTA_MAIN } from '../services/Rutas'; // Importo el servicio de rutas
 // Importaciones de componentes personalizados
 import FormularioLogin from '../components/FormularioLogin';
 
-// Ruta referente a la página de Login del usuario
+/**
+ * Ruta referente a la página donde el usuario debe iniciar sesión en la app
+ */
 const Login = () => {
   const navigate = useNavigate(); // Establezco el hook referente a cambiar de ruta
   

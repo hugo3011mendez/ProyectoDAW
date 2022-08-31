@@ -1,3 +1,6 @@
+/**
+ * Componente referente a un spinner que será usado como animación de carga de datos cuando se realicen peticiones a la API y haya que mostrar datos
+ */
 const Loading = () => {
     // Declaro un objeto de estilo para el spinner
     const spinnerStyle = {

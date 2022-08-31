@@ -8,8 +8,8 @@ import { RUTA_CREAR_PROYECTO } from "../services/Rutas";
 
 
 /**
- * Ruta referente a la vista principal de los proyectos y las tareas del usuario
- *  */ 
+ * Ruta referente a la vista principal de los proyectos del usuario
+ */ 
 const Main = () => {
   const {comprobarLogin} = useContext(UserContext); // Consigo la variable del contexto
   
@@ -17,7 +17,7 @@ const Main = () => {
     comprobarLogin(); // Añado comprobación del login
   }, []);
 
-  return (
+  return ( // Muestro la lista de los proyectos del usuario junto con un botón para crear un proyecto
     <div className="container">
       <ListaProyectos />
       <Link to={RUTA_CREAR_PROYECTO} className="btn btn-primary mt-3 ms-2">Crear Proyecto</Link>

@@ -4,6 +4,10 @@ import axios from "axios"; // Importo Axios
 import { URL_ACTUALIZAR_USUARIO } from "../services/API"; // Importación de URLs del archivo de constantes
 import Swal from 'sweetalert2' // Importo el paquete de Sweet Alert 2 que he instalado previamente en el proyecto
 
+/**
+ * Componente dedicado a editar la información de un usuario
+ * @param usuario Objeto con la información referente al usuario que se quiere modificar 
+ */
 const FormularioCambioPerfil = ({usuario}) => {
  
   // Declaro una variable con los valores iniciales que deben tomar los elementos del form

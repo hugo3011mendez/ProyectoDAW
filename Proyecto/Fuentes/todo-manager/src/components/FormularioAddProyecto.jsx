@@ -8,6 +8,9 @@ import { URL_CREAR_PROYECTO } from "../services/API"; // Importación de URLs de
 import { RUTA_MAIN } from "../services/Rutas"; // Importación de rutas
 import Swal from 'sweetalert2' // Importo el paquete de Sweet Alert 2 que he instalado previamente en el proyecto
 
+/**
+ * Formulario dedicado a crear un nuevo proyecto en la base de datos
+ */
 const FormularioAddProyecto = () => {
   const {id} = useContext(UserContext); // Consigo la variable del contexto
   
@@ -17,9 +20,9 @@ const FormularioAddProyecto = () => {
     txtDescripcion:""
   };
 
-  const [message, setMessage] = useState(""); // Un hook referente al mensaje de error por defecto una cadena vacía
+  const [message, setMessage] = useState(""); // Un hook referente al mensaje de error, por defecto una cadena vacía
 
-  const [inputs, handleChange, reset] = useFormulario(initialState); // Uso el hook personalizado en Utils
+  const [inputs, handleChange, reset] = useFormulario(initialState); // Uso el hook personalizado
   const {txtNombre, txtDescripcion} = inputs; // Destructuración de los valores de los inputs
 
   const navigate = useNavigate(); // Establezco el hook referente a cambiar de dirección web
@@ -41,7 +44,7 @@ const FormularioAddProyecto = () => {
         showConfirmButton: false,
         timer: 1500
       });
-      reset(); // Termino reiniciando el estado de los inputs
+      reset(); // Reinicio el estado de los inputs
     }
     else{
       // Defino el cuerpo del mensaje que le mandaré a la API con los datos introducidos
@@ -50,8 +53,8 @@ const FormularioAddProyecto = () => {
 
       // Realizo la petición a la API con Axios
       axios.post(URL_CREAR_PROYECTO, cuerpo).then(function(response){
-        if (response.data.success === 1) { // Compruebo si el resultado del success es correcto
-          setMessage(response.data.message);
+        if (response.data.success === 1) { // Compruebo si el resultado es correcto
+          setMessage(response.data.message); // Establezco el mensaje
           Swal.fire({ // Muestro el modal indicando éxito
             title: 'Éxito!',
             text: ""+message,
@@ -59,7 +62,7 @@ const FormularioAddProyecto = () => {
             showConfirmButton: false,
             timer: 1000
           });
-          navigate(RUTA_MAIN); // Vuelvo a la página de main
+          navigate(RUTA_MAIN); // Vuelvo a la página Main
         }
         else{ // Y en el caso de que haya algún error
           setMessage(response.data.message); // Establezco el valor del mensaje de error
@@ -70,7 +73,7 @@ const FormularioAddProyecto = () => {
             showConfirmButton: false,
             timer: 1000
           });
-          reset(); // Termino reiniciando el estado de los inputs
+          reset(); // Reinicio el estado de los inputs
         }
       });      
     }
@@ -80,8 +83,8 @@ const FormularioAddProyecto = () => {
   return (
     <div className="container">
       <h5 className="card-title">Crear Proyecto</h5>
-      <form className="mb-3" onSubmit={handleSubmit}> {/* Le paso el hook a la referencia y le adjunto el evento onSubmit */}
-        {/* Campo referente al email del usuario que quiera registrarse */}
+      <form className="mb-3" onSubmit={handleSubmit}> {/* Le adjunto el evento onSubmit */}
+        {/* Campo referente al nombre del nuevo proyecto */}
         <label htmlFor="txtNombre"> Escribe el nombre del nuevo proyecto </label>
         <input
           type="text"
@@ -91,7 +94,7 @@ const FormularioAddProyecto = () => {
           value={txtNombre}
         /> {/* Le asocio el evento onChange referenciando a su función manejadora y el valor a cambiar correspondiente */}
 
-        {/* Campo referente al nickname del usuario */}
+        {/* Campo referente a la descripción del nuevo proyecto */}
         <label htmlFor="txtDescripcion"> Escribe la descripción del proyecto </label>
         <textarea
           type="text"
@@ -104,7 +107,7 @@ const FormularioAddProyecto = () => {
         <button type="submit" className="btn btn-success">Crear Proyecto</button>
       </form>
 
-      {/* Pongo un enlace a la página de login para que el usuario pueda volver en el caso de que se haya equivocado */}
+      {/* Pongo un enlace a la página Main para que el usuario pueda volver */}
       <Link to={RUTA_MAIN} className="h5 link-primary" style={{textDecoration: "none"}}>🔙</Link>
     </div>
   )

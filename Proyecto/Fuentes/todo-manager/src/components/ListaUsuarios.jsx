@@ -5,7 +5,9 @@ import Loading from './Loading';
 import {URL_LEER_USUARIOS, URL_ELIMINAR_USUARIO} from '../services/API'; // Importo la constante referente a la API
 import axios from "axios"; // Importo Axios
 
-
+/**
+ * Componente referente a la lista de los usuarios, visible para los administradores
+ */
 const ListaUsuarios = () => { // Referente a listar los usuarios
   const {id} = useContext(UserContext); // Consigo la variable del contexto
 

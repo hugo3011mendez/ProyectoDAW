@@ -2,7 +2,9 @@ import { Outlet } from "react-router-dom"; // Importaciones de módulos de React
 // Importaciones de componentes :
 import Navbar from "./components/Navbar"; 
 
-// Aplicación principal
+/**
+ * Aplicación principal, desde aquí se mostrará toda la información pertinente después de que un usuario se logguee
+ */
 const App = () => {
   return (
     <div>

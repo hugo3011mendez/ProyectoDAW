@@ -1,23 +1,29 @@
-import { useState, useContext } from "react"; // Importamos el hook de React
+import { useState } from "react"; // Importamos el hook de React
+import { Link, useNavigate } from "react-router-dom"; // Importación de componentes de React Router DOM
 import { useFormulario } from "../hooks/useFormulario"; // Importación del hook personalizado referente al form
 import axios from "axios"; // Importo Axios
 import { URL_ACTUALIZAR_TAREA } from "../services/API"; // Importación de URLs del archivo de constantes
+import { RUTA_LISTA_TAREAS_SIN_ID } from "../services/Rutas"; // Importación de rutas
 import Swal from 'sweetalert2' // Importo el paquete de Sweet Alert 2 que he instalado previamente en el proyecto
 
+/**
+ * Componente dedicado a editar los datos de una tarea
+ * @param tarea Objeto con los datos de la tarea que se quiere editar
+ */
 const FormularioCambioTarea = ({tarea}) => {
-  console.log(tarea);
-
   // Declaro una variable con los valores iniciales que deben tomar los elementos del form
   const initialState = { // El estado inicial de los campos es igual al de los valores del usuario
     txtNombre: tarea.nombre,
     txtDescripcion: tarea.descripcion,
     estado: null, // Establezco el estado inicial a null para que el usuario tenga que escogerlo de nuevo
-  };
+  };  
 
   const [message, setMessage] = useState(""); // Un hook referente al mensaje de error por defecto una cadena vacía
 
   const [inputs, handleChange, reset] = useFormulario(initialState); // Uso el hook personalizado en Utils
   const {txtNombre, txtDescripcion, estado} = inputs; // Destructuración de los valores de los inputs
+
+  const navigate = useNavigate(); // Establezco el hook referente a cambiar de dirección web
 
   /**
     * Función para controlar el evento onSubmit
@@ -54,6 +60,7 @@ const FormularioCambioTarea = ({tarea}) => {
             showConfirmButton: false,
             timer: 1500
           });
+          navigate(RUTA_LISTA_TAREAS_SIN_ID+tarea.proyecto);
         }
         else{
           setMessage(response.data.message); // Consigo el mensaje de la petición
@@ -72,7 +79,7 @@ const FormularioCambioTarea = ({tarea}) => {
   
   return (
     <>
-      <h5>Datos del perfil</h5>
+      <h5>Datos de la tarea</h5>
       <form className="mb-3" onSubmit={handleSubmit}> {/* Le paso el hook a la referencia y le adjunto el evento onSubmit */}
         {/* Campo referente al nombre de la tarea */}
         <label htmlFor="txtNombre"> Nombre : </label>
@@ -84,7 +91,7 @@ const FormularioCambioTarea = ({tarea}) => {
           value={txtNombre}
         /> {/* Le asocio el evento onChange referenciando a su función manejadora y el valor a cambiar correspondiente */}
 
-        {/* Campo referente al descripción del usuario */}
+        {/* Campo referente a la descripción de la tarea */}
         <label htmlFor="txtDescripcion"> Descripción : </label>
         <textarea
           type="text"
@@ -111,6 +118,9 @@ const FormularioCambioTarea = ({tarea}) => {
 
         <button type="submit" className="btn btn-warning">Actualizar datos</button>
       </form>
+
+      {/* Pongo un enlace a la página de lista de tareas para que el usuario pueda volver */}
+      <Link to={RUTA_LISTA_TAREAS_SIN_ID+tarea.proyecto} className="h5 link-primary" style={{textDecoration: "none"}}>🔙</Link>
     </>
   )
 }

@@ -4,7 +4,7 @@ import { UserContext } from '../context/UserProvider'; // Importo el contexto de
 import { RUTA_ADMIN, RUTA_MAIN, RUTA_PERFIL } from '../services/Rutas'; // Importo el servicio de rutas
 
 /**
- * Navbar que se mostrará en todas las páginas después del login
+ * Componente referente al navbar que se mostrará en la parte superior de las páginas una vez el usuario inicie sesión
  */
 const Navbar = () => {
   const {nickname, rol, signOut} = useContext(UserContext); // Consigo la variable del contexto referente a cerrar sesión

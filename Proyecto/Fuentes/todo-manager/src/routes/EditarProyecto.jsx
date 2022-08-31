@@ -7,7 +7,9 @@ import { URL_LEER_PROYECTO } from "../services/API"; // Importo el archivo de co
 import FormularioCambioProyecto from "../components/FormularioCambioProyecto";
 import Loading from '../components/Loading';
 
-
+/**
+ * Ruta referente a la edición de un proyecto
+ */
 const EditarProyecto = () => {
   let params = useParams(); // Recojo todos los parámetros en la URL
   let idProyecto = params.id; // Obtengo la ID del proyecto a editar

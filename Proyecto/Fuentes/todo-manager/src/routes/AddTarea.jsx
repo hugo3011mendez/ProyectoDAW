@@ -4,9 +4,10 @@ import { useParams } from "react-router-dom";
 // Importaciones de componentes personalizados :
 import FormularioAddTarea from "../components/FormularioAddTarea";
 
-
-const AddTarea = () => {
-  
+/**
+ * Ruta referente a la página en la que se podrá crear una tarea
+ */
+ const AddTarea = () => {
   const {comprobarLogin} = useContext(UserContext); // Consigo la variable del contexto
   
   useEffect(()=>{

@@ -91,8 +91,8 @@ const FormularioLogin = () => {
  
 
   return (
-    <>
-      <div className="card p-0" style={{width: "18rem"}}> {/* Un card para meter el formulario dentro */}
+    <> {/* Meto el formulario dentro de un card */}
+      <div className="card p-0" style={{width: "18rem"}}>
         <div className="card-header text-center">
           <h5 className="card-title">Iniciar Sesión</h5>
         </div>

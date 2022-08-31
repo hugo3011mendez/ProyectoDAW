@@ -495,3 +495,9 @@ Subiré aquí todos los archivos relacionados con el proyecto de fin de ciclo de
 ### 31/08/2022
 - Proyecto de React con ToDo Manager
 	- Cambiado diseño de la lista de tareas para que se muestren mejor
+	- Corregido el funcionamiento del editado de una tarea, ahora funciona correctamente
+	- Modificados mensajes de error de la API cuando no hay elementos en las listas
+	- Mostrada la descripción en la lista de proyectos
+	- Añadidos comentarios a todos los archivos
+
+- Creado dump de la base de datos

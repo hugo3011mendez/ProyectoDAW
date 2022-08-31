@@ -18,6 +18,9 @@ import AddProyecto from './routes/AddProyecto';
 import AddTarea from './routes/AddTarea';
 import ListaTareas from './routes/ListaTareas';
 
+/**
+ * Desde este archivo se enrutan todos los demás
+ */
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>

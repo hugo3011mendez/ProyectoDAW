@@ -6,7 +6,12 @@ import { URL_CREAR_TAREA } from "../services/API"; // Importación de URLs del a
 import { RUTA_LISTA_TAREAS_SIN_ID } from "../services/Rutas"; // Importación de rutas
 import Swal from 'sweetalert2' // Importo el paquete de Sweet Alert 2 que he instalado previamente en el proyecto
 
-const FormularioAddTarea = ({proyecto, parentID}) => { // TODO : Comprobar cuando el ParentID da undefined
+/**
+ * Componente dedicado a crear una nueva tarea
+ * @param proyecto La ID del proyecto en el que se creará la nueva tarea
+ * @param parentID La ID de la tarea padre, si tiene, de la nueva tarea
+ */
+const FormularioAddTarea = ({proyecto, parentID}) => {
   
   // Declaro una variable con los valores iniciales que deben tomar los elementos del form
   const initialState = { // Deben tener el mismo nombre que el atributo name de cada elemento
@@ -40,7 +45,7 @@ const FormularioAddTarea = ({proyecto, parentID}) => { // TODO : Comprobar cuand
         showConfirmButton: false,
         timer: 1500
       });
-      reset(); // Termino reiniciando el estado de los inputs
+      reset(); // Reinicio el estado de los inputs
     }
     else{
       // Defino el cuerpo del mensaje que le mandaré a la API con los datos introducidos
@@ -49,7 +54,7 @@ const FormularioAddTarea = ({proyecto, parentID}) => { // TODO : Comprobar cuand
 
       // Realizo la petición a la API con Axios
       axios.post(URL_CREAR_TAREA, cuerpo).then(function(response){
-        setMessage(response.data.message); // TODO : Sale error en la API pero inserta igual, he quitado el condicional para que no se muestre error
+        setMessage(response.data.message); // FIXME : Sale error en la API pero inserta igual, he quitado el condicional para que no se muestre error
         Swal.fire({ // Muestro el modal indicando éxito
           title: 'Éxito!',
           text: ""+message,
@@ -67,7 +72,7 @@ const FormularioAddTarea = ({proyecto, parentID}) => { // TODO : Comprobar cuand
     <div className="container">
       <h5 className="card-title">Crear Tarea</h5>
       <form className="mb-3" onSubmit={handleSubmit}> {/* Le paso el hook a la referencia y le adjunto el evento onSubmit */}
-        {/* Campo referente al email del usuario que quiera registrarse */}
+        {/* Campo referente al nombre de la nueva tarea */}
         <label htmlFor="txtNombre"> Escribe el nombre de la nueva tarea </label>
         <input
           type="text"
@@ -77,7 +82,7 @@ const FormularioAddTarea = ({proyecto, parentID}) => { // TODO : Comprobar cuand
           value={txtNombre}
         /> {/* Le asocio el evento onChange referenciando a su función manejadora y el valor a cambiar correspondiente */}
 
-        {/* Campo referente al nickname del usuario */}
+        {/* Campo referente a la descripción de la nueva tarea */}
         <label htmlFor="txtDescripcion"> Escribe la descripción de la nueva tarea </label>
         <textarea
           type="text"
@@ -87,7 +92,6 @@ const FormularioAddTarea = ({proyecto, parentID}) => { // TODO : Comprobar cuand
           value={txtDescripcion}
         /> {/* Le asocio el evento onChange referenciando a su función manejadora y el valor a cambiar correspondiente */}
 
-        {/* TODO : Mirar en el otro proyecto para los radio buttons */}
         {/* Radio Buttons referentes al estado de la tarea : */}
         <div className="form-check">
           <input className="form-check-input" type="radio" name="estado" id="pendiente" value={0} onChange={handleChange} />
@@ -105,7 +109,7 @@ const FormularioAddTarea = ({proyecto, parentID}) => { // TODO : Comprobar cuand
         <button type="submit" className="btn btn-success">Crear Tarea</button>
       </form>
 
-      {/* Pongo un enlace a la página de login para que el usuario pueda volver en el caso de que se haya equivocado */}
+      {/* Pongo un enlace a la página de lista de tareas para que el usuario pueda volver */}
       <Link to={RUTA_LISTA_TAREAS_SIN_ID+proyecto} className="h5 link-primary" style={{textDecoration: "none"}}>🔙</Link>
     </div>
   )

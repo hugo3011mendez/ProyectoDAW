@@ -6,8 +6,10 @@ import {URL_REGISTRAR_USUARIO} from "../services/API"; // Importación de URLs d
 import emailjs from '@emailjs/browser'; // Importo EmailJS
 import Swal from 'sweetalert2' // Importo el paquete de Sweet Alert 2 que he instalado previamente en el proyecto
 
+/**
+ * Componente referente al formulario dedicado a registrar un usuario en la base de datos
+ */
 const FormularioRegistro = () => {
-
   // Declaro una variable con los valores iniciales que deben tomar los elementos del form
   const initialState = { // Deben tener el mismo nombre que el atributo name de cada elemento
     txtEmail: "",
@@ -91,7 +93,7 @@ const FormularioRegistro = () => {
 
   
   return (
-    <>
+    <> {/* Muestro el formulario dentro de un card */}
       <div className="card p-0" style={{width: "18rem"}}>
         <div className="card-header text-center">
           <h5 className="card-title">Registro</h5>

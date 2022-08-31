@@ -6,7 +6,9 @@ import { URL_LEER_USUARIO } from "../services/API"; // Importación de URLs del 
 import FormularioCambioPerfil from "../components/FormularioCambioPerfil";
 import Loading from '../components/Loading';
 
-// Ruta referente a la vista del perfil del usuario
+/**
+ * Ruta referente a la vista del perfil del usuario loggeado, donde podrá editar sus credenciales
+ */
 const Perfil = () => {
   const {id, comprobarLogin} = useContext(UserContext); // Consigo las variables del contexto
   const {data, loading, error} = useFetch(URL_LEER_USUARIO+id);
