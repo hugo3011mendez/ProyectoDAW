@@ -5,7 +5,8 @@ import { URL_ACTUALIZAR_TAREA } from "../services/API"; // Importación de URLs 
 import Swal from 'sweetalert2' // Importo el paquete de Sweet Alert 2 que he instalado previamente en el proyecto
 
 const FormularioCambioTarea = ({tarea}) => {
- 
+  console.log(tarea);
+
   // Declaro una variable con los valores iniciales que deben tomar los elementos del form
   const initialState = { // El estado inicial de los campos es igual al de los valores del usuario
     txtNombre: tarea.nombre,

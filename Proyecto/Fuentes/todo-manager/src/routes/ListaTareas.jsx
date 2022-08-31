@@ -41,12 +41,12 @@ const ListaTareas = () => {
   
 
   return (
-  <div className="col-9">
+  <div className="ms-3">
     <h4>Tareas</h4>
 
     { // Listo todos los usuarios que haya para que se muestren
       data.map(item => 
-        <div className="card p-1 d-inline-block me-3" key={item.id}>
+        <div className="card p-1 d-inline-block m-3" key={item.id}>
           <div class="card-body p-1">
             <h5 className="card-title">{item.nombre}</h5>
             <h6 className="card-subtitle mb-2 text-muted">Fecha de última modificación : {item.fecha_modificacion}</h6>

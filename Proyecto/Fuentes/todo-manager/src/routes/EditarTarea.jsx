@@ -14,21 +14,21 @@ const EditarTarea = () => {
   const {comprobarLogin} = useContext(UserContext); // Consigo las variables del contexto
   comprobarLogin(); // Añado comprobación del login
 
-  // FIXME : Se ejecuta varias veces, acaba después de renderizarse
-  const {data, loading, error} = useFetch(URL_LEER_TAREA+idTarea);  
-    
+  const {data, loading, error} = useFetch(URL_LEER_TAREA+idTarea);
+  
   if (loading) { // Compruebo que esté cargando los datos para mostrar el spinner
     return <Loading />;
   }
       
   if (error !== "") { // Compruebo que haya algún error para mostrarlo
-    console.log(error);
-    return <div className="alert alert-danger" role="alert">Error de petición a la API</div>
+    return <div className="alert alert-danger" role="alert">{error}</div>
   }
 
   return (
     <div className="container">
-        <FormularioCambioTarea proyecto={data[0]} /> {/* Muestro el formulario de cambio de datos de la tarea */}
+      { // Compruebo que se hayan recogido los datos conseguidos y muestro el formulario
+        data[0] && <FormularioCambioTarea tarea={data[0]} /> /* Muestro el formulario de cambio de datos de la tarea */
+      }
     </div>
   )
 }

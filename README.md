@@ -490,3 +490,8 @@ Subiré aquí todos los archivos relacionados con el proyecto de fin de ciclo de
 
 - Modificados archivos PHP del lado del servidor
 	- Modificada sentencia de listado de tareas de un proyecto para su correcto funcionamiento
+
+
+### 31/08/2022
+- Proyecto de React con ToDo Manager
+	- Cambiado diseño de la lista de tareas para que se muestren mejor
