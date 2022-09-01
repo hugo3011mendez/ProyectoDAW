@@ -505,4 +505,3 @@ Subiré aquí todos los archivos relacionados con el proyecto de fin de ciclo de
 
 ### 01/09/2022
 - Cambiado nombre de la carpeta del proyecto a ToDo Manager
-
