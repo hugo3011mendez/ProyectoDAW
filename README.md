@@ -501,3 +501,8 @@ Subiré aquí todos los archivos relacionados con el proyecto de fin de ciclo de
 	- Añadidos comentarios a todos los archivos
 
 - Creado dump de la base de datos
+
+
+### 01/09/2022
+- Cambiado nombre de la carpeta del proyecto a ToDo Manager
+
