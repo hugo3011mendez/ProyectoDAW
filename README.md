@@ -505,3 +505,9 @@ Subiré aquí todos los archivos relacionados con el proyecto de fin de ciclo de
 
 ### 01/09/2022
 - Cambiado nombre de la carpeta del proyecto a ToDo Manager
+
+
+### 06/09/2022
+- Modificados archivos PHP del lado del servidor
+	- Eliminadas funciones a las que no se les dará uso en el archivo *funcionesBBDDusuarios.php*
+	

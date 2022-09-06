@@ -9,7 +9,6 @@ const Loading = () => {
     }
 
     return (
-        // Pego el elemento de Bootstrap
         <div className="d-flex justify-content-center"> {/* Centro el spinner */}
             <div className="spinner-border" style={spinnerStyle} role="status"> {/* Establezco el estilo del spinner */}
                 <span className="visually-hidden">Loading...</span>

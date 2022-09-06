@@ -77,25 +77,6 @@
     //------------------------------------------------------------- READ -----------------------------------------------
 
     /**
-     * Devuelve el rol de un usuario según su ID
-     * 
-     * @param $conexion La conexión con la base de datos
-     * @param $idUsuario La ID del usuario sobre el que queremos saber su rol
-     * 
-     * @return Int La ID de su rol
-     */
-    function conseguirRolDeUsuario($conexion, $idUsuario){
-        // Armo la sentencia para conseguir los datos del usuario en cuestión
-        $sentencia = "SELECT * FROM ".TABLA_USUARIOS." WHERE id = ".$idUsuario.";";
-        $resultado = mysqli_query($conexion, $sentencia); // Guardo su resultado
-
-        while ($usuario = $resultado -> fetch_object()) { // Consigo el resultado en formato objeto
-            return $usuario -> rol; // Y devuelvo el rol del usuario
-        }
-    }
-
-
-    /**
      * Consigo todos los usuarios de la base de datos y devuelvo la info
      * 
      * @param $conexion La conexión con la base de datos
@@ -130,45 +111,6 @@
             return json_encode($usuario);
         }
     }
-
-    // /**
-    //  * Devuelve el nickname del usuario indicado
-    //  * 
-    //  * @param $conexion La conexión con la base de datos
-    //  * @param $id La ID del usuario a buscar
-    //  * 
-    //  * @return String El nickname del usuario buscado
-    //  */
-    // function conseguirNickname($conexion, $id){
-    //     $sentencia = "SELECT nickname FROM ".TABLA_USUARIOS." WHERE id=".$id.";";
-    //     $resultado = mysqli_query($conexion, $sentencia); // Guardo el resultado de la ejecución de la sentencia para recorrerse
-
-    //     if(mysqli_num_rows($resultado) > 0){
-    //         $datos = $resultado -> fetch_object();
-    //         return $datos->nickname;
-    //     }
-    // }
-
-
-    // /**
-    //  * Devuelve el rol del usuario indicado
-    //  * 
-    //  * @param $conexion La conexión con la base de datos
-    //  * @param $id La ID del usuario a buscar
-    //  * 
-    //  * @return Int El rol del usuario buscado
-    //  */
-    // function conseguirRol($conexion, $id){
-    //     $sentencia = "SELECT rol FROM ".TABLA_USUARIOS." WHERE id=".$id.";";
-    //     $resultado = mysqli_query($conexion, $sentencia); // Guardo el resultado de la ejecución de la sentencia para recorrerse
-
-    //     if(mysqli_num_rows($resultado) > 0){
-    //         $datos = $resultado -> fetch_object();
-    //         return $datos->rol;
-    //     }
-    // }
-
-
 
 
     //------------------------------------------------------------- UPDATE -----------------------------------------------
