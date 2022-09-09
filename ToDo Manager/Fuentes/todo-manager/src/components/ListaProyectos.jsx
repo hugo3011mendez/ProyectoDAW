@@ -31,12 +31,12 @@ const ListaProyectos = () => {
   * @param {*} id La ID del proyecto a eliminar
   */
   function eliminarProyecto(id){
-    axios.post(URL_ELIMINAR_PROYECTO+id).then(function(response){ // FIXME : Devuelve undefined
+    axios.get(URL_ELIMINAR_PROYECTO+id).then(function(response){
       if (response.data.success == 1) { // Si la petición a la API ha resultado bien
-        window.location.reload(); // Recargo la página para que se muestren los datos actualizados        
+        window.location.reload(); // Recargo la página para que se muestren los datos actualizados   
       }
       else{
-        console.log("ERROR");
+        console.log("ERROR AL ELIMINAR EL PROYECTO");
       }
     });
   }

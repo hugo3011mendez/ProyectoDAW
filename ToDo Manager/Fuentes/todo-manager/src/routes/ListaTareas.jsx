@@ -43,8 +43,14 @@ const ListaTareas = () => {
   * @param {*} id La ID de la tarea a eliminar
   */
   function eliminarTarea(id){
-    axios.post(URL_ELIMINAR_TAREA+id); // FIXME : Arreglar DELETE
-    window.location.reload(); // Recargo la página para que se muestren los datos actualizados
+    axios.get(URL_ELIMINAR_TAREA+id).then(function(response){
+      if (response.data.success == 1) { // Si la petición a la API ha resultado bien
+        window.location.reload(); // Recargo la página para que se muestren los datos actualizados   
+      }
+      else{
+        console.log("ERROR AL ELIMINAR LA TAREA");
+      }
+    });
   }
   
 

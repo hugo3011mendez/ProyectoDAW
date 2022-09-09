@@ -18,10 +18,13 @@ const Login = () => {
   }, []);
 
   return (
-    <div style={{background: "linear-gradient(30deg, rgba(136,200,255,1) 0%, rgba(112,252,211,1) 100%)"}}>
+    <div style={{background: "linear-gradient(30deg, rgba(136,200,255,1) 0%, rgba(112,252,211,1) 100%)", height: "100vh", overflowX: "none"}}>
       <h2>ToDo Manager</h2>
-      <div className="row justify-content-center align-items-center">
-        <FormularioLogin />
+
+      <div className="container-fluid">
+        <div className="row justify-content-center align-items-center">
+          <FormularioLogin />
+        </div>
       </div>
     </div>
   )

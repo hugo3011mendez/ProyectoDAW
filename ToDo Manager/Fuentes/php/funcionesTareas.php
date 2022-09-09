@@ -80,7 +80,7 @@
 
     // DELETE : $_GET["eliminarTarea"] es la ID de la tarea
     if (isset($_GET["eliminarTarea"])){
-        if(eliminarProyecto($conexionBBDD, $_GET["eliminarTarea"])){
+        if(eliminarTarea($conexionBBDD, $_GET["eliminarTarea"])){
             echo json_encode(["success"=>1, "message"=>"Tarea eliminada correctamente"]);
             exit();
         }

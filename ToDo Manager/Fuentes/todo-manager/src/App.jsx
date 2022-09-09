@@ -10,7 +10,7 @@ const App = () => {
     <div>
       <Navbar /> {/* Llamo al componente antes del título porque es un Navbar */}
 
-      <div>
+      <div style={{height: "85vh", overflowX: "none"}}>
         <Outlet /> {/* Con esta etiqueta indicamos que aquí se debe pintar el componente referente a la ruta en la que esté */}
       </div>
 

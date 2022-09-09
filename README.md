@@ -510,4 +510,8 @@ Subiré aquí todos los archivos relacionados con el proyecto de fin de ciclo de
 ### 06/09/2022
 - Modificados archivos PHP del lado del servidor
 	- Eliminadas funciones a las que no se les dará uso en el archivo *funcionesBBDDusuarios.php*
-	
+
+
+### 09/09/2022
+- Corregido error al eliminar proyectos y tareas
+- Modificado estilo de páginas

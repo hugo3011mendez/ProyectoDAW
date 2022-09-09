@@ -160,40 +160,23 @@
      * Elimina una tarea y todas sus subtareas
      * 
      * @param $conexion La conexión con la base de datos
-     * @param $tarea El objeto o la ID de la tarea que queremos eliminar
+     * @param $tarea La ID de la tarea que queremos eliminar
      * 
      * @return Boolean indicando si la acción resultó con errores
      */
     function eliminarTarea($conexion, $tarea){
-        
-        if (is_object($tarea)) { // Si la variable es un objeto de tipo tarea
-            // Primero elimino las subtareas de la tarea que se quiere eliminar
-            if (eliminarSubtareas($conexion, $tarea)) { 
-                // Armo la consulta       
-                $sentencia = "DELETE FROM ".TABLA_TAREAS." WHERE id=".$tarea-> id;
-                
-                // Compruebo el resultado de la ejecución de la sentencia y devuelvo un booleano según corresponda
-                return comprobarResultadoDeQuery($conexion, $sentencia);
-            }
-            else {
-                // Devuelvo el resultado de las acciones de error
-                return accionesDeError($conexion);
-            }
+        // Primero elimino las subtareas de la tarea que se quiere eliminar
+        if (eliminarSubtareas($conexion, $tarea)) { 
+            // Armo la consulta       
+            $sentencia = "DELETE FROM ".TABLA_TAREAS." WHERE id=".$tarea;
+                        
+            // Compruebo el resultado de la ejecución de la sentencia y devuelvo un booleano según corresponda
+            return comprobarResultadoDeQuery($conexion, $sentencia);
         }
-        elseif (is_int($tarea)) { // Si la variable es el ID de la tarea
-            // Primero elimino las subtareas de la tarea que se quiere eliminar
-            if (eliminarSubtareas($conexion, $tarea)) { 
-                // Armo la consulta       
-                $sentencia = "DELETE FROM ".TABLA_TAREAS." WHERE id=".$tarea;
-                
-                // Compruebo el resultado de la ejecución de la sentencia y devuelvo un booleano según corresponda
-                return comprobarResultadoDeQuery($conexion, $sentencia);
-            }
-            else {
-                // Devuelvo el resultado de las acciones de error
-                return accionesDeError($conexion);
-            }            
-        }
+        else {
+            // Devuelvo el resultado de las acciones de error
+            return accionesDeError($conexion);
+        }                    
     }
     
     
@@ -206,17 +189,9 @@
      * @return Boolean indicando si la acción resultó con errores
      */
     function eliminarSubtareas($conexion, $tarea){
-        
-        if (is_object($tarea)) { // Si la variable es un objeto de tipo tarea
-            // Intento eliminar las subtareas
-            $sentencia = "DELETE FROM ".TABLA_TAREAS." WHERE parentID=".$tarea-> id.";"; // Armo la sentencia para conseguir todas las subtareas
-            return comprobarResultadoDeQuery($conexion, $sentencia);
-        }
-        elseif (is_int($tarea)) { // Si la variable es el ID de la tarea
-            // Intento eliminar las subtareas
-            $sentencia = "DELETE FROM ".TABLA_TAREAS." WHERE parentID=".$tarea.";";
-            return comprobarResultadoDeQuery($conexion, $sentencia);
-        }
+        // Intento eliminar las subtareas
+        $sentencia = "DELETE FROM ".TABLA_TAREAS." WHERE parentID=".$tarea.";";
+        return comprobarResultadoDeQuery($conexion, $sentencia);
     }
 
 
