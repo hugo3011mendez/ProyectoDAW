@@ -39,19 +39,9 @@
     }
 
     // $_GET["conseguirUsuario"] es la ID del usuario
-    if (isset($_GET["conseguirUsuario"])) { // TODO : Ver si por temas de seguridad es mejor pasar la ID por POST
+    if (isset($_GET["conseguirUsuario"])) { 
         echo leerUsuario($conexionBBDD, $_GET["conseguirUsuario"]);
     }
-
-    // // $_GET["conseguirNickname"] es la ID del usuario
-    // if (isset($_GET["conseguirNickname"])) {
-    //     echo conseguirNickname($conexionBBDD, $_GET["conseguirNickname"]);
-    // }
-
-    // // $_GET["conseguirRol"] es la ID del usuario
-    // if (isset($_GET["conseguirRol"])) {
-    //     echo conseguirRol($conexionBBDD, $_GET["conseguirRol"]);
-    // }
 
 
     // UPDATE :
@@ -83,7 +73,7 @@
 
 
     // DELETE : $_GET["eliminarUsuario"] es la ID del usuario
-    if (isset($_GET["eliminarUsuario"])){ // TODO : Ver si por temas de seguridad es mejor pasar la ID por POST
+    if (isset($_GET["eliminarUsuario"])){
         if(eliminarUsuario($conexionBBDD, $_GET["eliminarUsuario"])){
             echo json_encode(["success"=>1, "message"=>"Usuario eliminado correctamente"]);
             exit();

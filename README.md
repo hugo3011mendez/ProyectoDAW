@@ -515,3 +515,7 @@ Subiré aquí todos los archivos relacionados con el proyecto de fin de ciclo de
 ### 09/09/2022
 - Corregido error al eliminar proyectos y tareas
 - Modificado estilo de páginas
+
+### 10/09/2022
+- Retoques finales al código antes de la entrega
+- Añadido build del proyecto

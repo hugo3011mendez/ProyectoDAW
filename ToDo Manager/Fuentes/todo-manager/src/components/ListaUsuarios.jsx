@@ -53,7 +53,7 @@ const ListaUsuarios = () => { // Referente a listar los usuarios
                 <td className="ps-0">{item.rol == 1 ? "Usuario" : "Administrador"}</td> {/* Muestra en texto el rol del usuario, en vez de en un número */}
                 <td className="ps-0"> {/* Botones referentes a acciones que podremos hacer con un usuario */}
                   <div className="btn-group" role="group" aria-label="Basic example">
-                    {/* TODO : Pensar en si dejarle editar usuarios */}
+                    {/* TODO : Dejarle editar usuarios */}
 
                     {/* Le asigno al evento onClick una función para eliminar el usuario de la BBDD */}
                     {

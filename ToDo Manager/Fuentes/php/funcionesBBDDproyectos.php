@@ -147,7 +147,6 @@
      * @return Boolean indicando si la acción resultó con errores
      */
     function eliminarTodasTareas($conexion, $proyecto){
-        // TODO : Pendiente de ver si quito la comprobación de ser un objeto o un int
         $sentencia = "DELETE FROM ".TABLA_TAREAS." WHERE proyecto =".$proyecto.";";
 
         // Devuelvo el resultado de ejecutar la consulta previamente armada
