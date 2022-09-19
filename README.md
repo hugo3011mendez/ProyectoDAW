@@ -519,3 +519,14 @@ Subiré aquí todos los archivos relacionados con el proyecto de fin de ciclo de
 ### 10/09/2022
 - Retoques finales al código antes de la entrega
 - Añadido build del proyecto
+- Añadido PDF referente a la memoria
+
+
+### 19/09/2022
+- Proyecto de React con ToDo Manager
+	- Añadida ruta referente a la creación de un nuevo administrador
+		- Añadido formulario para crear dicho admin
+		- Añadida URL de la ruta al servicio de rutas
+		- Importada nueva ruta en index.js
+
+- Actualizado documento de la memoria con los últimos cambios

@@ -4,7 +4,7 @@ import App from './App';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import UserProvider  from './context/UserProvider'; // Importo el contexto del usuario
 // Importo el servicio de rutas
-import { RUTA_ADMIN, RUTA_EDITAR_PROYECTO, RUTA_CREAR_PROYECTO, RUTA_EDITAR_TAREA, RUTA_MAIN, RUTA_PERFIL, RUTA_REGISTRO, RUTA_CREAR_TAREA, RUTA_LISTA_TAREAS } from './services/Rutas';
+import { RUTA_ADMIN, RUTA_EDITAR_PROYECTO, RUTA_CREAR_PROYECTO, RUTA_EDITAR_TAREA, RUTA_MAIN, RUTA_PERFIL, RUTA_REGISTRO, RUTA_CREAR_TAREA, RUTA_LISTA_TAREAS, RUTA_CREAR_ADMIN } from './services/Rutas';
 // Importaciones de rutas
 import Login from './routes/Login';
 import Registro from './routes/Registro';
@@ -17,6 +17,7 @@ import EditarTarea from './routes/EditarTarea';
 import AddProyecto from './routes/AddProyecto';
 import AddTarea from './routes/AddTarea';
 import ListaTareas from './routes/ListaTareas';
+import AddAdmin from './routes/AddAdmin';
 
 /**
  * Desde este archivo se enrutan todos los demás
@@ -42,6 +43,7 @@ root.render(
             <Route path={RUTA_CREAR_TAREA} element={<AddTarea />} /> {/* Para crear una tarea en la BBDD */}
             <Route path={RUTA_PERFIL} element={<Perfil />} /> {/* Este componente comparte la ruta de App - Referente a la vista principal */}
             <Route path={RUTA_ADMIN} element={<Admin />} /> {/* Ruta referente al menú de admin del usuario */}
+            <Route path={RUTA_CREAR_ADMIN} element={<AddAdmin />} /> {/* Para que un administrador pueda crear otro admin */}
           </Route>
         </Routes>
       </UserProvider>

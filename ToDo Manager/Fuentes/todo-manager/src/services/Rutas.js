@@ -21,6 +21,8 @@ const RUTA_EDITAR_TAREA_SIN_ID = RUTA_MAIN + "/editarTarea/"; // Esta ruta será
 const RUTA_CREAR_TAREA = RUTA_MAIN + "/crearTarea/:id"; // Esta ruta será para index.js
 const RUTA_CREAR_TAREA_SIN_ID = RUTA_MAIN + "/crearTarea/" // Esta ruta será para completar en el código
 
+const RUTA_CREAR_ADMIN = RUTA_MAIN + "/crearAdmin" // Esta ruta será para completar en el código
+
 
 export {RUTA_REGISTRO,
     RUTA_MAIN,
@@ -28,5 +30,6 @@ export {RUTA_REGISTRO,
     RUTA_PERFIL,
     RUTA_ADMIN,
     RUTA_EDITAR_PROYECTO, RUTA_EDITAR_PROYECTO_SIN_ID, RUTA_CREAR_PROYECTO,
-    RUTA_EDITAR_TAREA, RUTA_EDITAR_TAREA_SIN_ID, RUTA_CREAR_TAREA, RUTA_CREAR_TAREA_SIN_ID
+    RUTA_EDITAR_TAREA, RUTA_EDITAR_TAREA_SIN_ID, RUTA_CREAR_TAREA, RUTA_CREAR_TAREA_SIN_ID,
+    RUTA_CREAR_ADMIN
 };

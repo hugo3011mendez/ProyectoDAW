@@ -1,8 +1,10 @@
 import { useContext } from "react"; // Importamos módulos de React
+import { Link } from "react-router-dom"; // Importación de componentes de React Router DOM
 import { UserContext } from '../context/UserProvider'; // Importo el contexto del usuario
 import { useFetch } from '../hooks/useFetch';
 import Loading from './Loading';
 import {URL_LEER_USUARIOS, URL_ELIMINAR_USUARIO} from '../services/API'; // Importo la constante referente a la API
+import { RUTA_CREAR_ADMIN } from "../services/Rutas"; // Importo el servicio de rutas
 import axios from "axios"; // Importo Axios
 
 /**
@@ -64,6 +66,8 @@ const ListaUsuarios = () => { // Referente a listar los usuarios
               </tr>              
             )
           }
+
+          <Link to={RUTA_CREAR_ADMIN} className="btn btn-primary mt-3 ms-2">Crear Administrador</Link>
         </tbody>
     </table>
   )
