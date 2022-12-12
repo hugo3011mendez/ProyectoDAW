@@ -55,26 +55,26 @@ const ListaTareas = () => {
   
 
   return (
-  <div className="ms-3">
-    <h4>Tareas</h4>
+    <div className="ms-3">
+      <h4>Tareas</h4>
 
-    { // Listo todos los usuarios que haya para que se muestren
-      data.map(item => 
-        <div className="card p-1 d-inline-block m-3" key={item.id}>
-          <div class="card-body p-1">
-            <h5 className="card-title">{item.nombre}</h5>
-            <h6 className="card-subtitle mb-2 text-muted">Fecha de última modificación : {item.fecha_modificacion}</h6>
-            <p className="card-text">{item.descripcion}</p>
-
-            <Link to={RUTA_EDITAR_TAREA_SIN_ID+item.id} className="btn btn-warning">Editar</Link>
-            <button type="button" className="btn btn-danger ms-1" onClick={() => eliminarTarea(item.id)}>Eliminar</button>
+      { // Listo todos los usuarios que haya para que se muestren
+        data.map(item => 
+          <div className="card p-1 d-inline-block m-3" key={item.id}>
+            <div class="card-body p-1">
+              <h5 className="card-title">{item.nombre}</h5>
+              <h6 className="card-subtitle mb-2 text-muted">Fecha de última modificación : {item.fecha_modificacion}</h6>
+              <p className="card-text">{item.descripcion}</p>
+              <p className="card-text">{item.estado == 1 ? "Finalizada" : "Pendiente"}</p>
+              <Link to={RUTA_EDITAR_TAREA_SIN_ID+item.id} className="btn btn-warning">Editar</Link>
+              <button type="button" className="btn btn-danger ms-1" onClick={() => eliminarTarea(item.id)}>Eliminar</button>
+            </div>
           </div>
-        </div>
-      )
-    }
+        )
+      }
 
-    <Link to={RUTA_CREAR_TAREA_SIN_ID+idProyecto} className="btn btn-primary mt-3 ms-2">Crear Tarea</Link>
-  </div>
+      <Link to={RUTA_CREAR_TAREA_SIN_ID+idProyecto} className="btn btn-primary mt-3 ms-2">Crear Tarea</Link>
+    </div>
   )
 }
 
