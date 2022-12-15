@@ -12,6 +12,7 @@ const Navbar = () => {
   return (
     <nav className="navbar bg-light border-bottom row">
         <div className="container">
+            <img src="ToDoManagerIcon.png" width={"100rem"}></img>
             <h2 className="col-7 ms-4">Bienvenido, {nickname}</h2>
             <NavLink className="btn btn-primary col-1" to={RUTA_MAIN} >Main</NavLink>
             <NavLink className="btn btn-primary col-1" to={RUTA_PERFIL} >Perfil</NavLink>
